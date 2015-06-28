@@ -1,0 +1,75 @@
+{
+	"manifest_version": 2,
+	"name": "Global Media Keys",
+	"description": "Allows websites that play media to be controlled with the global media keys (or any keyboard shortcut).",
+	"version": "0.0.1",
+	"permissions": [
+		"tabs"
+	],
+	"background": {
+		"scripts": [
+			"global.js",
+			"background/util.js",
+			"background/messages.js",
+			"background/commands.js",
+			"background/main.js"
+		],
+		"persistent": true
+	},
+	"content-scripts": [
+		{
+			"matches": [
+				"*://play.google.com/music/listen*",
+				"*://soundcloud.com/*",
+				"*://youtube.com/*"
+			],
+			"js": [
+				"global.js",
+				"content/util.js",
+				"content/messages.js"
+			]
+		},
+		{
+			"matches": ["*://play.google.com/music/listen*"],
+			"js": ["content/domains/googleplaymusic.js"]
+		},
+		{
+			"matches": ["*://soundcloud.com/*"],
+			"js": ["content/domains/soundcloud.js"]
+		},
+		{
+			"matches": ["*://youtube.com/*"],
+			"js": ["content/domains/youtube.js"]
+		}
+	],
+	"commands": {
+		"media-play-pause": {
+			"suggested_key": {
+				"default": "MediaPlayPause"
+			},
+			"description": "Play/Pause",
+			"global": true
+		},
+		"media-next": {
+			"suggested_key": {
+				"default": "MediaNextTrack"
+			},
+			"description": "Next",
+			"global": true
+		},
+		"media-prev": {
+			"suggested_key": {
+				"default": "MediaPrevTrack"
+			},
+			"description": "Previous",
+			"global": true
+		},
+		"media-stop": {
+			"suggested_key": {
+				"default": "MediaStop"
+			},
+			"description": "Stop",
+			"global": true
+		}
+	}
+}
