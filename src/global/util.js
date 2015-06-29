@@ -38,12 +38,9 @@
 	}
 
 	function click(ele) {
-		if (typeof ele === 'string') {
-			console.log('Util.click: selecting element', ele);
-			ele = document.querySelector(ele);
-		}
-
-		if (!ele.dispatchEvent) {
+		if (!ele) {
+			throw new Error('Utils.click: ele is undefined');
+		} else if (!ele.dispatchEvent) {
 			console.error('Cannot dispatch event on element:', ele);
 		} else {
 			ele.dispatchEvent(new MouseEvent('click', {
