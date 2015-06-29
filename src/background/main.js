@@ -27,8 +27,8 @@
 		}
 	}
 
-	Messages.addListener(Global.msg.REGISTER, registerTab);
-	Messages.addListener(Global.msg.UNREGISTER, unregisterTab);
+	Messages.addListener(Const.msg.REGISTER, registerTab);
+	Messages.addListener(Const.msg.UNREGISTER, unregisterTab);
 
 	function updatePlayState(data, tabId) {
 		if (typeof data !== 'boolean') {
@@ -40,25 +40,25 @@
 		}
 	}
 
-	Messages.addListener(Global.msg.PLAY_STATE, updatePlayState);
+	Messages.addListener(Const.msg.PLAY_STATE, updatePlayState);
 
 	function handlePlayPause() {
 		if (preferredTab && preferredTab in registeredTabs) {
-			var messageName = registeredTabs[preferredTab].isPlaying ? Global.msg.PAUSE : Global.msg.PLAY;
+			var messageName = registeredTabs[preferredTab].isPlaying ? Const.msg.PAUSE : Const.msg.PLAY;
 			Messages.send(messageName, preferredTab);
 		} else {
 			preferredTab = null;
 			var anyTabsPlaying = Util.some(registeredTabs, function(tab, id) {
 				if (tab.isPlaying) {
 					preferredTab = id;
-					Messages.send(Global.msg.PAUSE, id);
+					Messages.send(Const.msg.PAUSE, id);
 					return true;
 				}
 			});
 			if (!anyTabsPlaying) {
 				var firstTab = Util.firstKey(preferredTab);
 				preferredTab = firstTab;
-				Messages.send(Global.msg.PLAY, firstTab);
+				Messages.send(Const.msg.PLAY, firstTab);
 			}
 		}
 	}
@@ -77,19 +77,19 @@
 		}
 	}
 
-	var handleNext = handleSkip.bind(this, Global.msg.NEXT);
-	var handlePrev = handleSkip.bind(this, Global.msg.PREV);
+	var handleNext = handleSkip.bind(this, Const.msg.NEXT);
+	var handlePrev = handleSkip.bind(this, Const.msg.PREV);
 
 	function handleStop() {
 		Util.each(registeredTabs, function(tab, id) {
 			if (tab.isPlaying) {
-				Messages.send(Global.msg.PAUSE, id);
+				Messages.send(Const.msg.PAUSE, id);
 			}
 		});
 	}
 
-	Commands.addListener(Global.cmd.PLAY_PAUSE, handlePlayPause);
-	Commands.addListener(Global.cmd.NEXT, handleNext);
-	Commands.addListener(Global.cmd.PREV, handlePrev);
-	Commands.addListener(Global.cmd.STOP, handleStop);
+	Commands.addListener(Const.cmd.PLAY_PAUSE, handlePlayPause);
+	Commands.addListener(Const.cmd.NEXT, handleNext);
+	Commands.addListener(Const.cmd.PREV, handlePrev);
+	Commands.addListener(Const.cmd.STOP, handleStop);
 })();

@@ -3,28 +3,28 @@
 	var nextButton = document.querySelector('selector');
 	var prevButton = document.querySelector('selector');
 
-	Messages.send(Global.msg.REGISTER, {
+	Messages.send(Const.msg.REGISTER, {
 		canSkip: false,
 		playState: false
 	});
 
-	Messages.addListener([Global.msg.PLAY, Global.msg.PAUSE], function() {
+	Messages.addListener([Const.msg.PLAY, Const.msg.PAUSE], function() {
 		Util.click(playButton);
 	});
 
-	Messages.addListener(Global.msg.PREV, function() {
+	Messages.addListener(Const.msg.PREV, function() {
 		Util.click(prevButton);
 	});
 
-	Messages.addListener(Global.msg.NEXT, function() {
+	Messages.addListener(Const.msg.NEXT, function() {
 		Util.click(nextButton);
 	});
 
 	playButton.addEventListener('click', function() {
-		Messages.send(Global.msg.PLAY_STATE, playButton.classList.contains('something'));
+		Messages.send(Const.msg.PLAY_STATE, playButton.classList.contains('something'));
 	});
 
 	window.addEventListener('unload', function() {
-		Messages.send(Global.msg.UNREGISTER);
+		Messages.send(Const.msg.UNREGISTER);
 	});
 })();

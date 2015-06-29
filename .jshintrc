@@ -10,9 +10,9 @@
 	"devel": true,
 	"globals": {
 		"chrome": false,
-		"Global": false,
+		"Const": false,
+		"Util": false,
 		"Messages": false,
-		"Commands": false,
-		"Util": false
+		"Commands": false
 	}
 }

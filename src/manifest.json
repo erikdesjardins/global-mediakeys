@@ -8,9 +8,9 @@
 	],
 	"background": {
 		"scripts": [
-			"global.js",
-			"background/util.js",
-			"background/messages.js",
+			"global/constants.js",
+			"global/util.js",
+			"background/backgroundMessages.js",
 			"background/commands.js",
 			"background/main.js"
 		],
@@ -24,14 +24,14 @@
 				"*://youtube.com/*"
 			],
 			"js": [
-				"global.js",
-				"content/util.js",
-				"content/messages.js"
+				"global/constants.js",
+				"global/util.js",
+				"content/contentMessages.js"
 			]
 		},
 		{
 			"matches": ["*://play.google.com/music/listen*"],
-			"js": ["content/domains/googleplaymusic.js"]
+			"js": ["content/domains/googlePlayMusic.js"]
 		},
 		{
 			"matches": ["*://soundcloud.com/*"],

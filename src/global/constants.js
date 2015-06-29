@@ -17,4 +17,4 @@
 		PREV: 'media-prev',
 		STOP: 'media-stop'
 	};
-})(/* jshint -W020 */ Global = {});
+})(/* jshint -W020 */ Const = {});
