@@ -1,5 +1,12 @@
 (function(exports) {
+	function checkIsObject(val) {
+		if (typeof val !== 'object') {
+			throw new Error(val + ' is not an object.');
+		}
+	}
+
 	function each(obj, callback) {
+		checkIsObject(obj);
 		for (var prop in obj) {
 			if (obj.hasOwnProperty(prop)) {
 				callback(obj[prop], prop, obj);
@@ -8,6 +15,7 @@
 	}
 
 	function some(obj, callback) {
+		checkIsObject(obj);
 		for (var prop in obj) {
 			if (obj.hasOwnProperty(prop)) {
 				if (callback(obj[prop], prop, obj)) {
@@ -19,6 +27,7 @@
 	}
 
 	function every(obj, callback) {
+		checkIsObject(obj);
 		for (var prop in obj) {
 			if (obj.hasOwnProperty(prop)) {
 				if (!callback(obj[prop], prop, obj)) {
@@ -30,11 +39,22 @@
 	}
 
 	function firstKey(obj) {
+		checkIsObject(obj);
 		for (var prop in obj) {
 			if (obj.hasOwnProperty(prop)) {
 				return prop;
 			}
 		}
+	}
+
+	function isEmpty(obj) {
+		checkIsObject(obj);
+		for (var prop in obj) {
+			if (obj.hasOwnProperty(prop)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	function click(ele) {
@@ -51,9 +71,19 @@
 		}
 	}
 
+	function observeClasses(ele, callback) {
+		new MutationObserver(function(mutations) {
+			mutations.forEach(function(mutationRecord) {
+				callback(mutationRecord.target.classList);
+			});
+		}).observe(ele, { attributes: true, attributeFilter: ['class'] });
+	}
+
 	exports.each = each;
 	exports.some = some;
 	exports.every = every;
 	exports.firstKey = firstKey;
+	exports.isEmpty = isEmpty;
 	exports.click = click;
+	exports.observeClasses = observeClasses;
 })(/* jshint -W020 */ Util = {});

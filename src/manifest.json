@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Global Media Keys",
-	"description": "Allows websites that play media to be controlled with the global media keys (or any keyboard shortcut).",
+	"description": "Allows websites that play media to be controlled with global keyboard shortcuts.",
 	"version": "0.0.1",
 	"permissions": [
 		"tabs"
@@ -16,12 +16,12 @@
 		],
 		"persistent": true
 	},
-	"content-scripts": [
+	"content_scripts": [
 		{
 			"matches": [
 				"*://play.google.com/music/listen*",
 				"*://soundcloud.com/*",
-				"*://youtube.com/*"
+				"*://*.youtube.com/*"
 			],
 			"js": [
 				"global/constants.js",
@@ -38,7 +38,7 @@
 			"js": ["content/domains/soundcloud.js"]
 		},
 		{
-			"matches": ["*://youtube.com/*"],
+			"matches": ["*://*.youtube.com/*"],
 			"js": ["content/domains/youtube.js"]
 		}
 	],

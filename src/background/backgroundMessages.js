@@ -25,15 +25,13 @@
 		}
 	});
 
-	function sendMessage(messageType, target, data, callback) {
+	function sendMessage(messageType, tabId, data, callback) {
 		var message = {
 			type: messageType,
 			data: data
 		};
-		var tabIds = [].concat(target);
-		tabIds.forEach(function(tabId) {
-			chrome.tabs.sendMessage(tabId, message, callback);
-		});
+		var target = parseInt(tabId, 10);
+		chrome.tabs.sendMessage(target, message, callback);
 	}
 
 	exports.addListener = addListener;
