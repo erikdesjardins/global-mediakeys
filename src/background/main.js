@@ -1,11 +1,10 @@
 (function() {
-	// The tab to play/pause/skip when multiple/none of the tabs are playing
 	var preferredTab = null;
 	var registeredTabs = {
-		/* 42: {
-		 canSkip: true,
-		 isPlaying: false
-		 } */
+		//42: {
+		//	canSkip: true,
+		//	isPlaying: false
+		//}
 	};
 
 	function registerTab(data, tabId) {
