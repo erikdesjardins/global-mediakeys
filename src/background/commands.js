@@ -4,7 +4,7 @@
 	function addListener(names, callback) {
 		[].concat(names).forEach(function(commandName) {
 			if (commandName in listeners) {
-				throw new Error('Listener for Command:' + commandName + ' already exists.');
+				console.error('Listener for Command:', commandName, 'already exists.');
 			} else {
 				listeners[commandName] = callback;
 			}

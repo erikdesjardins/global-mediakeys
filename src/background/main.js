@@ -20,7 +20,7 @@
 
 	function unregisterTab(data, tabId) {
 		if (!(tabId in registeredTabs)) {
-			throw new Error('Cannot unregister tab id: ' + tabId + ' because it is not registered.');
+			console.error('Cannot unregister tab id:', tabId, ' because it is not registered.');
 		} else {
 			delete registeredTabs[data];
 		}
@@ -31,9 +31,9 @@
 
 	function updatePlayState(data, tabId) {
 		if (typeof data !== 'boolean') {
-			throw new Error('Cannot set play state to non-boolean value: ' + data);
+			console.error('Cannot set play state to non-boolean value:', data);
 		} else if (!(tabId in registeredTabs)) {
-			throw new Error('Cannot set play state of tab id: ' + tabId + ' because it is not registered.');
+			console.error('Cannot set play state of tab id:', tabId, 'because it is not registered.');
 		} else {
 			registeredTabs[tabId].isPlaying = data;
 		}

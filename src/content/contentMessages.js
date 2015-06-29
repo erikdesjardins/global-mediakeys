@@ -4,7 +4,7 @@
 	function addListener(types, callback) {
 		[].concat(types).forEach(function(messageType) {
 			if (messageType in listeners) {
-				throw new Error('Listener for Message:' + messageType + ' already exists.');
+				console.error('Listener for Message:', messageType, 'already exists.');
 			} else {
 				listeners[messageType] = callback;
 			}
