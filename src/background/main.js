@@ -47,7 +47,7 @@
 
 	function ifAnyTabsRegistered(func) {
 		return function() {
-			if (!Util.isEmpty(registeredTabs)){
+			if (!Util.obj.isEmpty(registeredTabs)){
 				func.apply(null, arguments);
 			} else {
 				console.log('Attempted to fire:', func.name, 'but there are no registered tabs.');
@@ -62,7 +62,7 @@
 			console.log('Sending message:', messageName, 'to preferred tab:', preferredTab);
 		} else {
 			preferredTab = null;
-			var anyTabsPlaying = Util.some(registeredTabs, function(tab, id) {
+			var anyTabsPlaying = Util.obj.some(registeredTabs, function(tab, id) {
 				if (tab.isPlaying) {
 					preferredTab = id;
 					Messages.send(Const.msg.PAUSE, id);
@@ -71,7 +71,7 @@
 				}
 			});
 			if (!anyTabsPlaying) {
-				var firstTab = Util.firstKey(registeredTabs);
+				var firstTab = Util.obj.firstKey(registeredTabs);
 				preferredTab = firstTab;
 				Messages.send(Const.msg.PLAY, firstTab);
 				console.log('Sending message:', Const.msg.PLAY, 'to first registered tab:', firstTab);
@@ -84,7 +84,7 @@
 			Messages.send(messageName, preferredTab);
 			console.log('Sending message:', messageName, 'to preferred tab:', preferredTab);
 		} else {
-			Util.some(registeredTabs, function(tab, id) {
+			Util.obj.some(registeredTabs, function(tab, id) {
 				if (tab.canSkip) {
 					preferredTab = id;
 					Messages.send(messageName, id);
@@ -99,7 +99,7 @@
 	var handlePrev = handleSkip.bind(this, Const.msg.PREV);
 
 	function handleStop() {
-		Util.each(registeredTabs, function(tab, id) {
+		Util.obj.each(registeredTabs, function(tab, id) {
 			if (tab.isPlaying) {
 				Messages.send(Const.msg.PAUSE, id);
 			}

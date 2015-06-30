@@ -18,18 +18,18 @@ window.addEventListener('load', function() {
 	});
 
 	Messages.addListener([Const.msg.PLAY, Const.msg.PAUSE], function() {
-		Util.click(playButton);
+		Util.dom.click(playButton);
 	});
 
 	Messages.addListener(Const.msg.NEXT, function() {
-		Util.click(nextButton);
+		Util.dom.click(nextButton);
 	});
 
 	Messages.addListener(Const.msg.PREV, function() {
-		Util.click(prevButton);
+		Util.dom.click(prevButton);
 	});
 
-	Util.observeClasses(playButton, function(classList) {
+	Util.dom.observeClasses(playButton, function(classList) {
 		Messages.send(Const.msg.PLAY_STATE, getPlayState(classList));
 	});
 

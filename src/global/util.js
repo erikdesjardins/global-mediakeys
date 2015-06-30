@@ -57,6 +57,14 @@
 		return true;
 	}
 
+	exports.obj = {
+		each: each,
+		some: some,
+		every: every,
+		firstKey: firstKey,
+		isEmpty: isEmpty
+	};
+
 	function click(ele) {
 		if (!ele) {
 			console.error('Utils.click: ele is undefined');
@@ -79,11 +87,8 @@
 		}).observe(ele, { attributes: true, attributeFilter: ['class'] });
 	}
 
-	exports.each = each;
-	exports.some = some;
-	exports.every = every;
-	exports.firstKey = firstKey;
-	exports.isEmpty = isEmpty;
-	exports.click = click;
-	exports.observeClasses = observeClasses;
+	exports.dom = {
+		click: click,
+		observeClasses: observeClasses
+	};
 })(/* jshint -W020 */ Util = {});
