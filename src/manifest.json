@@ -4,7 +4,7 @@
 	"description": "Allows websites that play media to be controlled with global keyboard shortcuts.",
 	"version": "0.0.1",
 	"permissions": [
-		"tabs"
+		"storage"
 	],
 	"background": {
 		"scripts": [
@@ -13,10 +13,11 @@
 			"global/util.js",
 			"background/backgroundMessages.js",
 			"background/commands.js",
+			"background/storage.js",
 			"background/tabManager.js",
 			"background/main.js"
 		],
-		"persistent": true
+		"persistent": false
 	},
 	"content_scripts": [
 		{

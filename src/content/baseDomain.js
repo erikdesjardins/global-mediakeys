@@ -44,7 +44,7 @@
 
 		Messages.send(Const.msg.REGISTER, {
 			canSkip: !!(this.buttons.next || this.buttons.prev),
-			playState: currentPlayState
+			isPlaying: currentPlayState
 		});
 
 		Messages.addListener([Const.msg.PLAY, Const.msg.PAUSE], function() {

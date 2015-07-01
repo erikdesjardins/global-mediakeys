@@ -15,6 +15,7 @@
 		"Messages": false,
 		"Commands": false,
 		"Domain": false,
-		"Tabs": false
+		"TabMgr": false,
+		"Storage": false
 	}
 }

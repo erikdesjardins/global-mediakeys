@@ -1,56 +1,40 @@
 (function() {
 	Messages.addListener(Const.msg.REGISTER, function(data, tabId) {
-		return Tabs.add(tabId, data);
+		TabMgr.add(tabId, data);
 	});
+
 	Messages.addListener(Const.msg.UNREGISTER, function(data, tabId) {
-		return Tabs.remove(tabId);
+		TabMgr.remove(tabId);
 	});
+
 	Messages.addListener(Const.msg.PLAY_STATE, function(data, tabId) {
-		return Tabs.updatePlayState(tabId, data);
+		TabMgr.updatePlayState(tabId, data);
 	});
 
-	function onFirstTab(callback) {
-		return function() {
-			var tab = Tabs.first();
-			if (!tab) {
-				console.log('Attempted to fire:', callback.name, 'but there are no registered tabs.');
-			} else {
-				callback(tab);
-			}
-		};
-	}
+	Commands.addListener(Const.cmd.PLAY_PAUSE, function() {
+		TabMgr.first(function(tabId, tab) {
+			var messageName = tab.isPlaying ? Const.msg.PAUSE : Const.msg.PLAY;
+			Messages.send(messageName, tabId);
+		});
+	});
 
-	function handlePlayPause(tab) {
-		var messageName = tab.isPlaying ? Const.msg.PAUSE : Const.msg.PLAY;
-		Messages.send(messageName, tab.id);
-	}
+	Commands.addListener(Const.cmd.NEXT, function() {
+		TabMgr.first(function(tabId) {
+			Messages.send(Const.msg.NEXT, tabId);
+		});
+	});
 
-	function _handleSkip(tab, messageName) {
-		if (tab.canSkip) {
-			Messages.send(messageName, tab.id);
-		} else {
-			console.log('Attempted to send:', messageName, 'but tab:', tab.id, 'is not skippable.');
-		}
-	}
+	Commands.addListener(Const.cmd.PREV, function() {
+		TabMgr.first(function(tabId) {
+			Messages.send(Const.msg.PREV, tabId);
+		});
+	});
 
-	function handleNext(tab) {
-		_handleSkip(tab, Const.msg.NEXT);
-	}
-
-	function handlePrev(tab) {
-		_handleSkip(tab, Const.msg.PREV);
-	}
-
-	function handleStop() {
-		Tabs.each(function(tab) {
+	Commands.addListener(Const.cmd.STOP, function() {
+		TabMgr.each(function(tabId, tab) {
 			if (tab.isPlaying) {
-				Messages.send(Const.msg.PAUSE, tab.id);
+				Messages.send(Const.msg.PAUSE, tabId);
 			}
 		});
-	}
-
-	Commands.addListener(Const.cmd.PLAY_PAUSE, onFirstTab(handlePlayPause));
-	Commands.addListener(Const.cmd.NEXT, onFirstTab(handleNext));
-	Commands.addListener(Const.cmd.PREV, onFirstTab(handlePrev));
-	Commands.addListener(Const.cmd.STOP, handleStop);
+	});
 })();

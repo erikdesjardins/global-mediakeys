@@ -17,4 +17,8 @@
 		PREV: 'media-prev',
 		STOP: 'media-stop'
 	};
+
+	exports.storage = {
+		TABS: 'registered-tabs'
+	}
 })(/* jshint -W020 */ Const = {});

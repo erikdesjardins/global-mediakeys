@@ -1,4 +1,24 @@
 (function(exports) {
+	function extend(target /*[, ...objectN]*/) {
+		Array.prototype.slice.call(arguments, 1).forEach(function(extendObj) {
+			for (var prop in extendObj) {
+				if (extendObj.hasOwnProperty(prop)) {
+					target[prop] = extendObj[prop];
+				}
+			}
+		});
+		return target;
+	}
+
+	function isRefType(val) {
+		return Object(val) === val;
+	}
+
+	exports.obj = {
+		extend: extend,
+		isRefType: isRefType
+	};
+
 	function click(ele) {
 		if (!ele) {
 			console.warn('Util.click: ele is undefined');
