@@ -8,6 +8,7 @@
 	],
 	"background": {
 		"scripts": [
+			"global/polyfill.js",
 			"global/constants.js",
 			"global/util.js",
 			"background/backgroundMessages.js",
@@ -24,6 +25,7 @@
 				"*://*.youtube.com/*"
 			],
 			"js": [
+				"global/polyfill.js",
 				"global/constants.js",
 				"global/util.js",
 				"content/contentMessages.js",

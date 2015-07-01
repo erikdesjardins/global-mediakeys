@@ -9,11 +9,13 @@
 		return this;
 	};
 
-	exports.prototype.go = function(eventName, eventTarget) {
-		if (eventName) {
-			this._event = eventName;
-			this._eventTarget = eventTarget ? document.querySelector(eventTarget) : window;
-			this._eventTarget.addEventListener(this._event, this.go.bind(this));
+	exports.prototype.go = function(setup) {
+		if (setup) {
+			if (this._cleanup) {
+				console.warn('.go() has already been called with a setup function, aborting setup.');
+			} else {
+				this._cleanup = setup(this.go.bind(this));
+			}
 		}
 
 		this.buttons = this._buttons();
@@ -23,8 +25,8 @@
 			return;
 		}
 
-		if (this._event && this._eventTarget) {
-			this._eventTarget.removeEventListener(this._event, this.go.bind(this));
+		if (this._cleanup) {
+			this._cleanup();
 		}
 
 		this.getPlayState = this._getPlayState.bind(this, this.buttons.play);
@@ -46,9 +48,13 @@
 			Util.dom.click(this.buttons.prev);
 		}.bind(this));
 
-		Util.dom.observeClasses(this.buttons.play, function(/* classList */) {
-			Messages.send(Const.msg.PLAY_STATE, this.getPlayState());
-		}.bind(this));
+		Util.dom.observe(
+			this.buttons.play,
+			{ attributes: true, attributeFilter: ['class'] },
+			function() {
+				Messages.send(Const.msg.PLAY_STATE, this.getPlayState())
+			}.bind(this)
+		);
 
 		window.addEventListener('unload', function() {
 			Messages.send(Const.msg.UNREGISTER);

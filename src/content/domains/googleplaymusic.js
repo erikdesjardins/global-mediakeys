@@ -9,4 +9,7 @@ new Domain()
 	.defPlayState(function(playButton) {
 		return playButton.classList.contains('playing');
 	})
-	.go('load');
+	.go(function(callback) {
+		window.addEventListener('load', callback);
+		return window.removeEventListener.bind(window, 'load', callback);
+	});

@@ -79,16 +79,16 @@
 		}
 	}
 
-	function observeClasses(ele, callback) {
-		new MutationObserver(function(mutations) {
-			mutations.forEach(function(mutationRecord) {
-				callback(mutationRecord.target.classList);
-			});
-		}).observe(ele, { attributes: true, attributeFilter: ['class'] });
+	function observe(ele, options, callback) {
+		var observer = new MutationObserver(function(mutations) {
+			mutations.forEach(callback);
+		});
+		observer.observe(ele, options);
+		return observer;
 	}
 
 	exports.dom = {
 		click: click,
-		observeClasses: observeClasses
+		observe: observe
 	};
 })(/* jshint -W020 */ Util = {});
