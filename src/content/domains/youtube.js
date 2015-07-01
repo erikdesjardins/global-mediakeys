@@ -1,12 +1,12 @@
 new Domain()
-	.defButtons(function() {
+	.buttons(function() {
 		return {
 			play: document.querySelector('.ytp-button-play, .ytp-button-pause'),
 			next: document.querySelector('.ytp-button-next'),
 			prev: document.querySelector('.ytp-button-prev')
 		};
 	})
-	.defPlayState(function(playButton) {
+	.playState(function(playButton) {
 		return playButton.classList.contains('ytp-button-pause');
 	})
 	.go(function(callback) {

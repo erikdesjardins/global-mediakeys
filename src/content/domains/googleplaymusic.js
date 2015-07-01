@@ -1,12 +1,12 @@
 new Domain()
-	.defButtons(function() {
+	.buttons(function() {
 		return {
 			play: document.querySelector('sj-icon-button[data-id="play-pause"]'),
 			next: document.querySelector('sj-icon-button[data-id="forward"]'),
 			prev: document.querySelector('sj-icon-button[data-id="rewind"]')
 		};
 	})
-	.defPlayState(function(playButton) {
+	.playState(function(playButton) {
 		return playButton.classList.contains('playing');
 	})
 	.go(function(callback) {

@@ -1,10 +1,10 @@
 (function(exports) {
-	exports.prototype.defButtons = function(func) {
+	exports.prototype.buttons = function(func) {
 		this._buttons = func;
 		return this;
 	};
 
-	exports.prototype.defPlayState = function(func) {
+	exports.prototype.playState = function(func) {
 		this._getPlayState = func;
 		return this;
 	};
