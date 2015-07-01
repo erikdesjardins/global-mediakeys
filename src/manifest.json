@@ -26,7 +26,8 @@
 			"js": [
 				"global/constants.js",
 				"global/util.js",
-				"content/contentMessages.js"
+				"content/contentMessages.js",
+				"content/baseDomain.js"
 			]
 		},
 		{

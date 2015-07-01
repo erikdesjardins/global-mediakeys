@@ -13,6 +13,7 @@
 		"Const": false,
 		"Util": false,
 		"Messages": false,
-		"Commands": false
+		"Commands": false,
+		"Domain": false
 	}
 }

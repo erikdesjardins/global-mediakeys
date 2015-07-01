@@ -67,7 +67,7 @@
 
 	function click(ele) {
 		if (!ele) {
-			console.error('Utils.click: ele is undefined');
+			console.warn('Utils.click: ele is undefined');
 		} else if (!ele.dispatchEvent) {
 			console.error('Cannot dispatch event on element:', ele);
 		} else {
