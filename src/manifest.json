@@ -13,6 +13,7 @@
 			"global/util.js",
 			"background/backgroundMessages.js",
 			"background/commands.js",
+			"background/tabManager.js",
 			"background/main.js"
 		],
 		"persistent": true

@@ -14,6 +14,7 @@
 		"Util": false,
 		"Messages": false,
 		"Commands": false,
-		"Domain": false
+		"Domain": false,
+		"Tabs": false
 	}
 }
