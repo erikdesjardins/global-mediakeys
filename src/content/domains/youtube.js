@@ -1,13 +1,21 @@
 new Domain()
-	.buttons(function() {
+	.setupButtons(function() {
 		return {
 			play: document.querySelector('.ytp-button-play, .ytp-button-pause'),
 			next: document.querySelector('.ytp-button-next'),
 			prev: document.querySelector('.ytp-button-prev')
 		};
 	})
-	.playState(function(playButton) {
-		return playButton.classList.contains('ytp-button-pause');
+	.setupPlayState(function(callback, buttons) {
+		function isPlaying(playButton) {
+			return playButton.classList.contains('ytp-button-pause');
+		}
+		Util.dom.observe(
+			buttons.play,
+			{ attributes: true, attributeFilter: ['class'] },
+			function() { callback(isPlaying(buttons.play)); }
+		);
+		return isPlaying(buttons.play);
 	})
 	.go(function(callback) {
 		var observer = Util.dom.observe(

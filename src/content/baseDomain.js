@@ -1,18 +1,26 @@
 (function(exports) {
-	exports.prototype.buttons = function(func) {
-		this._buttons = func;
+	exports.prototype.setupButtons = function(func) {
+		if (this._buttons) {
+			console.error('setupButtons() has already been called.');
+		} else {
+			this._buttons = func;
+		}
 		return this;
 	};
 
-	exports.prototype.playState = function(func) {
-		this._getPlayState = func;
+	exports.prototype.setupPlayState = function(func) {
+		if (this._playState) {
+			console.error('setupPlayState() has already been called.');
+		} else {
+			this._playState = func;
+		}
 		return this;
 	};
 
 	exports.prototype.go = function(setup) {
 		if (setup) {
 			if (this._cleanup) {
-				console.warn('.go() has already been called with a setup function, aborting setup.');
+				console.error('go() has already been called with a setup function.');
 			} else {
 				this._cleanup = setup(this.go.bind(this));
 			}
@@ -29,11 +37,14 @@
 			this._cleanup();
 		}
 
-		this.getPlayState = this._getPlayState.bind(this, this.buttons.play);
+		var currentPlayState = this._playState(
+			Messages.send.bind(Messages, Const.msg.PLAY_STATE),
+			this.buttons
+		);
 
 		Messages.send(Const.msg.REGISTER, {
 			canSkip: !!(this.buttons.next || this.buttons.prev),
-			playState: this.getPlayState()
+			playState: currentPlayState
 		});
 
 		Messages.addListener([Const.msg.PLAY, Const.msg.PAUSE], function() {
@@ -47,14 +58,6 @@
 		Messages.addListener(Const.msg.PREV, function() {
 			Util.dom.click(this.buttons.prev);
 		}.bind(this));
-
-		Util.dom.observe(
-			this.buttons.play,
-			{ attributes: true, attributeFilter: ['class'] },
-			function() {
-				Messages.send(Const.msg.PLAY_STATE, this.getPlayState())
-			}.bind(this)
-		);
 
 		window.addEventListener('unload', function() {
 			Messages.send(Const.msg.UNREGISTER);
