@@ -20,5 +20,5 @@
 
 	exports.storage = {
 		TABS: 'registered-tabs'
-	}
+	};
 })(/* jshint -W020 */ Const = {});
