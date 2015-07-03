@@ -1,4 +1,4 @@
-(function(exports) {
+(function(exports) {'use strict';
 	var listeners = {};
 
 	function addListener(types, callback) {

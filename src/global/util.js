@@ -1,4 +1,4 @@
-(function(exports) {
+(function(exports) {'use strict';
 	function extend(target /*[, ...objectN]*/) {
 		Array.prototype.slice.call(arguments, 1).forEach(function(extendObj) {
 			for (var prop in extendObj) {

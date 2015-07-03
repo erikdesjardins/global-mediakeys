@@ -1,4 +1,4 @@
-(function(exports) {
+(function(exports) {'use strict';
 	exports.prototype.setupButtons = function(func) {
 		if (this._buttons) {
 			console.error('setupButtons() has already been called.');

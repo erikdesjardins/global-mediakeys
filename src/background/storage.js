@@ -1,4 +1,4 @@
-(function(exports) {
+(function(exports) {'use strict';
 	function set(key, value) {
 		var obj = {};
 		obj[key] = value;

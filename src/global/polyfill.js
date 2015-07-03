@@ -1,4 +1,4 @@
-(function() {
+(function() {'use strict';
 	// via https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from#Polyfill
 	// Production steps of ECMA-262, Edition 6, 22.1.2.1
 	// Reference: https://people.mozilla.org/~jorendorff/es6-draft.html#sec-array.from
@@ -29,8 +29,8 @@
 				var items = Object(arrayLike);
 
 				// 3. ReturnIfAbrupt(items).
-				if (arrayLike == null) {
-					throw new TypeError("Array.from requires an array-like object - not null or undefined");
+				if (/* jshint -W041 */ arrayLike == null) {/* jshint +W041 */
+					throw new TypeError('Array.from requires an array-like object - not null or undefined');
 				}
 
 				// 4. If mapfn is undefined, then let mapping be false.
