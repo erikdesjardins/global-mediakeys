@@ -17,9 +17,9 @@
 		var tabId = sender.tab && sender.tab.id;
 
 		if (!tabId) {
-			console.error('Received content->background message without tabId:', request, sender);
+			console.error('Received message without tabId:', request, sender);
 		} else if (!(messageType in listeners)) {
-			console.error('Unrecognised content->background message type:', request, sender);
+			console.error('Unrecognised message type:', request, sender);
 		} else {
 			sendResponse(listeners[messageType](data, tabId));
 		}

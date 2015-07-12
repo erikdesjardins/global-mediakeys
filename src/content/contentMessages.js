@@ -16,7 +16,7 @@
 		var data = request.data;
 
 		if (!(messageType in listeners)) {
-			console.error('Unrecognised background->content message:', request);
+			console.error('Unrecognised message type:', request);
 		} else {
 			sendResponse(listeners[messageType](data));
 		}
