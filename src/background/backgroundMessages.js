@@ -25,13 +25,20 @@
 		}
 	});
 
-	function sendMessage(messageType, tabId, data, callback) {
+	function sendMessage(messageType, tabId, data) {
 		var message = {
 			type: messageType,
 			data: data
 		};
 		var target = parseInt(tabId, 10);
-		chrome.tabs.sendMessage(target, message, callback);
+		return new Promise(function(resolve, reject) {
+			var timeout = setTimeout(reject, Const.req.TIMEOUT);
+			function success() {
+				clearTimeout(timeout);
+				resolve.apply(null, arguments);
+			}
+			chrome.tabs.sendMessage(target, message, success);
+		});
 	}
 
 	exports.addListener = addListener;

@@ -22,12 +22,19 @@
 		}
 	});
 
-	function sendMessage(messageType, data, callback) {
+	function sendMessage(messageType, data) {
 		var message = {
 			type: messageType,
 			data: data
 		};
-		chrome.runtime.sendMessage(message, callback);
+		return new Promise(function(resolve, reject) {
+			var timeout = setTimeout(reject, Const.req.TIMEOUT);
+			function success() {
+				clearTimeout(timeout);
+				resolve.apply(null, arguments);
+			}
+			chrome.runtime.sendMessage(message, success);
+		});
 	}
 
 	exports.addListener = addListener;

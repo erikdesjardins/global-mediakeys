@@ -11,6 +11,10 @@
 		PREV: 'tab-prev'
 	};
 
+	exports.req = {
+		TIMEOUT: 1000
+	};
+
 	exports.cmd = {
 		PLAY_PAUSE: 'media-play-pause',
 		NEXT: 'media-next',
