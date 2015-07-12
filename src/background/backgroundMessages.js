@@ -21,7 +21,10 @@
 		} else if (!(messageType in listeners)) {
 			console.error('Unrecognised message type:', request, sender);
 		} else {
-			sendResponse(listeners[messageType](data, tabId));
+			var response = {
+				data: listeners[messageType](data, tabId)
+			};
+			sendResponse(response);
 		}
 	});
 
@@ -32,12 +35,13 @@
 		};
 		var target = parseInt(tabId, 10);
 		return new Promise(function(resolve, reject) {
-			var timeout = setTimeout(reject, Const.req.TIMEOUT);
-			function success() {
-				clearTimeout(timeout);
-				resolve.apply(null, arguments);
-			}
-			chrome.tabs.sendMessage(target, message, success);
+			chrome.tabs.sendMessage(target, message, function(response) {
+				if (response) {
+					resolve(response.data);
+				} else {
+					reject();
+				}
+			});
 		});
 	}
 

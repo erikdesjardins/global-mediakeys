@@ -18,7 +18,10 @@
 		if (!(messageType in listeners)) {
 			console.error('Unrecognised message type:', request);
 		} else {
-			sendResponse(listeners[messageType](data));
+			var response = {
+				data: listeners[messageType](data)
+			};
+			sendResponse(response);
 		}
 	});
 
@@ -28,12 +31,13 @@
 			data: data
 		};
 		return new Promise(function(resolve, reject) {
-			var timeout = setTimeout(reject, Const.req.TIMEOUT);
-			function success() {
-				clearTimeout(timeout);
-				resolve.apply(null, arguments);
-			}
-			chrome.runtime.sendMessage(message, success);
+			chrome.runtime.sendMessage(message, function(response) {
+				if (response) {
+					resolve(response.data);
+				} else {
+					reject();
+				}
+			});
 		});
 	}
 
