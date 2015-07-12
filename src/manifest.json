@@ -3,7 +3,7 @@
 	"name": "Global Media Keys",
 	"short_name": "GMK",
 	"description": "Allows websites that play media to be controlled with global keyboard shortcuts.",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"permissions": [
 		"storage"
 	],
