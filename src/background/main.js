@@ -47,4 +47,10 @@
 			}
 		});
 	});
+
+	// Prune unresponsive tabs (in case of crashing, etc.)
+	TabMgr.each(function(tabId) {
+		Messages.send(Const.msg.ECHO, tabId)
+			.catch(removeTab(tabId));
+	});
 })();
