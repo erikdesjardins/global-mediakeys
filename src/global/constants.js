@@ -8,7 +8,9 @@
 		PLAY: 'tab-play',
 		PAUSE: 'tab-pause',
 		NEXT: 'tab-next',
-		PREV: 'tab-prev'
+		PREV: 'tab-prev',
+
+		ECHO: 'echo'
 	};
 
 	exports.cmd = {

@@ -43,4 +43,8 @@
 
 	exports.addListener = addListener;
 	exports.send = sendMessage;
+
+	addListener(Const.msg.ECHO, function(data) {
+		return data;
+	});
 })(/* jshint -W020 */ Messages = {});
