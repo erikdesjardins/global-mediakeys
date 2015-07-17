@@ -2,15 +2,23 @@
 	function set(key, value) {
 		var obj = {};
 		obj[key] = value;
-		return new Promise(function(resolve) {
-			chrome.storage.local.set(obj, resolve);
+		return new Promise(function(resolve, reject) {
+			chrome.storage.local.set(obj, function() {
+				if (chrome.runtime.lastError) {
+					reject(chrome.runtime.lastError);
+				} else {
+					resolve();
+				}
+			});
 		});
 	}
 
 	function get(key, defaultValue) {
-		return new Promise(function(resolve) {
+		return new Promise(function(resolve, reject) {
 			chrome.storage.local.get(key, function(items) {
-				if (typeof items[key] === 'undefined') {
+				if (chrome.runtime.lastError) {
+					reject(chrome.runtime.lastError);
+				} else if (items[key] === undefined) {
 					resolve(defaultValue);
 				} else {
 					resolve(items[key]);
