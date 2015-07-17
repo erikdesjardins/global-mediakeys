@@ -8,6 +8,7 @@
 	"loopfunc": true,
 	"browser": true,
 	"devel": true,
+	"esnext": true,
 	"globals": {
 		"chrome": false,
 		"Const": false,
