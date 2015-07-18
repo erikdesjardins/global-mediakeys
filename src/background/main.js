@@ -12,9 +12,8 @@
 	});
 
 	Commands.addListener(Const.cmd.PLAY_PAUSE, function() {
-		TabMgr.first(function(tabId, tab) {
-			var messageName = tab.isPlaying ? Const.msg.PAUSE : Const.msg.PLAY;
-			Messages.send(messageName, tabId)
+		TabMgr.first(function(tabId) {
+			Messages.send(Const.msg.PLAY_PAUSE, tabId)
 				.catch(TabMgr.remove);
 		});
 	});
@@ -36,7 +35,7 @@
 	Commands.addListener(Const.cmd.STOP, function() {
 		TabMgr.each(function(tabId, tab) {
 			if (tab.isPlaying) {
-				Messages.send(Const.msg.PAUSE, tabId)
+				Messages.send(Const.msg.PLAY_PAUSE, tabId)
 					.catch(TabMgr.remove);
 			}
 		});

@@ -44,7 +44,7 @@
 			this.buttons
 		);
 
-		Messages.addListener([Const.msg.PLAY, Const.msg.PAUSE], function() {
+		Messages.addListener(Const.msg.PLAY_PAUSE, function() {
 			Util.dom.click(this.buttons.play);
 		}.bind(this));
 

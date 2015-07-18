@@ -2,11 +2,9 @@
 	exports.msg = {
 		REGISTER: 'tab-register',
 		UNREGISTER: 'tab-unregister',
-
 		PLAY_STATE: 'tab-playstate',
 
-		PLAY: 'tab-play',
-		PAUSE: 'tab-pause',
+		PLAY_PAUSE: 'tab-play-pause',
 		NEXT: 'tab-next',
 		PREV: 'tab-prev',
 
