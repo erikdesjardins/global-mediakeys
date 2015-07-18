@@ -26,9 +26,9 @@
 			}
 		}
 
-		this.buttons = this._buttons();
+		var buttons = this._buttons();
 
-		if (!this.buttons.play) {
+		if (!buttons.play) {
 			console.warn('No play button found.');
 			return;
 		}
@@ -41,20 +41,20 @@
 
 		this._playState(
 			Messages.send.bind(Messages, Const.msg.PLAY_STATE),
-			this.buttons
+			buttons
 		);
 
 		Messages.addListener(Const.msg.PLAY_PAUSE, function() {
-			Util.dom.click(this.buttons.play);
-		}.bind(this));
+			Util.dom.click(buttons.play);
+		});
 
 		Messages.addListener(Const.msg.NEXT, function() {
-			Util.dom.click(this.buttons.next);
-		}.bind(this));
+			Util.dom.click(buttons.next);
+		});
 
 		Messages.addListener(Const.msg.PREV, function() {
-			Util.dom.click(this.buttons.prev);
-		}.bind(this));
+			Util.dom.click(buttons.prev);
+		});
 
 		window.addEventListener('unload', function() {
 			Messages.send(Const.msg.UNREGISTER);
