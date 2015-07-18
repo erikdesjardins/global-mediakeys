@@ -20,5 +20,19 @@
 
 			callback(isPlaying(buttons.play));
 		})
-		.go();
+		.go(function(callback) {
+			var observer = Util.dom.observe(
+				document.getElementById('app'),
+				{ childList: true },
+				function(mutation) {
+					Array.from(mutation.addedNodes).some(function(node) {
+						if (node.nodeName === 'DIV' && node.classList.contains('playControls')) {
+							callback();
+							return true;
+						}
+					});
+				}
+			);
+			return observer.disconnect.bind(observer);
+		});
 })();
