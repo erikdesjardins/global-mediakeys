@@ -35,6 +35,8 @@
 	Commands.addListener(Const.cmd.STOP, function() {
 		TabMgr.each(function(tabId, tab) {
 			if (tab.isPlaying) {
+				// Avoid promoting the tab when its state changes
+				tab.isPlaying = false;
 				Messages.send(Const.msg.PLAY_PAUSE, tabId)
 					.catch(TabMgr.remove);
 			}
