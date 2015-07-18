@@ -8,7 +8,7 @@
 	});
 
 	Messages.addListener(Const.msg.PLAY_STATE, function(data, tabId) {
-		TabMgr.updatePlayState(tabId, data);
+		TabMgr.update(tabId, 'isPlaying', data);
 	});
 
 	Commands.addListener(Const.cmd.PLAY_PAUSE, function() {

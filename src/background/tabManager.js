@@ -25,7 +25,7 @@
 	}
 
 	function _add(tabs, tabId, data) {
-		tabs.unshift(Util.obj.extend({}, data, { id: tabId }));
+		tabs.unshift({ id: tabId, data: data });
 	}
 
 	function _remove(tabs, tabId) {
@@ -54,7 +54,7 @@
 	function remove(tabId) {
 		return isReady.then(function(tabs) {
 			if (!_exists(tabs, tabId)) {
-				console.error('Cannot unregister tab:', tabId, 'because it is not registered.');
+				console.error('Cannot unregister non-extant tab:', tabId);
 			} else {
 				_remove(tabs, tabId);
 				console.info('Unregistered tab:', tabId);
@@ -62,18 +62,16 @@
 		});
 	}
 
-	function updatePlayState(tabId, state) {
+	function update(tabId, key, value) {
 		return isReady.then(function(tabs) {
-			if (typeof state !== 'boolean') {
-				console.error('Cannot set play state to non-boolean value:', state);
-			} else if (!_exists(tabs, tabId)) {
-				console.error('Cannot update play state of unregistered tab:', tabId);
+			if (!_exists(tabs, tabId)) {
+				console.error('Cannot update unregistered tab:', tabId);
 			} else {
 				var tab = _get(tabs, tabId);
-				if (tab.isPlaying !== state) {
-					tab.isPlaying = state;
+				if (tab.data[key] !== value) {
+					tab.data[key] = value;
 					_promote(tabs, tabId);
-					console.log('Updated play state of tab:', tabId, 'to:', state);
+					console.log('Updated tab:', tabId, 'with:', key, '=', value);
 				}
 			}
 		});
@@ -84,7 +82,7 @@
 			if (!tabs[0]) {
 				console.warn('There are no registered tabs.');
 			} else {
-				return callback(tabs[0].id, tabs[0]);
+				return callback(tabs[0].id, tabs[0].data);
 			}
 		});
 	}
@@ -92,14 +90,14 @@
 	function each(callback) {
 		return isReady.then(function(tabs) {
 			tabs.forEach(function(tab) {
-				callback(tab.id, tab);
+				callback(tab.id, tab.data);
 			});
 		});
 	}
 
 	exports.add = add;
 	exports.remove = remove;
-	exports.updatePlayState = updatePlayState;
+	exports.update = update;
 	exports.first = first;
 	exports.each = each;
 })(/* jshint -W020 */ TabMgr = {});
