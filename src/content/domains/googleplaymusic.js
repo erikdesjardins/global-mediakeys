@@ -17,7 +17,8 @@
 				{ attributes: true, attributeFilter: ['class'] },
 				function() { callback(isPlaying(buttons.play)); }
 			);
-			return isPlaying(buttons.play);
+
+			callback(isPlaying(buttons.play));
 		})
 		.go(function(callback) {
 			window.addEventListener('load', callback);

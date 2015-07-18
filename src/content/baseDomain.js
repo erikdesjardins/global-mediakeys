@@ -37,14 +37,12 @@
 			this._cleanup();
 		}
 
-		var currentPlayState = this._playState(
+		Messages.send(Const.msg.REGISTER);
+
+		this._playState(
 			Messages.send.bind(Messages, Const.msg.PLAY_STATE),
 			this.buttons
 		);
-
-		Messages.send(Const.msg.REGISTER, {
-			isPlaying: currentPlayState
-		});
 
 		Messages.addListener([Const.msg.PLAY, Const.msg.PAUSE], function() {
 			Util.dom.click(this.buttons.play);

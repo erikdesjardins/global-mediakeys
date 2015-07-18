@@ -36,18 +36,14 @@
 		tabs.unshift(_remove(tabs, tabId));
 	}
 
-	function add(tabId, data) {
+	function add(tabId) {
 		return isReady.then(function(tabs) {
-			if (typeof data !== 'object') {
-				console.error('Cannot register tab without data. Arguments:', arguments);
-			} else {
-				if (_exists(tabs, tabId)) {
-					_remove(tabs, tabId);
-					console.warn('Tab:', tabId, 'was not unregistered, will be overwritten.');
-				}
-				_add(tabs, tabId, data);
-				console.info('Registered tab:', tabId, 'with data:', data);
+			if (_exists(tabs, tabId)) {
+				_remove(tabs, tabId);
+				console.warn('Tab:', tabId, 'was not unregistered, will be overwritten.');
 			}
+			_add(tabs, tabId, {});
+			console.info('Registered tab:', tabId);
 		});
 	}
 
