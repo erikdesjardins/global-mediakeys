@@ -43,7 +43,6 @@
 		);
 
 		Messages.send(Const.msg.REGISTER, {
-			canSkip: !!(this.buttons.next || this.buttons.prev),
 			isPlaying: currentPlayState
 		});
 
