@@ -14,12 +14,7 @@
 			.then(update);
 	});
 
-	document.getElementById('play').addEventListener('click', function() {
-		Messages.send(Const.msg.PLAY_PAUSE)
-			.then(update);
-	});
-
-	document.getElementById('pause').addEventListener('click', function() {
+	document.getElementById('play-pause').addEventListener('click', function() {
 		Messages.send(Const.msg.PLAY_PAUSE)
 			.then(update);
 	});

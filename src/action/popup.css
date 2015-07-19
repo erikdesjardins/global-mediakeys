@@ -51,41 +51,40 @@ body:hover {
 
 .button {
 	cursor: pointer;
-	color: #fff;
 	background-color: #2db69a;
-	text-shadow: #fff 0 0 5px;
 	border-radius: 50%;
 	height: 50px;
 	width: 50px;
-	line-height: 42px;
-	font-size: 30px;
-	text-align: center;
 	transition: transform 0.1s;
 }
 .button:hover:not(:active) {
 	transform: scale(1.1);
 }
-#next, #prev {
+
+.button::after {
+	display: block;
+	color: #fff;
+	text-shadow: #fff 0 0 5px;
+	line-height: 42px;
+	font-size: 30px;
+	text-align: center;
+}
+#next::after, #prev::after {
+	content:'\25B6\25B6';
 	letter-spacing: -15px;
 	padding-right: 10px;
 }
-#prev {
+#prev::after {
 	transform: scaleX(-1);
 }
-#prev:hover:not(:active) {
-	transform: scale(-1.1, 1.1);
-}
-#play {
+#play-pause::after {
+	content:'\25B6';
 	padding-left: 5px;
 }
-#pause {
+body.playing #play-pause::after {
+	content:'\275A\275A';
 	letter-spacing: 5px;
 	padding-left: 5px;
 	font-size: 25px;
 	line-height: 47px;
-}
-
-body:not(.playing) #pause,
-body.playing #play {
-	display: none;
 }
