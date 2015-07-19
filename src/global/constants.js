@@ -13,6 +13,11 @@
 		ECHO: 'echo'
 	};
 
+	exports.status = {
+		// unique object (for reference equality)
+		NO_RESPONSE: {}
+	};
+
 	exports.cmd = {
 		PLAY_PAUSE: 'media-play-pause',
 		NEXT: 'media-next',

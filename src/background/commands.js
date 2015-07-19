@@ -1,3 +1,4 @@
+/* global chrome */
 (function(exports) {
 	var listeners = {};
 

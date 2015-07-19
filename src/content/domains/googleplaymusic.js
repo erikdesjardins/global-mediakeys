@@ -1,37 +1,43 @@
 (function() {
 	new Domain()
-		.setupButtons(function() {
-			return {
-				play: document.querySelector('sj-icon-button[data-id="play-pause"]'),
-				next: document.querySelector('sj-icon-button[data-id="forward"]'),
-				prev: document.querySelector('sj-icon-button[data-id="rewind"]')
-			};
-		})
+		.setupButtons(() => ({
+			play: document.querySelector('sj-icon-button[data-id="play-pause"]'),
+			next: document.querySelector('sj-icon-button[data-id="forward"]'),
+			prev: document.querySelector('sj-icon-button[data-id="rewind"]')
+		}))
 		.setupPlayState(function(callback, buttons) {
-			function isPlaying(playButton) {
-				return playButton.classList.contains('playing');
+			function sendUpdate() {
+				callback(buttons.play.classList.contains('playing'));
 			}
 
-			Util.dom.observe(
+			Util.observe(
 				buttons.play,
 				{ attributes: true, attributeFilter: ['class'] },
-				function() { callback(isPlaying(buttons.play)); }
+				sendUpdate
 			);
 
-			callback(isPlaying(buttons.play));
+			sendUpdate();
 		})
-		.setupInfo(function() {
-			var imageElem = document.getElementById('playingAlbumArt');
-			var titleElem = document.getElementById('player-song-title');
-			var subtitleElem = document.querySelector('.player-artist-album-wrapper');
-			return {
-				image: imageElem.src.replace('=s90', '=s250'),
-				title: titleElem.textContent,
-				subtitle: subtitleElem.textContent
-			};
+		.setupInfo(function(callback) {
+			var watchElem = document.getElementById('playerSongInfo');
+
+			function sendUpdate() {
+				var imageElem = watchElem.querySelector('#playingAlbumArt');
+				var titleElem = watchElem.querySelector('#player-song-title');
+				var subtitleElem = watchElem.querySelector('.player-artist-album-wrapper');
+
+				callback({
+					image: imageElem.src.replace('=s90', '=s250'),
+					title: titleElem.textContent,
+					subtitle: subtitleElem.textContent
+				});
+			}
+
+			Util.observe(
+				watchElem,
+				{ childList: true },
+				sendUpdate
+			);
 		})
-		.go(function(callback) {
-			window.addEventListener('load', callback);
-			return window.removeEventListener.bind(window, 'load', callback);
-		});
+		.go(Util.waitForEvent(window, 'load'));
 })();

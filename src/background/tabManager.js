@@ -2,9 +2,7 @@
 	var isReady = Storage.getWithAutosave(Const.storage.TABS, []);
 
 	function _findIndex(tabs, tabId) {
-		return tabs.findIndex(function(tab) {
-			return tab.id === tabId;
-		});
+		return tabs.findIndex(tab => tab.id === tabId);
 	}
 
 	function _validIndex(tabs, tabId) {
@@ -36,65 +34,54 @@
 		tabs.unshift(_remove(tabs, tabId));
 	}
 
-	function add(tabId) {
-		return isReady.then(function(tabs) {
-			if (_exists(tabs, tabId)) {
-				_remove(tabs, tabId);
-				console.warn('Tab:', tabId, 'was not unregistered, will be overwritten.');
+	async function add(tabId) {
+		var tabs = await isReady;
+		if (_exists(tabs, tabId)) {
+			_remove(tabs, tabId);
+			console.warn('Tab:', tabId, 'was not unregistered, will be overwritten.');
+		}
+		_add(tabs, tabId, {});
+		console.info('Registered tab:', tabId);
+	}
+
+	async function remove(tabId) {
+		var tabs = await isReady;
+		if (!_exists(tabs, tabId)) {
+			throw new Error('Cannot unregister non-extant tab: ' + tabId);
+		} else {
+			_remove(tabs, tabId);
+			console.info('Unregistered tab:', tabId);
+		}
+	}
+
+	async function update(tabId, key, value) {
+		var tabs = await isReady;
+		if (!_exists(tabs, tabId)) {
+			throw new Error('Cannot update unregistered tab: ' + tabId);
+		} else {
+			var tab = _get(tabs, tabId);
+			if (tab.data[key] !== value) {
+				tab.data[key] = value;
+				_promote(tabs, tabId);
+				console.log('Updated tab:', tabId, 'with:', key, '=', value);
 			}
-			_add(tabs, tabId, {});
-			console.info('Registered tab:', tabId);
-		});
+		}
 	}
 
-	function remove(tabId) {
-		return isReady.then(function(tabs) {
-			if (!_exists(tabs, tabId)) {
-				console.error('Cannot unregister non-extant tab:', tabId);
-			} else {
-				_remove(tabs, tabId);
-				console.info('Unregistered tab:', tabId);
-			}
-		});
+	async function first() {
+		var tabs = await isReady;
+		if (!tabs[0]) {
+			throw new Error('There are no registered tabs.');
+		} else {
+			return { tabId: tabs[0].id, tab: tabs[0].data };
+		}
 	}
 
-	function update(tabId, key, value) {
-		return isReady.then(function(tabs) {
-			if (!_exists(tabs, tabId)) {
-				console.error('Cannot update unregistered tab:', tabId);
-			} else {
-				var tab = _get(tabs, tabId);
-				if (tab.data[key] !== value) {
-					tab.data[key] = value;
-					_promote(tabs, tabId);
-					console.log('Updated tab:', tabId, 'with:', key, '=', value);
-				}
-			}
-		});
-	}
-
-	function first(callback) {
-		return new Promise(function(resolve, reject) {
-			isReady.then(function(tabs) {
-				if (!tabs[0]) {
-					console.warn('There are no registered tabs.');
-					reject();
-				} else {
-					callback(tabs[0].id, tabs[0].data)
-						.then(resolve, reject);
-				}
-			});
-		});
-	}
-
-	function each(callback) {
-		return new Promise(function(resolve, reject) {
-			isReady.then(function(tabs) {
-				Promise.all(tabs.map(function(tab) {
-					return callback(tab.id, tab.data);
-				})).then(resolve, reject);
-			});
-		});
+	async function each(callback) {
+		var tabs = await isReady;
+		await Promise.all(tabs.map(function(tab) {
+			return callback(tab.id, tab.data);
+		}));
 	}
 
 	exports.add = add;

@@ -1,3 +1,4 @@
+/* global chrome */
 (function(exports) {
 	var listeners = {};
 
@@ -20,11 +21,11 @@
 		} else {
 			var response = listeners[messageType](data);
 
-			if (Util.obj.isPromise(response)) {
+			if (Util.isPromise(response)) {
 				response.then(data => sendResponse({ data }), e => sendResponse());
 				return true;
-			} else {
-				sendResponse(response);
+			} else if (response !== Const.status.NO_RESPONSE) {
+				sendResponse({ data: response });
 			}
 		}
 	});
@@ -35,20 +36,14 @@
 			data: data
 		};
 		return new Promise(function(resolve, reject) {
-			chrome.runtime.sendMessage(message, function(response) {
-				if (response) {
-					resolve(response.data);
-				} else {
-					reject();
-				}
-			});
+			chrome.runtime.sendMessage(message, response =>
+					response ? resolve(response.data) : reject('Received empty response.')
+			);
 		});
 	}
 
 	exports.addListener = addListener;
 	exports.send = sendMessage;
 
-	addListener(Const.msg.ECHO, function(data) {
-		return data;
-	});
+	addListener(Const.msg.ECHO, data => data);
 })(window.Messages = {});

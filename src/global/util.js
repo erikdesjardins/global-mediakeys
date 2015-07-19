@@ -1,6 +1,6 @@
 (function(exports) {
-	function extend(target /*[, ...objectN]*/) {
-		Array.prototype.slice.call(arguments, 1).forEach(function(extendObj) {
+	function extend(target, ...objects) {
+		objects.forEach(function(extendObj) {
 			for (var prop in extendObj) {
 				if (extendObj.hasOwnProperty(prop)) {
 					target[prop] = extendObj[prop];
@@ -18,15 +18,19 @@
 		return val && (typeof val === 'object' || typeof val === 'function') && typeof val.then === 'function';
 	}
 
-	exports.obj = {
-		extend,
-		isRefType,
-		isPromise
-	};
+	function debounce(callback, delay) {
+		var timeout;
+		function exec(...args) {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => callback(...args), delay);
+		}
+		exec.cancel = () => clearTimeout(timeout);
+		return exec;
+	}
 
 	function click(ele) {
 		if (!ele) {
-			console.warn('Util.click: ele is undefined');
+			console.warn('Util.click: ele is undefined.');
 		} else if (!ele.dispatchEvent) {
 			console.error('Cannot dispatch event on element:', ele);
 		} else {
@@ -39,15 +43,47 @@
 	}
 
 	function observe(ele, options, callback) {
-		var observer = new MutationObserver(function(mutations) {
-			mutations.forEach(callback);
-		});
+		if (!ele) {
+			throw new TypeError('ele is undefined.');
+		}
+		var observer = new MutationObserver(mutations => mutations.forEach(callback));
 		observer.observe(ele, options);
 		return observer;
 	}
 
-	exports.dom = {
-		click,
-		observe
-	};
+	function waitForMutation(ele, options, callback) {
+		return new Promise(function(resolve) {
+			var observer = observe(ele, options, mutation => {
+				if (!callback || callback(mutation)) {
+					observer.disconnect();
+					resolve();
+				}
+			});
+		});
+	}
+
+	function waitForChild(ele, callback) {
+		return waitForMutation(ele, { childList: true }, mutation =>
+			Array.from(mutation.addedNodes).some(node => !callback || callback(node))
+		);
+	}
+
+	function waitForEvent(ele, event) {
+		return new Promise(function(resolve) {
+			ele.addEventListener(event, function fire() {
+				ele.removeEventListener(event, fire);
+				resolve();
+			});
+		})
+	}
+
+	exports.extend = extend;
+	exports.isRefType = isRefType;
+	exports.isPromise = isPromise;
+	exports.debounce = debounce;
+	exports.click = click;
+	exports.observe = observe;
+	exports.waitForMutation = waitForMutation;
+	exports.waitForChild = waitForChild;
+	exports.waitForEvent = waitForEvent;
 })(window.Util = {});

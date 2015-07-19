@@ -1,28 +1,46 @@
 (function() {
-	function update() {
-		Messages.send(Const.msg.INFO)
-			.then(function(info) {
-				document.body.style.backgroundImage = 'url(' + info.image + ')';
-				document.getElementById('title').textContent = info.title;
-				document.getElementById('subtitle').textContent = info.subtitle;
-				document.body.classList.toggle('playing', info.isPlaying);
-			});
+	function updateInfo(info) {
+		document.body.style.backgroundImage = 'url(' + info.image + ')';
+		document.getElementById('title').textContent = info.title;
+		document.getElementById('subtitle').textContent = info.subtitle;
 	}
 
-	document.getElementById('prev').addEventListener('click', function() {
-		Messages.send(Const.msg.PREV)
-			.then(update);
+	function updatePlayState(state) {
+		document.body.classList.toggle('playing', state);
+	}
+
+	function fetchInfo() {
+		Messages.send(Const.msg.INFO)
+			.then(updateInfo);
+	}
+
+	function fetchPlayState() {
+		Messages.send(Const.msg.PLAY_STATE)
+			.then(updatePlayState);
+	}
+
+	document.getElementById('prev')
+		.addEventListener('click', () => Messages.send(Const.msg.PREV));
+
+	document.getElementById('play-pause')
+		.addEventListener('click', () => Messages.send(Const.msg.PLAY_PAUSE));
+
+	document.getElementById('next')
+		.addEventListener('click', () => Messages.send(Const.msg.NEXT));
+
+	// Not responding since the background page handles these
+	Messages.addListener(Const.msg.INFO, (info) => {
+		updateInfo(info);
+		return Const.status.NO_RESPONSE;
 	});
 
-	document.getElementById('play-pause').addEventListener('click', function() {
-		Messages.send(Const.msg.PLAY_PAUSE)
-			.then(update);
+	Messages.addListener(Const.msg.PLAY_STATE, () => {
+		// Not using the state from this message as it may be a background tab
+		// e.g. if we pressed stop
+		fetchPlayState();
+		return Const.status.NO_RESPONSE;
 	});
 
-	document.getElementById('next').addEventListener('click', function() {
-		Messages.send(Const.msg.NEXT)
-			.then(update);
-	});
-
-	update();
+	fetchInfo();
+	fetchPlayState();
 })();

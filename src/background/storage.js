@@ -1,15 +1,12 @@
+/* global chrome */
 (function(exports) {
 	function set(key, value) {
 		var obj = {};
 		obj[key] = value;
 		return new Promise(function(resolve, reject) {
-			chrome.storage.local.set(obj, function() {
-				if (chrome.runtime.lastError) {
-					reject(chrome.runtime.lastError);
-				} else {
-					resolve();
-				}
-			});
+			chrome.storage.local.set(obj, () =>
+					chrome.runtime.lastError ? reject(chrome.runtime.lastError) : resolve()
+			);
 		});
 	}
 
@@ -28,21 +25,18 @@
 	}
 
 	var hasListener = {};
-	function getAndSetOnSuspend(key, defaultValue) {
-		return get(key, defaultValue)
-			.then(function(val) {
-				if (!Util.obj.isRefType(val)) {
-					console.warn('Key:', key, 'value:', val, 'is not a reference type - changes will not be saved.');
-				} else if (hasListener[key]) {
-					console.error('Key:', key, 'has been previously fetched with autosave.');
-				} else {
-					chrome.runtime.onSuspend.addListener(function() {
-						set(key, val);
-					});
-					hasListener[key] = true;
-				}
-				return val;
-			});
+
+	async function getAndSetOnSuspend(key, defaultValue) {
+		var val = await get(key, defaultValue);
+		if (!Util.isRefType(val)) {
+			console.warn('Key:', key, 'value:', val, 'is not a reference type - changes will not be saved.');
+		} else if (hasListener[key]) {
+			console.error('Key:', key, 'has been previously fetched with autosave.');
+		} else {
+			chrome.runtime.onSuspend.addListener(() => set(key, val));
+			hasListener[key] = true;
+		}
+		return val;
 	}
 
 	exports.set = set;

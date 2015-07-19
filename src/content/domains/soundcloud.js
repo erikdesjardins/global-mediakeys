@@ -1,50 +1,47 @@
 (function() {
 	new Domain()
-		.setupButtons(function() {
-			return {
-				play: document.querySelector('.playControls .playControl'),
-				next: document.querySelector('.playControls .skipControl__next'),
-				prev: document.querySelector('.playControls .skipControl__previous')
-			};
-		})
+		.setupButtons(() => ({
+			play: document.querySelector('.playControls .playControl'),
+			next: document.querySelector('.playControls .skipControl__next'),
+			prev: document.querySelector('.playControls .skipControl__previous')
+		}))
 		.setupPlayState(function(callback, buttons) {
-			function isPlaying(playButton) {
-				return playButton.classList.contains('playing');
+			function sendUpdate() {
+				callback(buttons.play.classList.contains('playing'));
 			}
 
-			Util.dom.observe(
+			Util.observe(
 				buttons.play,
 				{ attributes: true, attributeFilter: ['class'] },
-				function() { callback(isPlaying(buttons.play)); }
+				sendUpdate
 			);
 
-			callback(isPlaying(buttons.play));
+			sendUpdate();
 		})
-		.setupInfo(function() {
-			var imageElem = document.querySelector('.playbackSoundBadge .image .sc-artwork');
-			var titleElem = document.querySelector('.playbackSoundBadge__title span:last-of-type');
-			var subtitleElem = document.querySelector('.playbackSoundBadge__context');
-			return {
-				image: imageElem.style.backgroundImage
-					.replace('50x50', '250x250')
-					.replace(/^url\((.*)\)$/, '$1'),
-				title: titleElem.textContent,
-				subtitle: subtitleElem.textContent
-			};
-		})
-		.go(function(callback) {
-			var observer = Util.dom.observe(
-				document.getElementById('app'),
+		.setupInfo(function(callback) {
+			var watchElem = document.querySelector('.playbackSoundBadge');
+
+			function sendUpdate() {
+				var imageElem = watchElem.querySelector('.image .sc-artwork');
+				var titleElem = watchElem.querySelector('.playbackSoundBadge__title span:last-of-type');
+				var subtitleElem = watchElem.querySelector('.playbackSoundBadge__context');
+
+				callback({
+					image: imageElem.style.backgroundImage
+						.replace('50x50', '250x250')
+						.replace(/^url\((.*)\)$/, '$1'),
+					title: titleElem.textContent,
+					subtitle: subtitleElem.textContent
+				});
+			}
+
+			Util.observe(
+				watchElem,
 				{ childList: true },
-				function(mutation) {
-					Array.from(mutation.addedNodes).some(function(node) {
-						if (node.nodeName === 'DIV' && node.classList.contains('playControls')) {
-							callback();
-							return true;
-						}
-					});
-				}
+				sendUpdate
 			);
-			return observer.disconnect.bind(observer);
-		});
+		})
+		.go(Util.waitForChild(document.getElementById('app'), node =>
+			node.nodeName === 'DIV' && node.classList.contains('playControls')
+		));
 })();
