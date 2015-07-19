@@ -16,15 +16,14 @@
 		var data = request.data;
 		var tabId = sender.tab && sender.tab.id;
 
-		if (!tabId) {
-			console.error('Received message without tabId:', request, sender);
-		} else if (!(messageType in listeners)) {
+		if (!(messageType in listeners)) {
 			console.error('Unrecognised message type:', request, sender);
 		} else {
-			var response = {
-				data: listeners[messageType](data, tabId)
-			};
-			sendResponse(response);
+			listeners[messageType](data, tabId)
+				.then(function(response) {
+					sendResponse({ data: response });
+				}, sendResponse);
+			return true;
 		}
 	});
 

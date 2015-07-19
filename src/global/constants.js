@@ -4,6 +4,8 @@
 		UNREGISTER: 'tab-unregister',
 		PLAY_STATE: 'tab-playstate',
 
+		INFO: 'tab-info',
+
 		PLAY_PAUSE: 'tab-play-pause',
 		NEXT: 'tab-next',
 		PREV: 'tab-prev',

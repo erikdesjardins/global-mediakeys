@@ -20,6 +20,16 @@
 
 			callback(isPlaying(buttons.play));
 		})
+		.setupInfo(function() {
+			var imageElem = document.querySelector('#watch-header .video-thumb img');
+			var titleElem = document.getElementById('watch-headline-title');
+			var subtitleElem = document.querySelector('#watch-header .yt-user-info');
+			return {
+				image: imageElem.src.replace('/s88', '/s250'),
+				title: titleElem.textContent,
+				subtitle: subtitleElem.textContent
+			};
+		})
 		.go(function(callback) {
 			var observer = Util.dom.observe(
 				document.getElementById('player-api'),

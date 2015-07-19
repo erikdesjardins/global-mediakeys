@@ -20,6 +20,16 @@
 
 			callback(isPlaying(buttons.play));
 		})
+		.setupInfo(function() {
+			var imageElem = document.getElementById('playingAlbumArt');
+			var titleElem = document.getElementById('player-song-title');
+			var subtitleElem = document.querySelector('.player-artist-album-wrapper');
+			return {
+				image: imageElem.src.replace('=s90', '=s250'),
+				title: titleElem.textContent,
+				subtitle: subtitleElem.textContent
+			};
+		})
 		.go(function(callback) {
 			window.addEventListener('load', callback);
 			return window.removeEventListener.bind(window, 'load', callback);

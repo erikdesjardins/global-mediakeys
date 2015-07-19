@@ -74,19 +74,25 @@
 	}
 
 	function first(callback) {
-		return isReady.then(function(tabs) {
-			if (!tabs[0]) {
-				console.warn('There are no registered tabs.');
-			} else {
-				return callback(tabs[0].id, tabs[0].data);
-			}
+		return new Promise(function(resolve, reject) {
+			isReady.then(function(tabs) {
+				if (!tabs[0]) {
+					console.warn('There are no registered tabs.');
+					reject();
+				} else {
+					callback(tabs[0].id, tabs[0].data)
+						.then(resolve, reject);
+				}
+			});
 		});
 	}
 
 	function each(callback) {
-		return isReady.then(function(tabs) {
-			tabs.forEach(function(tab) {
-				callback(tab.id, tab.data);
+		return new Promise(function(resolve, reject) {
+			isReady.then(function(tabs) {
+				Promise.all(tabs.map(function(tab) {
+					return callback(tab.id, tab.data);
+				})).then(resolve, reject);
 			});
 		});
 	}

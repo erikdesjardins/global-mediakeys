@@ -17,6 +17,15 @@
 		return this;
 	};
 
+	exports.prototype.setupInfo = function(func) {
+		if (this._getInfo) {
+			console.error('setupInfo() has already been called.');
+		} else {
+			this._getInfo = func;
+		}
+		return this;
+	};
+
 	exports.prototype.go = function(setup) {
 		if (setup) {
 			if (this._cleanup) {
@@ -46,15 +55,22 @@
 
 		Messages.addListener(Const.msg.PLAY_PAUSE, function() {
 			Util.dom.click(buttons.play);
+			return Promise.resolve();
 		});
 
 		Messages.addListener(Const.msg.NEXT, function() {
 			Util.dom.click(buttons.next);
+			return Promise.resolve();
 		});
 
 		Messages.addListener(Const.msg.PREV, function() {
 			Util.dom.click(buttons.prev);
+			return Promise.resolve();
 		});
+
+		Messages.addListener(Const.msg.INFO, function() {
+			return Promise.resolve(this._getInfo());
+		}.bind(this));
 
 		window.addEventListener('unload', function() {
 			Messages.send(Const.msg.UNREGISTER);

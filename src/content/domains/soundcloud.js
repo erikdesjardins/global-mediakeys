@@ -20,6 +20,18 @@
 
 			callback(isPlaying(buttons.play));
 		})
+		.setupInfo(function() {
+			var imageElem = document.querySelector('.playbackSoundBadge .image .sc-artwork');
+			var titleElem = document.querySelector('.playbackSoundBadge__title span:last-of-type');
+			var subtitleElem = document.querySelector('.playbackSoundBadge__context');
+			return {
+				image: imageElem.style.backgroundImage
+					.replace('50x50', '250x250')
+					.replace(/^url\((.*)\)$/, '$1'),
+				title: titleElem.textContent,
+				subtitle: subtitleElem.textContent
+			};
+		})
 		.go(function(callback) {
 			var observer = Util.dom.observe(
 				document.getElementById('app'),

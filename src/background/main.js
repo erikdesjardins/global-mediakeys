@@ -1,45 +1,64 @@
 (function() {'use strict';
 	Messages.addListener(Const.msg.REGISTER, function(data, tabId) {
-		TabMgr.add(tabId);
+		return TabMgr.add(tabId);
 	});
 
 	Messages.addListener(Const.msg.UNREGISTER, function(data, tabId) {
-		TabMgr.remove(tabId);
+		return TabMgr.remove(tabId);
 	});
 
 	Messages.addListener(Const.msg.PLAY_STATE, function(data, tabId) {
-		TabMgr.update(tabId, 'isPlaying', data);
+		return TabMgr.update(tabId, 'isPlaying', data);
 	});
 
-	Commands.addListener(Const.cmd.PLAY_PAUSE, function() {
-		TabMgr.first(function(tabId) {
-			Messages.send(Const.msg.PLAY_PAUSE, tabId)
+	function playPause() {
+		return TabMgr.first(function(tabId) {
+			return Messages.send(Const.msg.PLAY_PAUSE, tabId)
 				.catch(TabMgr.remove);
 		});
-	});
+	}
+	Commands.addListener(Const.cmd.PLAY_PAUSE, playPause);
+	Messages.addListener(Const.msg.PLAY_PAUSE, playPause);
 
-	Commands.addListener(Const.cmd.NEXT, function() {
-		TabMgr.first(function(tabId) {
-			Messages.send(Const.msg.NEXT, tabId)
+	function next() {
+		return TabMgr.first(function(tabId) {
+			return Messages.send(Const.msg.NEXT, tabId)
 				.catch(TabMgr.remove);
 		});
-	});
+	}
+	Commands.addListener(Const.cmd.NEXT, next);
+	Messages.addListener(Const.msg.NEXT, next);
 
-	Commands.addListener(Const.cmd.PREV, function() {
-		TabMgr.first(function(tabId) {
-			Messages.send(Const.msg.PREV, tabId)
+	function prev() {
+		return TabMgr.first(function(tabId) {
+			return Messages.send(Const.msg.PREV, tabId)
 				.catch(TabMgr.remove);
 		});
-	});
+	}
+	Commands.addListener(Const.cmd.PREV, prev);
+	Messages.addListener(Const.msg.PREV, prev);
 
-	Commands.addListener(Const.cmd.STOP, function() {
-		TabMgr.each(function(tabId, tab) {
+	function stop() {
+		return TabMgr.each(function(tabId, tab) {
 			if (tab.isPlaying) {
 				// Avoid promoting the tab when its state changes
 				tab.isPlaying = false;
-				Messages.send(Const.msg.PLAY_PAUSE, tabId)
+				return Messages.send(Const.msg.PLAY_PAUSE, tabId)
 					.catch(TabMgr.remove);
+			} else {
+				return Promise.resolve();
 			}
+		});
+	}
+	Commands.addListener(Const.cmd.STOP, stop);
+
+	Messages.addListener(Const.msg.INFO, function() {
+		return TabMgr.first(function(tabId, tab) {
+			return Messages.send(Const.msg.INFO, tabId)
+				.then(function(info) {
+					info.isPlaying = tab.isPlaying;
+					return info;
+				});
 		});
 	});
 

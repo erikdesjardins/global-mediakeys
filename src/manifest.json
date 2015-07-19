@@ -55,6 +55,13 @@
 			"js": ["content/domains/youtube.js"]
 		}
 	],
+	"browser_action": {
+		"default_icon": {
+			"19": "images/icon19.png",
+			"38": "images/icon38.png"
+		},
+		"default_popup": "action/popup.html"
+	},
 	"commands": {
 		"media-play-pause": {
 			"suggested_key": {

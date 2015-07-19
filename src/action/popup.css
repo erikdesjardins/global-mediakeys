@@ -1,0 +1,91 @@
+html {
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+body {
+	margin: 0;
+	width: 250px;
+	height: 250px;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	background: #333 no-repeat;
+	opacity: 0.5;
+	transition: opacity 0.2s;
+}
+body:hover {
+	opacity: 1;
+}
+
+.header {
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	background-color: #2db69a;
+	text-shadow: #333 0 0 1px;
+	padding: 0 5px;
+}
+
+#title {
+	font-size: 15px;
+}
+#subtitle {
+	font-size: 10px;
+}
+
+.spacer {
+	flex-grow: 1;
+}
+
+#buttons {
+	height: 80px;
+	width: 100%;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.button {
+	cursor: pointer;
+	color: #fff;
+	background-color: #2db69a;
+	text-shadow: #fff 0 0 5px;
+	border-radius: 50%;
+	height: 50px;
+	width: 50px;
+	line-height: 42px;
+	font-size: 30px;
+	text-align: center;
+	transition: transform 0.1s;
+}
+.button:hover:not(:active) {
+	transform: scale(1.1);
+}
+#next, #prev {
+	letter-spacing: -15px;
+	padding-right: 10px;
+}
+#prev {
+	transform: scaleX(-1);
+}
+#prev:hover:not(:active) {
+	transform: scale(-1.1, 1.1);
+}
+#play {
+	padding-left: 5px;
+}
+#pause {
+	letter-spacing: 5px;
+	padding-left: 5px;
+	font-size: 25px;
+	line-height: 47px;
+}
+
+body:not(.playing) #pause,
+body.playing #play {
+	display: none;
+}

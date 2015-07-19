@@ -18,10 +18,11 @@
 		if (!(messageType in listeners)) {
 			console.error('Unrecognised message type:', request);
 		} else {
-			var response = {
-				data: listeners[messageType](data)
-			};
-			sendResponse(response);
+			listeners[messageType](data)
+				.then(function(response) {
+					sendResponse({ data: response });
+				}, sendResponse);
+			return true;
 		}
 	});
 
