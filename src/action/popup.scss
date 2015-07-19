@@ -1,6 +1,11 @@
+$bgColor: #333;
+$textColor: #fff;
+$highlightColor: #2db69a;
+
 html {
 	box-sizing: border-box;
 }
+
 *, *:before, *:after {
 	box-sizing: inherit;
 }
@@ -12,26 +17,28 @@ body {
 	display: flex;
 	flex-direction: column;
 	flex-wrap: nowrap;
-	background: #333 no-repeat;
+	background: $bgColor no-repeat;
 	opacity: 0.5;
 	transition: opacity 0.2s;
-}
-body:hover {
-	opacity: 1;
+
+	&:hover {
+		opacity: 1;
+	}
 }
 
 .header {
 	width: 100%;
 	text-align: center;
-	color: #fff;
-	background-color: #2db69a;
-	text-shadow: #333 0 0 1px;
+	color: $textColor;
+	background-color: $highlightColor;
+	text-shadow: $bgColor 0 0 1px;
 	padding: 0 5px;
 }
 
 #title {
 	font-size: 15px;
 }
+
 #subtitle {
 	font-size: 10px;
 }
@@ -51,40 +58,43 @@ body:hover {
 
 .button {
 	cursor: pointer;
-	background-color: #2db69a;
+	background-color: $highlightColor;
 	border-radius: 50%;
 	height: 50px;
 	width: 50px;
 	transition: transform 0.1s;
-}
-.button:hover:not(:active) {
-	transform: scale(1.1);
+
+	&:hover:not(:active) {
+		transform: scale(1.1);
+	}
 }
 
 .button::after {
 	display: block;
-	color: #fff;
-	text-shadow: #fff 0 0 5px;
+	color: $textColor;
+	text-shadow: $textColor 0 0 5px;
 	line-height: 42px;
 	font-size: 30px;
 	text-align: center;
 }
-#next::after, #prev::after {
-	content:'\25B6\25B6';
+#next::after {
+	content: '\25B6\25B6';
 	letter-spacing: -15px;
 	padding-right: 10px;
 }
 #prev::after {
+	@extend #next::after;
 	transform: scaleX(-1);
 }
 #play-pause::after {
-	content:'\25B6';
+	content: '\25B6';
 	padding-left: 5px;
-}
-body.playing #play-pause::after {
-	content:'\275A\275A';
-	letter-spacing: 5px;
-	padding-left: 5px;
-	font-size: 25px;
-	line-height: 47px;
+
+	body.playing & {
+		content: '\275A\275A';
+		letter-spacing: 5px;
+		padding-left: 5px;
+		font-size: 25px;
+		line-height: 47px;
+	}
 }
