@@ -2,7 +2,6 @@
 	"quotmark": "single",
 	"undef": true,
 	"unused": "vars",
-	"strict": true,
 	"multistr": true,
 	"sub": true,
 	"loopfunc": true,

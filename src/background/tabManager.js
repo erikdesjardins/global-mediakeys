@@ -1,4 +1,4 @@
-(function(exports) {'use strict';
+(function(exports) {
 	var isReady = Storage.getWithAutosave(Const.storage.TABS, []);
 
 	function _findIndex(tabs, tabId) {
@@ -102,4 +102,4 @@
 	exports.update = update;
 	exports.first = first;
 	exports.each = each;
-})(/* jshint -W020 */ TabMgr = {});
+})(window.TabMgr = {});

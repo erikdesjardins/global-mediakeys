@@ -1,4 +1,4 @@
-(function(exports) {'use strict';
+(function(exports) {
 	var listeners = {};
 
 	function addListener(names, callback) {
@@ -21,4 +21,4 @@
 
 	exports.addListener = addListener;
 
-})(/* jshint -W020 */ Commands = {});
+})(window.Commands = {});

@@ -1,0 +1,20 @@
+{
+  "name": "Global-Media-Keys",
+  "version": "0.1.4",
+  "description": "Allows websites that play media to be controlled with global keyboard shortcuts.",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erikdesjardins/global-mediakeys.git"
+  },
+  "devDependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-babel": "^5.1.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-sass": "^2.0.4",
+    "merge-stream": "^0.1.8"
+  },
+  "license": "GPL-3.0"
+}

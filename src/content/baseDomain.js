@@ -1,4 +1,4 @@
-(function(exports) {'use strict';
+(function(exports) {
 	exports.prototype.setupButtons = function(func) {
 		if (this._buttons) {
 			console.error('setupButtons() has already been called.');
@@ -76,4 +76,4 @@
 			Messages.send(Const.msg.UNREGISTER);
 		});
 	};
-})(/* jshint -W020 */ Domain = function() {});
+})(window.Domain = function() {});

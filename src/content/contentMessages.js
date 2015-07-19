@@ -1,4 +1,4 @@
-(function(exports) {'use strict';
+(function(exports) {
 	var listeners = {};
 
 	function addListener(types, callback) {
@@ -48,4 +48,4 @@
 	addListener(Const.msg.ECHO, function(data) {
 		return data;
 	});
-})(/* jshint -W020 */ Messages = {});
+})(window.Messages = {});

@@ -1,4 +1,4 @@
-(function() {'use strict';
+(function() {
 	function update() {
 		Messages.send(Const.msg.INFO)
 			.then(function(info) {

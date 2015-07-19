@@ -16,7 +16,7 @@
 	},
 	"background": {
 		"scripts": [
-			"global/polyfill.js",
+			"vendor/browser-polyfill.min.js",
 			"global/constants.js",
 			"global/util.js",
 			"background/backgroundMessages.js",
@@ -35,7 +35,7 @@
 				"*://*.youtube.com/*"
 			],
 			"js": [
-				"global/polyfill.js",
+				"vendor/browser-polyfill.min.js",
 				"global/constants.js",
 				"global/util.js",
 				"content/contentMessages.js",

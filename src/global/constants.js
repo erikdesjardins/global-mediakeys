@@ -1,4 +1,4 @@
-(function(exports) {'use strict';
+(function(exports) {
 	exports.msg = {
 		REGISTER: 'tab-register',
 		UNREGISTER: 'tab-unregister',
@@ -23,4 +23,4 @@
 	exports.storage = {
 		TABS: 'registered-tabs'
 	};
-})(/* jshint -W020 */ Const = {});
+})(window.Const = {});

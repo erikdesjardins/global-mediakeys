@@ -1,4 +1,4 @@
-(function() {'use strict';
+(function() {
 	Messages.addListener(Const.msg.REGISTER, function(data, tabId) {
 		return TabMgr.add(tabId);
 	});

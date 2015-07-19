@@ -1,4 +1,4 @@
-(function(exports) {'use strict';
+(function(exports) {
 	function set(key, value) {
 		var obj = {};
 		obj[key] = value;
@@ -48,4 +48,4 @@
 	exports.set = set;
 	exports.get = get;
 	exports.getWithAutosave = getAndSetOnSuspend;
-})(/* jshint -W020 */ Storage = {});
+})(window.Storage = {});

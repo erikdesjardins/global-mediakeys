@@ -1,4 +1,4 @@
-(function() {'use strict';
+(function() {
 	new Domain()
 		.setupButtons(function() {
 			return {

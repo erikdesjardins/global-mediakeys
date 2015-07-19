@@ -1,4 +1,4 @@
-(function(exports) {'use strict';
+(function(exports) {
 	function extend(target /*[, ...objectN]*/) {
 		Array.prototype.slice.call(arguments, 1).forEach(function(extendObj) {
 			for (var prop in extendObj) {
@@ -45,4 +45,4 @@
 		click: click,
 		observe: observe
 	};
-})(/* jshint -W020 */ Util = {});
+})(window.Util = {});
