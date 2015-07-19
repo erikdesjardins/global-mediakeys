@@ -4,7 +4,7 @@
 	});
 
 	Messages.addListener(Const.msg.UNREGISTER, function(data, tabId) {
-		return TabMgr.remove(tabId);
+		TabMgr.remove(tabId);
 	});
 
 	Messages.addListener(Const.msg.PLAY_STATE, function(data, tabId) {

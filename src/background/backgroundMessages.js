@@ -19,11 +19,14 @@
 		if (!(messageType in listeners)) {
 			console.error('Unrecognised message type:', request, sender);
 		} else {
-			listeners[messageType](data, tabId)
-				.then(function(response) {
-					sendResponse({ data: response });
-				}, sendResponse);
-			return true;
+			var response = listeners[messageType](data, tabId);
+
+			if (Util.obj.isPromise(response)) {
+				response.then(data => sendResponse({ data }), e => sendResponse());
+				return true;
+			} else {
+				sendResponse(response);
+			}
 		}
 	});
 

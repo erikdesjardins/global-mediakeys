@@ -14,9 +14,14 @@
 		return Object(val) === val;
 	}
 
+	function isPromise(val) {
+		return val && (typeof val === 'object' || typeof val === 'function') && typeof val.then === 'function';
+	}
+
 	exports.obj = {
-		extend: extend,
-		isRefType: isRefType
+		extend,
+		isRefType,
+		isPromise
 	};
 
 	function click(ele) {
@@ -42,7 +47,7 @@
 	}
 
 	exports.dom = {
-		click: click,
-		observe: observe
+		click,
+		observe
 	};
 })(window.Util = {});
