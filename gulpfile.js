@@ -7,6 +7,7 @@
 	var autoprefixer = require('gulp-autoprefixer');
 	var merge = require('merge-stream');
 	var plumber = require('gulp-plumber');
+	var zip = require('gulp-zip');
 
 	var files = {
 		cwd: 'src/**',
@@ -22,11 +23,11 @@
 	gulp.task('build', function() {
 		var babelStream = gulp.src(files.babel, { cwd: files.cwd })
 			.pipe(plumber())
-			.pipe(babel({ stage: 1, compact: true, blacklist: ['flow', 'react', 'reactCompat', 'jscript'] }))
+			.pipe(babel({ stage: 1, blacklist: ['flow', 'react', 'reactCompat', 'jscript'] }))
 			.pipe(plumber.stop());
 
 		var sassStream = gulp.src(files.sass, { cwd: files.cwd })
-			.pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+			.pipe(sass().on('error', sass.logError))
 			.pipe(autoprefixer({ browsers: 'Chrome >= 36' }));
 
 		var copyStream = gulp.src(files.copy, { cwd: files.cwd });
@@ -41,5 +42,11 @@
 
 	gulp.task('clean', function(cb) {
 		del('dist/*', cb);
+	});
+
+	gulp.task('zip', ['build'], function() {
+		return gulp.src('dist/**')
+			.pipe(zip('GMK.zip'))
+			.pipe(gulp.dest('dist'));
 	});
 })();
