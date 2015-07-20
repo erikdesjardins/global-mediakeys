@@ -11,8 +11,8 @@
 
 	var files = {
 		cwd: 'src/**',
-		copy: ['*.png', '*.json', '*.html', 'vendor/*.js'],
-		babel: ['*.js', '!vendor/*.js'],
+		copy: ['*.png', '*.json', '*.html', 'js/vendor/*.js'],
+		babel: ['*.js', '!js/vendor/*.js'],
 		sass: ['*.scss']
 	};
 

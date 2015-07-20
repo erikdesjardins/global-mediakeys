@@ -16,14 +16,14 @@
 	},
 	"background": {
 		"scripts": [
-			"vendor/browser-polyfill.min.js",
-			"global/constants.js",
-			"global/util.js",
-			"background/backgroundMessages.js",
-			"background/commands.js",
-			"background/storage.js",
-			"background/tabManager.js",
-			"background/main.js"
+			"js/vendor/browser-polyfill.min.js",
+			"js/constants.js",
+			"js/util.js",
+			"js/background/backgroundMessages.js",
+			"js/background/commands.js",
+			"js/background/storage.js",
+			"js/background/tabManager.js",
+			"js/background/main.js"
 		],
 		"persistent": false
 	},
@@ -35,24 +35,24 @@
 				"*://*.youtube.com/*"
 			],
 			"js": [
-				"vendor/browser-polyfill.min.js",
-				"global/constants.js",
-				"global/util.js",
-				"content/contentMessages.js",
-				"content/baseDomain.js"
+				"js/vendor/browser-polyfill.min.js",
+				"js/constants.js",
+				"js/util.js",
+				"js/content/contentMessages.js",
+				"js/content/baseDomain.js"
 			]
 		},
 		{
 			"matches": ["*://play.google.com/music/listen*"],
-			"js": ["content/domains/googlePlayMusic.js"]
+			"js": ["js/content/domains/googlePlayMusic.js"]
 		},
 		{
 			"matches": ["*://soundcloud.com/*"],
-			"js": ["content/domains/soundcloud.js"]
+			"js": ["js/content/domains/soundcloud.js"]
 		},
 		{
 			"matches": ["*://*.youtube.com/*"],
-			"js": ["content/domains/youtube.js"]
+			"js": ["js/content/domains/youtube.js"]
 		}
 	],
 	"browser_action": {
@@ -60,7 +60,7 @@
 			"19": "images/icon19.png",
 			"38": "images/icon38.png"
 		},
-		"default_popup": "action/popup.html"
+		"default_popup": "html/popup.html"
 	},
 	"commands": {
 		"media-play-pause": {

@@ -5,7 +5,7 @@
 		document.getElementById('subtitle').textContent = info.subtitle;
 	}
 
-	function updatePlayState(state) {
+	function updatePlayState(state = false) {
 		document.body.classList.toggle('playing', state);
 	}
 
