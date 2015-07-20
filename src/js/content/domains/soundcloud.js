@@ -27,9 +27,7 @@
 				var subtitleElem = watchElem.querySelector('.playbackSoundBadge__context');
 
 				callback({
-					image: imageElem.style.backgroundImage
-						.replace('50x50', '250x250')
-						.replace(/^url\((.*)\)$/, '$1'),
+					image: getComputedStyle(imageElem).backgroundImage.replace('50x50', '250x250'),
 					title: titleElem.textContent,
 					subtitle: subtitleElem.textContent
 				});

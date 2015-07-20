@@ -27,7 +27,7 @@
 				var subtitleElem = watchElem.querySelector('.player-artist-album-wrapper');
 
 				callback({
-					image: imageElem.src.replace('=s90', '=s250'),
+					image: `url(${imageElem.src.replace('=s90', '=s250')})`,
 					title: titleElem.textContent,
 					subtitle: subtitleElem.textContent
 				});

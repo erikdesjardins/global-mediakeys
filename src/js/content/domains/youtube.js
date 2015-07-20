@@ -32,7 +32,7 @@
 				);
 
 				callback({
-					image: imageElem.src.replace('/s88', '/s250'),
+					image: `url(${imageElem.src.replace('/s88', '/s250')})`,
 					title: titleElem.textContent,
 					subtitle: subtitleElem.textContent
 				});

@@ -1,6 +1,6 @@
 (function() {
-	function updateInfo(info) {
-		document.body.style.backgroundImage = 'url(' + info.image + ')';
+	function updateInfo(info = {}) {
+		document.body.style.backgroundImage = info.image;
 		document.getElementById('title').textContent = info.title;
 		document.getElementById('subtitle').textContent = info.subtitle;
 	}
