@@ -1,6 +1,6 @@
 {
   "name": "Global-Media-Keys",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Allows websites that play media to be controlled with global keyboard shortcuts.",
   "private": true,
   "repository": {
