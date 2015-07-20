@@ -8,7 +8,7 @@
 	function _validIndex(tabs, tabId) {
 		var index = _findIndex(tabs, tabId);
 		if (index === -1) {
-			throw new Error('Tab: ' + tabId + ' not found.');
+			throw new Error(`Tab: ${tabId} not found.`);
 		} else {
 			return index;
 		}
@@ -47,7 +47,7 @@
 	async function remove(tabId) {
 		var tabs = await isReady;
 		if (!_exists(tabs, tabId)) {
-			throw new Error('Cannot unregister non-extant tab: ' + tabId);
+			throw new Error(`Cannot unregister non-extant tab: ${tabId}`);
 		} else {
 			_remove(tabs, tabId);
 			console.info('Unregistered tab:', tabId);
@@ -57,7 +57,7 @@
 	async function update(tabId, key, value) {
 		var tabs = await isReady;
 		if (!_exists(tabs, tabId)) {
-			throw new Error('Cannot update unregistered tab: ' + tabId);
+			throw new Error(`Cannot update unregistered tab: ${tabId}`);
 		} else {
 			var tab = _get(tabs, tabId);
 			if (tab.data[key] !== value) {
