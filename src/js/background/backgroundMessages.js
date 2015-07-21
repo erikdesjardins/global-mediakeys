@@ -25,7 +25,7 @@
 			if (Util.isPromise(response)) {
 				response.then(data => sendResponse({ data }), e => sendResponse());
 				return true;
-			} else if (response !== Const.status.NO_RESPONSE) {
+			} else {
 				sendResponse({ data: response });
 			}
 		}

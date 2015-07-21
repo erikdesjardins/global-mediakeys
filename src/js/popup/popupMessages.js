@@ -12,21 +12,16 @@
 		});
 	}
 
-	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	chrome.runtime.onMessage.addListener(function(request, sender) {
 		var messageType = request.type;
 		var data = request.data;
+		var tabId = sender.tab && sender.tab.id;
 
 		if (!(messageType in listeners)) {
-			console.error('Unrecognised message type:', request);
+			console.error('Unrecognised message type:', request, sender);
 		} else {
-			var response = listeners[messageType](data);
-
-			if (Util.isPromise(response)) {
-				response.then(data => sendResponse({ data }), e => sendResponse());
-				return true;
-			} else {
-				sendResponse({ data: response });
-			}
+			listeners[messageType](data, tabId);
+			// Responses handled by the background page
 		}
 	});
 
