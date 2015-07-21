@@ -5,7 +5,7 @@
 		obj[key] = value;
 		return new Promise(function(resolve, reject) {
 			chrome.storage.local.set(obj, () =>
-					chrome.runtime.lastError ? reject(chrome.runtime.lastError) : resolve()
+					chrome.runtime.lastError ? reject(new Error(chrome.runtime.lastError)) : resolve()
 			);
 		});
 	}
@@ -14,7 +14,7 @@
 		return new Promise(function(resolve, reject) {
 			chrome.storage.local.get(key, function(items) {
 				if (chrome.runtime.lastError) {
-					reject(chrome.runtime.lastError);
+					reject(new Error(chrome.runtime.lastError));
 				} else if (items[key] === undefined) {
 					resolve(defaultValue);
 				} else {

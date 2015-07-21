@@ -32,7 +32,7 @@
 		};
 		return new Promise(function(resolve, reject) {
 			chrome.runtime.sendMessage(message, response =>
-					response ? resolve(response.data) : reject('Received empty response.')
+					response ? resolve(response.data) : reject(new Error('Received empty response.'))
 			);
 		});
 	}
