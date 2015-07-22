@@ -1,0 +1,51 @@
+@import '../colors';
+@import '../mixins';
+
+$Button-popDuration: 0.1s;
+
+@mixin buttonSizing($lineHeight, $fontSize) {
+	display: block;
+	line-height: $lineHeight;
+	font-size: $fontSize;
+}
+
+.Button {
+	@include size(100%, 100%);
+	cursor: pointer;
+	border-radius: 50%;
+	background-color: $highlightColor;
+	color: $textColor;
+	text-shadow: $textColor 0 0 5px;
+	text-align: center;
+	transition: transform $Button-popDuration;
+
+	&:hover:not(:active) {
+		transform: scale(1.1);
+	}
+
+	&-prev::after {
+		@include buttonSizing(42px, 30px);
+		content: '\25B6\25B6';
+		letter-spacing: -15px;
+		padding-right: 10px;
+		transform: scaleX(-1);
+	}
+	&-next::after {
+		@include buttonSizing(42px, 30px);
+		content: '\25B6\25B6';
+		letter-spacing: -15px;
+		padding-right: 10px;
+	}
+	&-playPause::after {
+		@include buttonSizing(42px, 30px);
+		content: '\25B6';
+		padding-left: 5px;
+
+		body.isPlaying & {
+			@include buttonSizing(47px, 27px);
+			content: '\275A\275A';
+			letter-spacing: 5px;
+			padding-left: 5px;
+		}
+	}
+}

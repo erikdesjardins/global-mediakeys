@@ -6,7 +6,7 @@
 	}
 
 	function updatePlayState(state = false) {
-		document.body.classList.toggle('playing', state);
+		document.body.classList.toggle('isPlaying', state);
 	}
 
 	function fetchInfo() {

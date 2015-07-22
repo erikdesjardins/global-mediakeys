@@ -1,0 +1,17 @@
+@import '../colors';
+
+.TitleBlock {
+	width: 100%;
+	text-align: center;
+	color: $textColor;
+	background-color: $highlightColor;
+	text-shadow: $bgColor 0 0 1px;
+
+	&-title {
+		font-size: 15px;
+		padding: 0 5px;
+	}
+	&-subtitle {
+		font-size: 10px;
+	}
+}

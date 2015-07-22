@@ -1,0 +1,21 @@
+@import '../mixins';
+
+.ButtonGroup {
+	@include size(100%, 100%);
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+
+	&--vertical {
+		flex-direction: column;
+	}
+
+	&-button {
+		@include size(50px, 50px);
+
+		&--small {
+			@include size(25px, 25px);
+		}
+	}
+}

@@ -6,13 +6,27 @@
     <title>Global Media Keys</title>
 </head>
 <body>
-	<div id="title" class="header"></div>
-	<div id="subtitle" class="header"></div>
-	<div class="spacer"></div>
-	<div id="buttons">
-		<span id="prev" class="button"></span>
-		<span id="play-pause" class="button"></span>
-		<span id="next" class="button"></span>
+	<div class="VerticalGroup">
+		<div class="VerticalGroup-content">
+			<div class="TitleBlock">
+				<div class="TitleBlock-title" id="title"></div>
+				<div class="TitleBlock-subtitle" id="subtitle"></div>
+			</div>
+		</div>
+		<div class="VerticalGroup-spacer"></div>
+		<div class="VerticalGroup-content VerticalGroup-content--largeButtons">
+			<div class="ButtonGroup">
+				<div class="ButtonGroup-button">
+					<div class="Button" id="prev"><div class="Button-prev"></div></div>
+				</div>
+				<div class="ButtonGroup-button">
+					<div class="Button" id="play-pause"><div class="Button-playPause"></div></div>
+				</div>
+				<div class="ButtonGroup-button">
+					<div class="Button" id="next"><div class="Button-next"></div></div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script src="../js/vendor/browser-polyfill.min.js"></script>

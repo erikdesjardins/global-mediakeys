@@ -1,0 +1,17 @@
+.VerticalGroup {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+
+	&-content {
+		flex-shrink: 0;
+
+		&--largeButtons {
+			height: 80px;
+		}
+	}
+	&-spacer {
+		flex-grow: 1;
+	}
+}

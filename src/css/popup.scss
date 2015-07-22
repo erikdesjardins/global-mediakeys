@@ -1,101 +1,23 @@
-$bgColor: #333;
-$textColor: #fff;
-$highlightColor: #2db69a;
+@import 'colors';
+@import 'resets';
 
-html {
-	box-sizing: border-box;
-}
+@import 'modules/VerticalGroup';
+@import 'modules/TitleBlock';
+@import 'modules/ButtonGroup';
+@import 'modules/Button';
 
-*, *:before, *:after {
-	box-sizing: inherit;
-}
+$Body-fadeDuration: 0.2s;
 
 body {
+	@include size(250px, 250px);
 	margin: 0;
-	width: 250px;
-	height: 250px;
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
+
 	background: $bgColor 50% no-repeat;
 	background-size: cover;
 	opacity: 0.5;
-	transition: opacity 0.2s;
+	transition: opacity $Body-fadeDuration;
 
 	&:hover {
 		opacity: 1;
-	}
-}
-
-.header {
-	width: 100%;
-	text-align: center;
-	color: $textColor;
-	background-color: $highlightColor;
-	text-shadow: $bgColor 0 0 1px;
-	padding: 0 5px;
-}
-
-#title {
-	font-size: 15px;
-}
-
-#subtitle {
-	font-size: 10px;
-}
-
-.spacer {
-	flex-grow: 1;
-}
-
-#buttons {
-	height: 80px;
-	width: 100%;
-	display: flex;
-	flex-wrap: nowrap;
-	justify-content: space-around;
-	align-items: center;
-}
-
-.button {
-	cursor: pointer;
-	background-color: $highlightColor;
-	border-radius: 50%;
-	height: 50px;
-	width: 50px;
-	transition: transform 0.1s;
-
-	&:hover:not(:active) {
-		transform: scale(1.1);
-	}
-}
-
-.button::after {
-	display: block;
-	color: $textColor;
-	text-shadow: $textColor 0 0 5px;
-	line-height: 42px;
-	font-size: 30px;
-	text-align: center;
-}
-#next::after {
-	content: '\25B6\25B6';
-	letter-spacing: -15px;
-	padding-right: 10px;
-}
-#prev::after {
-	@extend #next::after;
-	transform: scaleX(-1);
-}
-#play-pause::after {
-	content: '\25B6';
-	padding-left: 5px;
-
-	body.playing & {
-		content: '\275A\275A';
-		letter-spacing: 5px;
-		padding-left: 5px;
-		font-size: 25px;
-		line-height: 47px;
 	}
 }
