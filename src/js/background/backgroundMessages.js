@@ -39,7 +39,7 @@
 		var target = parseInt(tabId, 10);
 		return new Promise(function(resolve, reject) {
 			chrome.tabs.sendMessage(target, message, response =>
-					response ? resolve(response.data) : reject(new Error('Received empty response.'))
+					response ? resolve(response.data) : reject(new Error(`Received empty response from type: ${messageType}`))
 			);
 		});
 	}
