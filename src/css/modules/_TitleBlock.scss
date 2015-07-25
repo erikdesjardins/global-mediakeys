@@ -10,8 +10,9 @@
 	&-title {
 		font-size: 15px;
 		padding: 0 5px;
-	}
-	&-subtitle {
-		font-size: 10px;
+
+		&--sub {
+			font-size: 10px;
+		}
 	}
 }
