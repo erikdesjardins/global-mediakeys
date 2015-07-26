@@ -1,5 +1,5 @@
 /* global chrome */
-var Messages = (function() {
+var Messages = (() => {
 	var listeners = {};
 
 	function addListener(messageType, callback) {
@@ -10,7 +10,7 @@ var Messages = (function() {
 		}
 	}
 
-	chrome.runtime.onMessage.addListener(function(request, sender) {
+	chrome.runtime.onMessage.addListener((request, sender) => {
 		var messageType = request.type;
 		var data = request.data;
 		var tabId = sender.tab && sender.tab.id;
@@ -28,7 +28,7 @@ var Messages = (function() {
 			type: messageType,
 			data: data
 		};
-		return new Promise(function(resolve, reject) {
+		return new Promise((resolve, reject) => {
 			chrome.runtime.sendMessage(message, response =>
 					response ? resolve(response.data) : reject(new Error(`Received empty response from type: ${messageType}`))
 			);

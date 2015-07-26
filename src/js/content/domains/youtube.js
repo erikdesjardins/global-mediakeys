@@ -1,11 +1,11 @@
-(function() {
+(() => {
 	new Domain()
 		.setupButtons(() => ({
 			play: document.querySelector('.ytp-button-play, .ytp-button-pause'),
 			next: document.querySelector('.ytp-button-next'),
 			prev: document.querySelector('.ytp-button-prev')
 		}))
-		.setupPlayState(function(callback, playButton) {
+		.setupPlayState((callback, playButton) => {
 			function sendUpdate() {
 				callback(playButton.classList.contains('ytp-button-pause'));
 			}
@@ -18,7 +18,7 @@
 
 			sendUpdate();
 		})
-		.setupInfo(function(callback) {
+		.setupInfo(callback => {
 			var watchElem = document.getElementById('content');
 
 			async function sendUpdate() {
@@ -50,7 +50,7 @@
 
 			sendUpdate();
 		})
-		.setupAction('watch-later', function(callback) {
+		.setupAction('watch-later', callback => {
 			var button = document.querySelector('.ytp-button-watch-later');
 
 			function sendUpdate() {

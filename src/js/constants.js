@@ -1,4 +1,4 @@
-var Const = (function() {
+var Const = (() => {
 	return {
 		msg: {
 			REGISTER: 'tab-register',

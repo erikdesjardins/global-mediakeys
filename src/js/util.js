@@ -1,6 +1,6 @@
-var Util = (function() {
+var Util = (() => {
 	function extend(target, ...objects) {
-		objects.forEach(function(extendObj) {
+		objects.forEach(extendObj => {
 			for (var prop in extendObj) {
 				if (extendObj.hasOwnProperty(prop)) {
 					target[prop] = extendObj[prop];
@@ -78,7 +78,7 @@ var Util = (function() {
 	}
 
 	function waitForMutation(ele, options, callback) {
-		return new Promise(function(resolve) {
+		return new Promise(resolve => {
 			var observer = observe(ele, options, mutation => {
 				if (!callback || callback(mutation)) {
 					observer.disconnect();
@@ -95,7 +95,7 @@ var Util = (function() {
 	}
 
 	function waitForEvent(ele, event) {
-		return new Promise(function(resolve) {
+		return new Promise(resolve => {
 			ele.addEventListener(event, function fire() {
 				ele.removeEventListener(event, fire);
 				resolve();

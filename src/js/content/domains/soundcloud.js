@@ -1,11 +1,11 @@
-(function() {
+(() => {
 	new Domain()
 		.setupButtons(() => ({
 			play: document.querySelector('.playControls .playControl'),
 			next: document.querySelector('.playControls .skipControl__next'),
 			prev: document.querySelector('.playControls .skipControl__previous')
 		}))
-		.setupPlayState(function(callback, playButton) {
+		.setupPlayState((callback, playButton) => {
 			function sendUpdate() {
 				callback(playButton.classList.contains('playing'));
 			}
@@ -18,7 +18,7 @@
 
 			sendUpdate();
 		})
-		.setupInfo(function(callback) {
+		.setupInfo(callback => {
 			var watchElem = document.querySelector('.playbackSoundBadge');
 
 			function sendUpdate() {
@@ -39,7 +39,7 @@
 				sendUpdate
 			);
 		})
-		.setupAction('like', async function(callback) {
+		.setupAction('like', async (callback) => {
 			await Util.waitForChild(document.querySelector('.playbackSoundBadge'), node =>
 				node.nodeName === 'DIV' && node.classList.contains('playbackSoundBadge__actions')
 			);

@@ -1,5 +1,5 @@
 /* global chrome */
-var Commands = (function() {
+var Commands = (() => {
 	var listeners = {};
 
 	function addListener(commandName, callback) {
@@ -10,7 +10,7 @@ var Commands = (function() {
 		}
 	}
 
-	chrome.commands.onCommand.addListener(function(commandName) {
+	chrome.commands.onCommand.addListener(commandName => {
 		if (!(commandName in listeners)) {
 			console.error('Unrecognised command:', commandName);
 		} else {

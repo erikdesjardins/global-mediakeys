@@ -1,4 +1,4 @@
-var Templates = (function() {
+var Templates = (() => {
 	function populate(templateId, map) {
 		var template = document.getElementById(templateId);
 
@@ -9,7 +9,7 @@ var Templates = (function() {
 		var wrapper = document.createElement('p');
 
 		wrapper.appendChild(document.importNode(template.content, true));
-		wrapper.innerHTML = wrapper.innerHTML.replace(/\{\{(\w+)\}\}/g, function(m, key) {
+		wrapper.innerHTML = wrapper.innerHTML.replace(/\{\{(\w+)\}\}/g, (m, key) => {
 			if (!(key in map)) {
 				throw new Error(`Cannot populate template: ${templateId}, missing property: ${key}.`);
 			}

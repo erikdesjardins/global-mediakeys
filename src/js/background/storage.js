@@ -1,9 +1,9 @@
 /* global chrome */
-var Storage = (function() {
+var Storage = (() => {
 	function set(key, value) {
 		var obj = {};
 		obj[key] = value;
-		return new Promise(function(resolve, reject) {
+		return new Promise((resolve, reject) => {
 			chrome.storage.local.set(obj, () =>
 					chrome.runtime.lastError ? reject(new Error(chrome.runtime.lastError)) : resolve()
 			);
@@ -11,8 +11,8 @@ var Storage = (function() {
 	}
 
 	function get(key, defaultValue) {
-		return new Promise(function(resolve, reject) {
-			chrome.storage.local.get(key, function(items) {
+		return new Promise((resolve, reject) => {
+			chrome.storage.local.get(key, items => {
 				if (chrome.runtime.lastError) {
 					reject(new Error(chrome.runtime.lastError));
 				} else if (items[key] === undefined) {

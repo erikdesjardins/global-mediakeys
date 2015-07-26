@@ -1,4 +1,4 @@
-var TabMgr = (function() {
+var TabMgr = (() => {
 	var isReady = Storage.getWithAutosave(Const.storage.TABS, []);
 
 	function _findIndex(tabs, tabId) {
@@ -79,9 +79,7 @@ var TabMgr = (function() {
 
 	async function each(callback) {
 		var tabs = await isReady;
-		await Promise.all(tabs.map(function(tab) {
-			return callback(tab.id, tab.data);
-		}));
+		await Promise.all(tabs.map(tab => callback(tab.id, tab.data)));
 	}
 
 	return {

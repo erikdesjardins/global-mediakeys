@@ -1,4 +1,4 @@
-(function() {
+(() => {
 	function updateInfo(info = {}) {
 		document.body.style.backgroundImage = info.image;
 		document.getElementById('title').textContent = info.title;
@@ -8,7 +8,7 @@
 	function updateActions(actions = {}) {
 		var container = document.getElementById('actions-container');
 		Util.empty(container);
-		Util.each(actions, function(action, type) {
+		Util.each(actions, (action, type) => {
 			var ele = Templates.populate('action-button', action);
 			var button = ele.firstElementChild;
 			button.addEventListener('click', () => Messages.send(Const.msg.DO_ACTION, type));

@@ -1,11 +1,11 @@
-(function() {
+(() => {
 	new Domain()
 		.setupButtons(() => ({
 			play: document.querySelector('sj-icon-button[data-id="play-pause"]'),
 			next: document.querySelector('sj-icon-button[data-id="forward"]'),
 			prev: document.querySelector('sj-icon-button[data-id="rewind"]')
 		}))
-		.setupPlayState(function(callback, playButton) {
+		.setupPlayState((callback, playButton) => {
 			function sendUpdate() {
 				callback(playButton.classList.contains('playing'));
 			}
@@ -18,7 +18,7 @@
 
 			sendUpdate();
 		})
-		.setupInfo(function(callback) {
+		.setupInfo(callback => {
 			var watchElem = document.getElementById('playerSongInfo');
 
 			function sendUpdate() {
@@ -39,7 +39,7 @@
 				sendUpdate
 			);
 		})
-		.setupAction('thumbs-up', async function(callback) {
+		.setupAction('thumbs-up', async (callback) => {
 			var parent = document.getElementById('playerSongInfo');
 
 			await Util.waitForChild(parent, node =>
@@ -65,7 +65,7 @@
 
 			return () => Util.click(thumbUpButton);
 		})
-		.setupAction('thumbs-down', async function(callback) {
+		.setupAction('thumbs-down', async (callback) => {
 			var parent = document.getElementById('playerSongInfo');
 
 			await Util.waitForChild(parent, node =>

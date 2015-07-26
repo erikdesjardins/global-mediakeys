@@ -1,4 +1,4 @@
-(function() {
+(() => {
 	function updateOrFetch(messageType, key) {
 		Messages.addListener(messageType, async (data, tabId) => {
 			if (tabId) { // From tab
@@ -18,7 +18,7 @@
 	}
 
 	function getTabSender(messageType) {
-		return async function() {
+		return async () => {
 			var { tabId } = await TabMgr.first();
 			await Messages.send(messageType, tabId)
 				.catch(() => TabMgr.remove(tabId));
@@ -48,7 +48,7 @@
 	Messages.addListener(Const.msg.PREV, prev);
 
 	async function stop() {
-		await TabMgr.each(async function(tabId, tab) {
+		await TabMgr.each(async (tabId, tab) => {
 			if (tab.isPlaying) {
 				// Avoid promoting the tab when its state changes
 				tab.isPlaying = false;

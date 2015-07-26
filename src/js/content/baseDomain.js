@@ -1,9 +1,9 @@
-var Domain = (function() {
-	var exports = function() {
+var Domain = (() => {
+	function Domain() {
 		this._actions = {};
-	};
+	}
 
-	Util.extend(exports.prototype, {
+	Util.extend(Domain.prototype, {
 		setupButtons(func) {
 			if (this._buttons) {
 				console.error('setupButtons() has already been called.');
@@ -80,5 +80,5 @@ var Domain = (function() {
 		}
 	});
 
-	return exports;
+	return Domain;
 })();
