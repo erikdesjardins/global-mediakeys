@@ -1,5 +1,5 @@
 /* global chrome */
-(function(exports) {
+var Commands = (function() {
 	var listeners = {};
 
 	function addListener(names, callback) {
@@ -20,6 +20,7 @@
 		}
 	});
 
-	exports.addListener = addListener;
-
-})(window.Commands = {});
+	return {
+		addListener
+	};
+})();

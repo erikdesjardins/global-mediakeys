@@ -1,28 +1,30 @@
-(function(exports) {
-	exports.msg = {
-		REGISTER: 'tab-register',
-		UNREGISTER: 'tab-unregister',
-		PLAY_STATE: 'tab-playstate',
+var Const = (function() {
+	return {
+		msg: {
+			REGISTER: 'tab-register',
+			UNREGISTER: 'tab-unregister',
+			PLAY_STATE: 'tab-playstate',
 
-		INFO: 'tab-info',
-		ACTIONS: 'tab-actions',
-		DO_ACTION: 'tab-do-action',
+			INFO: 'tab-info',
+			ACTIONS: 'tab-actions',
+			DO_ACTION: 'tab-do-action',
 
-		PLAY_PAUSE: 'tab-play-pause',
-		NEXT: 'tab-next',
-		PREV: 'tab-prev',
+			PLAY_PAUSE: 'tab-play-pause',
+			NEXT: 'tab-next',
+			PREV: 'tab-prev',
 
-		ECHO: 'echo'
-	};
+			ECHO: 'echo'
+		},
 
-	exports.cmd = {
-		PLAY_PAUSE: 'media-play-pause',
-		NEXT: 'media-next',
-		PREV: 'media-prev',
-		STOP: 'media-stop'
-	};
+		cmd: {
+			PLAY_PAUSE: 'media-play-pause',
+			NEXT: 'media-next',
+			PREV: 'media-prev',
+			STOP: 'media-stop'
+		},
 
-	exports.storage = {
-		TABS: 'registered-tabs'
-	};
-})(window.Const = {});
+		storage: {
+			TABS: 'registered-tabs'
+		}
+	}
+})();

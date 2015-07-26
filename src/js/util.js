@@ -1,4 +1,4 @@
-(function(exports) {
+var Util = (function() {
 	function extend(target, ...objects) {
 		objects.forEach(function(extendObj) {
 			for (var prop in extendObj) {
@@ -103,16 +103,18 @@
 		})
 	}
 
-	exports.extend = extend;
-	exports.each = each;
-	exports.asyncMap = asyncMap;
-	exports.isRefType = isRefType;
-	exports.isPromise = isPromise;
-	exports.debounce = debounce;
-	exports.click = click;
-	exports.empty = empty;
-	exports.observe = observe;
-	exports.waitForMutation = waitForMutation;
-	exports.waitForChild = waitForChild;
-	exports.waitForEvent = waitForEvent;
-})(window.Util = {});
+	return {
+		extend,
+		each,
+		asyncMap,
+		isRefType,
+		isPromise,
+		debounce,
+		click,
+		empty,
+		observe,
+		waitForMutation,
+		waitForChild,
+		waitForEvent
+	};
+})();

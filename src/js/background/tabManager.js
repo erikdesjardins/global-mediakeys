@@ -1,4 +1,4 @@
-(function(exports) {
+var TabMgr = (function() {
 	var isReady = Storage.getWithAutosave(Const.storage.TABS, []);
 
 	function _findIndex(tabs, tabId) {
@@ -84,9 +84,11 @@
 		}));
 	}
 
-	exports.add = add;
-	exports.remove = remove;
-	exports.update = update;
-	exports.first = first;
-	exports.each = each;
-})(window.TabMgr = {});
+	return {
+		add,
+		remove,
+		update,
+		first,
+		each
+	};
+})();

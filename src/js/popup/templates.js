@@ -1,4 +1,4 @@
-(function(exports) {
+var Templates = (function() {
 	function populate(templateId, map) {
 		var template = document.getElementById(templateId);
 
@@ -19,5 +19,7 @@
 		return wrapper.firstElementChild;
 	}
 
-	exports.populate = populate;
-})(window.Templates = {});
+	return {
+		populate
+	};
+})();

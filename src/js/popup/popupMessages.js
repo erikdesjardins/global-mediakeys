@@ -1,5 +1,5 @@
 /* global chrome */
-(function(exports) {
+var Messages = (function() {
 	var listeners = {};
 
 	function addListener(types, callback) {
@@ -37,8 +37,10 @@
 		});
 	}
 
-	exports.addListener = addListener;
-	exports.send = sendMessage;
-
 	addListener(Const.msg.ECHO, data => data);
-})(window.Messages = {});
+
+	return {
+		addListener,
+		send: sendMessage
+	};
+})();

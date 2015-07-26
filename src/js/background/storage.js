@@ -1,5 +1,5 @@
 /* global chrome */
-(function(exports) {
+var Storage = (function() {
 	function set(key, value) {
 		var obj = {};
 		obj[key] = value;
@@ -39,7 +39,9 @@
 		return val;
 	}
 
-	exports.set = set;
-	exports.get = get;
-	exports.getWithAutosave = getAndSetOnSuspend;
-})(window.Storage = {});
+	return {
+		set,
+		get,
+		getWithAutosave: getAndSetOnSuspend
+	};
+})();
