@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<link rel="stylesheet" href="../css/popup.css" type="text/css">
-    <title>Global Media Keys</title>
+	<title>Global Media Keys</title>
 
 	<template id="action-button">
 		<div class="ButtonGroup-smallButton">
@@ -14,37 +14,43 @@
 	</template>
 </head>
 <body>
-	<div class="VerticalGroup">
-		<div class="VerticalGroup-content">
-			<div class="TitleBlock">
-				<div class="TitleBlock-title" id="title"></div>
-				<div class="TitleBlock-title TitleBlock-title--sub" id="subtitle"></div>
+<div class="VerticalGroup">
+	<div class="VerticalGroup-content">
+		<div class="TitleBlock">
+			<div class="TitleBlock-title" id="title"></div>
+			<div class="TitleBlock-title TitleBlock-title--sub" id="subtitle"></div>
+		</div>
+	</div>
+	<div class="VerticalGroup-content">
+		<div class="ButtonGroup ButtonGroup--pullRight" id="actions-container"></div>
+	</div>
+	<div class="VerticalGroup-spacer"></div>
+	<div class="VerticalGroup-content">
+		<div class="ButtonGroup">
+			<div class="ButtonGroup-button">
+				<div class="Button" id="prev">
+					<div class="Button-prev"></div>
+				</div>
 			</div>
-		</div>
-		<div class="VerticalGroup-content">
-			<div class="ButtonGroup ButtonGroup--pullRight" id="actions-container"></div>
-		</div>
-		<div class="VerticalGroup-spacer"></div>
-		<div class="VerticalGroup-content">
-			<div class="ButtonGroup">
-				<div class="ButtonGroup-button">
-					<div class="Button" id="prev"><div class="Button-prev"></div></div>
+			<div class="ButtonGroup-button">
+				<div class="Button" id="play-pause">
+					<div class="Button-playPause"></div>
 				</div>
-				<div class="ButtonGroup-button">
-					<div class="Button" id="play-pause"><div class="Button-playPause"></div></div>
-				</div>
-				<div class="ButtonGroup-button">
-					<div class="Button" id="next"><div class="Button-next"></div></div>
+			</div>
+			<div class="ButtonGroup-button">
+				<div class="Button" id="next">
+					<div class="Button-next"></div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script src="../js/vendor/browser-polyfill.min.js"></script>
-	<script src="../js/constants.js"></script>
-	<script src="../js/util.js"></script>
-	<script src="../js/popup/templates.js"></script>
-	<script src="../js/popup/popupMessages.js"></script>
-	<script src="../js/popup/popup.js"></script>
+<script src="../js/vendor/browser-polyfill.min.js"></script>
+<script src="../js/constants.js"></script>
+<script src="../js/util.js"></script>
+<script src="../js/popup/templates.js"></script>
+<script src="../js/popup/popupMessages.js"></script>
+<script src="../js/popup/popup.js"></script>
 </body>
 </html>

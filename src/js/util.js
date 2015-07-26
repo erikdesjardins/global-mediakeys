@@ -35,10 +35,12 @@
 
 	function debounce(callback, delay) {
 		var timeout;
+
 		function exec(...args) {
 			clearTimeout(timeout);
 			timeout = setTimeout(() => callback(...args), delay);
 		}
+
 		exec.cancel = () => clearTimeout(timeout);
 		return exec;
 	}
@@ -88,7 +90,7 @@
 
 	function waitForChild(ele, callback) {
 		return waitForMutation(ele, { childList: true }, mutation =>
-			Array.from(mutation.addedNodes).some(node => !callback || callback(node))
+				Array.from(mutation.addedNodes).some(node => !callback || callback(node))
 		);
 	}
 
