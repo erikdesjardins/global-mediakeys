@@ -1,25 +1,26 @@
 @import '../mixins';
 
 .ButtonGroup {
-	@include size(100%, 100%);
+	width: 100%;
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-around;
 	align-items: center;
 
-	&--vertical {
-		flex-direction: column;
+	&--pullRight {
+		justify-content: flex-end;
 	}
 
 	&-button {
-		@include size(50px, 50px);
+		@include size(80px);
+		padding: 15px;
 		line-height: 50px;
 		font-size: 20px;
-
-		&--small {
-			@include size(25px, 25px);
-			line-height: 25px;
-			font-size: 10px;
-		}
+	}
+	&-smallButton {
+		@include size(50px);
+		padding: 10px;
+		line-height: 30px;
+		font-size: 10px;
 	}
 }

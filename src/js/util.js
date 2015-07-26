@@ -10,6 +10,21 @@
 		return target;
 	}
 
+	function each(object, callback) {
+		for (var key in object) {
+			if (object.hasOwnProperty(key)) {
+				callback(object[key], key, object);
+			}
+		}
+	}
+
+	async function asyncMap(object, callback) {
+		await Promise.all(Object.getOwnPropertyNames(object).map(key => (async () =>
+			(object[key] = await callback(object[key], key, object))
+		)()));
+		return object;
+	}
+
 	function isRefType(val) {
 		return Object(val) === val;
 	}
@@ -39,6 +54,15 @@
 				bubbles: true,
 				cancelable: true
 			}));
+		}
+	}
+
+	function empty(ele) {
+		if (!ele) {
+			throw new TypeError('ele is undefined.');
+		}
+		while (ele.lastChild) {
+			ele.removeChild(ele.lastChild);
 		}
 	}
 
@@ -78,10 +102,13 @@
 	}
 
 	exports.extend = extend;
+	exports.each = each;
+	exports.asyncMap = asyncMap;
 	exports.isRefType = isRefType;
 	exports.isPromise = isPromise;
 	exports.debounce = debounce;
 	exports.click = click;
+	exports.empty = empty;
 	exports.observe = observe;
 	exports.waitForMutation = waitForMutation;
 	exports.waitForChild = waitForChild;

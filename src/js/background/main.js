@@ -1,51 +1,49 @@
 (function() {
-	Messages.addListener(Const.msg.REGISTER, (data, tabId) => TabMgr.add(tabId));
+	function updateOrFetch(messageType, key) {
+		Messages.addListener(messageType, async (data, tabId) => {
+			if (tabId) { // From tab
+				await TabMgr.update(tabId, key, data);
+			} else { // From popup
+				var { tab } = await TabMgr.first();
+				return tab[key];
+			}
+		});
+	}
 
+	function forwardToTab(messageType) {
+		Messages.addListener(messageType, async (data) => {
+			var { tabId } = await TabMgr.first();
+			return await Messages.send(messageType, tabId, data);
+		});
+	}
+
+	function getTabSender(messageType) {
+		return async function() {
+			var { tabId } = await TabMgr.first();
+			await Messages.send(messageType, tabId)
+				.catch(() => TabMgr.remove(tabId));
+		}
+	}
+
+	Messages.addListener(Const.msg.REGISTER, (data, tabId) => TabMgr.add(tabId));
 	// Synchronous to ensure response is sent before unload
 	Messages.addListener(Const.msg.UNREGISTER, (data, tabId) => { TabMgr.remove(tabId) });
 
-	Messages.addListener(Const.msg.PLAY_STATE, async (data, tabId) => {
-		if (tabId) { // From tab
-			await TabMgr.update(tabId, 'isPlaying', data)
-		} else { // From popup
-			var { tab } = await TabMgr.first();
-			return tab.isPlaying;
-		}
-	});
+	updateOrFetch(Const.msg.PLAY_STATE, 'isPlaying');
+	updateOrFetch(Const.msg.INFO, 'info');
+	updateOrFetch(Const.msg.ACTIONS, 'actions');
 
-	Messages.addListener(Const.msg.INFO, async (data, tabId) => {
-		if (tabId) { // From tab
-			await TabMgr.update(tabId, 'info', data);
-		} else { // From popup
-			var { tab } = await TabMgr.first();
-			return tab.info;
-		}
-	});
+	forwardToTab(Const.msg.DO_ACTION);
 
-	async function playPause() {
-		var { tabId } = await TabMgr.first();
-		await Messages.send(Const.msg.PLAY_PAUSE, tabId)
-			.catch(() => TabMgr.remove(tabId));
-	}
-
+	var playPause = getTabSender(Const.msg.PLAY_PAUSE);
 	Commands.addListener(Const.cmd.PLAY_PAUSE, playPause);
 	Messages.addListener(Const.msg.PLAY_PAUSE, playPause);
 
-	async function next() {
-		var { tabId } = await TabMgr.first();
-		await Messages.send(Const.msg.NEXT, tabId)
-			.catch(() => TabMgr.remove(tabId));
-	}
-
+	var next = getTabSender(Const.msg.NEXT);
 	Commands.addListener(Const.cmd.NEXT, next);
 	Messages.addListener(Const.msg.NEXT, next);
 
-	async function prev() {
-		var { tabId } = await TabMgr.first();
-		await Messages.send(Const.msg.PREV, tabId)
-			.catch(() => TabMgr.remove(tabId));
-	}
-
+	var prev = getTabSender(Const.msg.PREV);
 	Commands.addListener(Const.cmd.PREV, prev);
 	Messages.addListener(Const.msg.PREV, prev);
 

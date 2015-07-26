@@ -4,7 +4,7 @@
 $Button-popDuration: 0.1s;
 
 .Button {
-	@include size(100%, 100%);
+	@include size(100%);
 	cursor: pointer;
 	border-radius: 50%;
 	background-color: $highlightColor;
@@ -16,6 +16,11 @@ $Button-popDuration: 0.1s;
 
 	&:hover:not(:active) {
 		transform: scale(1.1);
+	}
+
+	&.isInactive {
+		text-shadow: none;
+		color: #333;
 	}
 
 	&-prev::after {
@@ -32,5 +37,8 @@ $Button-popDuration: 0.1s;
 			content: '\f04c';
 			padding-left: 0;
 		}
+	}
+	&-custom::after {
+		content: attr(data-icon);
 	}
 }

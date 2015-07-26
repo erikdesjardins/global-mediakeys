@@ -5,6 +5,18 @@
 		document.getElementById('subtitle').textContent = info.subtitle;
 	}
 
+	function updateActions(actions = {}) {
+		var container = document.getElementById('actions-container');
+		Util.empty(container);
+		Util.each(actions, function(action, type) {
+			var ele = Templates.populate('action-button', action);
+			var button = ele.firstElementChild;
+			button.addEventListener('click', () => Messages.send(Const.msg.DO_ACTION, type));
+			button.classList.toggle('isInactive', !action.state);
+			container.appendChild(ele);
+		});
+	}
+
 	function updatePlayState(state = false) {
 		document.body.classList.toggle('isPlaying', state);
 	}
@@ -12,6 +24,11 @@
 	function fetchInfo() {
 		Messages.send(Const.msg.INFO)
 			.then(updateInfo);
+	}
+
+	function fetchActions() {
+		Messages.send(Const.msg.ACTIONS)
+			.then(updateActions);
 	}
 
 	function fetchPlayState() {
@@ -30,9 +47,12 @@
 
 	Messages.addListener(Const.msg.INFO, updateInfo);
 
+	Messages.addListener(Const.msg.ACTIONS, updateActions);
+
 	// Not using the state from this message as it may be a background tab (e.g. if we pressed stop)
 	Messages.addListener(Const.msg.PLAY_STATE, fetchPlayState);
 
 	fetchInfo();
+	fetchActions();
 	fetchPlayState();
 })();

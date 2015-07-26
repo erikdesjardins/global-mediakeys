@@ -5,13 +5,13 @@
 			next: document.querySelector('.playControls .skipControl__next'),
 			prev: document.querySelector('.playControls .skipControl__previous')
 		}))
-		.setupPlayState(function(callback, buttons) {
+		.setupPlayState(function(callback, playButton) {
 			function sendUpdate() {
-				callback(buttons.play.classList.contains('playing'));
+				callback(playButton.classList.contains('playing'));
 			}
 
 			Util.observe(
-				buttons.play,
+				playButton,
 				{ attributes: true, attributeFilter: ['class'] },
 				sendUpdate
 			);
@@ -38,6 +38,30 @@
 				{ childList: true },
 				sendUpdate
 			);
+		})
+		.setupAction('like', async function(callback) {
+			await Util.waitForChild(document.querySelector('.playbackSoundBadge'), node =>
+				node.nodeName === 'DIV' && node.classList.contains('playbackSoundBadge__actions')
+			);
+
+			var likeButton = document.querySelector('.playbackSoundBadge__like');
+
+			function sendUpdate() {
+				callback({
+					icon: '\uf004',
+					state: likeButton.classList.contains('sc-button-selected')
+				});
+			}
+
+			Util.observe(
+				likeButton,
+				{ attributes: true, attributeFilter: ['class'] },
+				sendUpdate
+			);
+
+			sendUpdate();
+
+			return () => Util.click(likeButton);
 		})
 		.go(Util.waitForChild(document.getElementById('app'), node =>
 			node.nodeName === 'DIV' && node.classList.contains('playControls')

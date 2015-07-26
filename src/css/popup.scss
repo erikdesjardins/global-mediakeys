@@ -10,7 +10,7 @@
 $Body-fadeDuration: 0.2s;
 
 body {
-	@include size(250px, 250px);
+	@include size(250px);
 	margin: 0;
 
 	background: $bgColor 50% no-repeat;

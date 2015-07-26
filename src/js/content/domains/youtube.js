@@ -5,13 +5,13 @@
 			next: document.querySelector('.ytp-button-next'),
 			prev: document.querySelector('.ytp-button-prev')
 		}))
-		.setupPlayState(function(callback, buttons) {
+		.setupPlayState(function(callback, playButton) {
 			function sendUpdate() {
-				callback(buttons.play.classList.contains('ytp-button-pause'));
+				callback(playButton.classList.contains('ytp-button-pause'));
 			}
 
 			Util.observe(
-				buttons.play,
+				playButton,
 				{ attributes: true, attributeFilter: ['class'] },
 				sendUpdate
 			);
@@ -49,6 +49,26 @@
 			);
 
 			sendUpdate();
+		})
+		.setupAction('watch-later', function(callback) {
+			var button = document.querySelector('.ytp-button-watch-later');
+
+			function sendUpdate() {
+				callback({
+					icon: '\uf017',
+					state: button.classList.contains('html5-async-success')
+				});
+			}
+
+			Util.observe(
+				button,
+				{ attributes: true, attributeFilter: ['class'] },
+				sendUpdate
+			);
+
+			sendUpdate();
+
+			return () => Util.click(button);
 		})
 		.go(Util.waitForChild(document.getElementById('player-api'), node =>
 			node.nodeName === 'DIV' && node.classList.contains('html5-video-player')

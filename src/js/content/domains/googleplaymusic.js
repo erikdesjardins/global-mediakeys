@@ -5,13 +5,13 @@
 			next: document.querySelector('sj-icon-button[data-id="forward"]'),
 			prev: document.querySelector('sj-icon-button[data-id="rewind"]')
 		}))
-		.setupPlayState(function(callback, buttons) {
+		.setupPlayState(function(callback, playButton) {
 			function sendUpdate() {
-				callback(buttons.play.classList.contains('playing'));
+				callback(playButton.classList.contains('playing'));
 			}
 
 			Util.observe(
-				buttons.play,
+				playButton,
 				{ attributes: true, attributeFilter: ['class'] },
 				sendUpdate
 			);
@@ -38,6 +38,58 @@
 				{ childList: true },
 				sendUpdate
 			);
+		})
+		.setupAction('thumbs-up', async function(callback) {
+			var parent = document.getElementById('playerSongInfo');
+
+			await Util.waitForChild(parent, node =>
+				node.nodeName === 'DIV' && node.classList.contains('now-playing-info-wrapper')
+			);
+
+			var thumbUpButton = parent.querySelector('sj-icon-button[data-rating="5"]');
+
+			function sendUpdate() {
+				callback({
+					icon: '\uf164',
+					state: thumbUpButton.getAttribute('aria-label').toLowerCase().includes('undo')
+				});
+			}
+
+			Util.observe(
+				thumbUpButton,
+				{ attributes: true, attributeFilter: ['aria-label'] },
+				sendUpdate
+			);
+
+			sendUpdate();
+
+			return () => Util.click(thumbUpButton);
+		})
+		.setupAction('thumbs-down', async function(callback) {
+			var parent = document.getElementById('playerSongInfo');
+
+			await Util.waitForChild(parent, node =>
+				node.nodeName === 'DIV' && node.classList.contains('now-playing-info-wrapper')
+			);
+
+			var thumbDownButton = parent.querySelector('sj-icon-button[data-rating="1"]');
+
+			function sendUpdate() {
+				callback({
+					icon: '\uf165',
+					state: thumbDownButton.getAttribute('aria-label').toLowerCase().includes('undo')
+				});
+			}
+
+			Util.observe(
+				thumbDownButton,
+				{ attributes: true, attributeFilter: ['aria-label'] },
+				sendUpdate
+			);
+
+			sendUpdate();
+
+			return () => Util.click(thumbDownButton);
 		})
 		.go(Util.waitForEvent(window, 'load'));
 })();

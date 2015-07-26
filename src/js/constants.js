@@ -5,6 +5,8 @@
 		PLAY_STATE: 'tab-playstate',
 
 		INFO: 'tab-info',
+		ACTIONS: 'tab-actions',
+		DO_ACTION: 'tab-do-action',
 
 		PLAY_PAUSE: 'tab-play-pause',
 		NEXT: 'tab-next',
