@@ -2,14 +2,12 @@
 var Messages = (function() {
 	var listeners = {};
 
-	function addListener(types, callback) {
-		[].concat(types).forEach(function(messageType) {
-			if (messageType in listeners) {
-				console.error('Listener for Message:', messageType, 'already exists.');
-			} else {
-				listeners[messageType] = callback;
-			}
-		});
+	function addListener(messageType, callback) {
+		if (messageType in listeners) {
+			console.error('Listener for Message:', messageType, 'already exists.');
+		} else {
+			listeners[messageType] = callback;
+		}
 	}
 
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
