@@ -44,6 +44,7 @@
 				mutation => {
 					if (Array.from(mutation.addedNodes).some(node => node.id === 'watch-header')) {
 						sendUpdate();
+						return true;
 					}
 				}
 			);
@@ -70,7 +71,5 @@
 
 			return () => Util.click(button);
 		})
-		.go(Util.waitForChild(document.getElementById('player-api'), node =>
-			node.nodeName === 'DIV' && node.classList.contains('html5-video-player')
-		));
+		.go(Util.waitForChild(document.getElementById('player-api'), '.html5-video-player'));
 })();

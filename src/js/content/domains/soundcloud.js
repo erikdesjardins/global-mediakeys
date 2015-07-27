@@ -18,7 +18,7 @@
 
 			sendUpdate();
 		})
-		.setupInfo(callback => {
+		.setupInfo(async (callback) => {
 			var watchElem = document.querySelector('.playbackSoundBadge');
 
 			function sendUpdate() {
@@ -38,13 +38,15 @@
 				{ childList: true },
 				sendUpdate
 			);
+
+			await Util.waitForChild(watchElem, '*');
+
+			sendUpdate();
 		})
 		.setupAction('like', async (callback) => {
-			await Util.waitForChild(document.querySelector('.playbackSoundBadge'), node =>
-				node.nodeName === 'DIV' && node.classList.contains('playbackSoundBadge__actions')
-			);
-
-			var likeButton = document.querySelector('.playbackSoundBadge__like');
+			var parent = document.querySelector('.playbackSoundBadge');
+			await Util.waitForChild(parent, '.playbackSoundBadge__actions');
+			var likeButton = parent.querySelector('.playbackSoundBadge__like');
 
 			function sendUpdate() {
 				callback({
@@ -63,7 +65,5 @@
 
 			return () => Util.click(likeButton);
 		})
-		.go(Util.waitForChild(document.getElementById('app'), node =>
-			node.nodeName === 'DIV' && node.classList.contains('playControls')
-		));
+		.go(Util.waitForChild(document.getElementById('app'), '.playControls'));
 })();

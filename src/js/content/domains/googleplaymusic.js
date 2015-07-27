@@ -41,11 +41,7 @@
 		})
 		.setupAction('thumbs-up', async (callback) => {
 			var parent = document.getElementById('playerSongInfo');
-
-			await Util.waitForChild(parent, node =>
-				node.nodeName === 'DIV' && node.classList.contains('now-playing-info-wrapper')
-			);
-
+			await Util.waitForChild(parent, '.now-playing-info-wrapper');
 			var thumbUpButton = parent.querySelector('sj-icon-button[data-rating="5"]');
 
 			function sendUpdate() {
@@ -67,11 +63,7 @@
 		})
 		.setupAction('thumbs-down', async (callback) => {
 			var parent = document.getElementById('playerSongInfo');
-
-			await Util.waitForChild(parent, node =>
-				node.nodeName === 'DIV' && node.classList.contains('now-playing-info-wrapper')
-			);
-
+			await Util.waitForChild(parent, '.now-playing-info-wrapper');
 			var thumbDownButton = parent.querySelector('sj-icon-button[data-rating="1"]');
 
 			function sendUpdate() {

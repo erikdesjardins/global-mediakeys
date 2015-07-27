@@ -37,12 +37,8 @@ var Domain = (() => {
 			return this;
 		},
 		async go(setup) {
-			if (this.setupComplete) {
-				return;
-			}
-
 			if (setup) {
-				setup.then(() => this.go());
+				return setup.then(() => this.go());
 			}
 
 			var buttons = this._buttons();
@@ -50,8 +46,6 @@ var Domain = (() => {
 			if (!buttons.play) {
 				console.warn('No play button found.');
 				return;
-			} else {
-				this.setupComplete = true;
 			}
 
 			await Messages.send(Const.msg.REGISTER);

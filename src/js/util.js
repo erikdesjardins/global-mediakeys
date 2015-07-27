@@ -72,7 +72,7 @@ var Util = (() => {
 		if (!ele) {
 			throw new TypeError('ele is undefined.');
 		}
-		var observer = new MutationObserver(mutations => mutations.forEach(callback));
+		var observer = new MutationObserver(mutations => mutations.some(callback));
 		observer.observe(ele, options);
 		return observer;
 	}
@@ -83,15 +83,31 @@ var Util = (() => {
 				if (!callback || callback(mutation)) {
 					observer.disconnect();
 					resolve();
+					return true;
 				}
 			});
 		});
 	}
 
-	function waitForChild(ele, callback) {
-		return waitForMutation(ele, { childList: true }, mutation =>
-				Array.from(mutation.addedNodes).some(node => !callback || callback(node))
-		);
+	function waitForChild(ele, selector, initialCheck) {
+		if (initialCheck !== false) {
+			for (var child of Array.from(ele.children)) {
+				if (child.matches(selector)) {
+					return Promise.resolve();
+				}
+			}
+		}
+		return new Promise(resolve => {
+			var observer = observe(ele, { childList: true }, mutation =>
+					Array.from(mutation.addedNodes).some(node => {
+						if (node.nodeType === Node.ELEMENT_NODE && node.matches(selector)) {
+							observer.disconnect();
+							resolve();
+							return true;
+						}
+					})
+			)
+		});
 	}
 
 	function waitForEvent(ele, event) {
