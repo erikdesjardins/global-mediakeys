@@ -119,6 +119,26 @@ var Util = (() => {
 		})
 	}
 
+	function descendant(ele, selector) {
+		var child = ele.querySelector(selector);
+		if (child) {
+			return Promise.resolve(child);
+		}
+		return new Promise(resolve => {
+			var observer = observe(ele, { childList: true, subtree: true }, mutation => {
+					if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
+						var child = ele.querySelector(selector);
+						if (child) {
+							observer.disconnect();
+							resolve(child);
+							return true;
+						}
+					}
+				}
+			)
+		});
+	}
+
 	return {
 		extend,
 		each,
@@ -131,6 +151,7 @@ var Util = (() => {
 		observe,
 		waitForMutation,
 		waitForChild,
-		waitForEvent
+		waitForEvent,
+		descendant
 	};
 })();

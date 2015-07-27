@@ -44,9 +44,7 @@
 			sendUpdate();
 		})
 		.setupAction('like', async (callback) => {
-			var parent = document.querySelector('.playbackSoundBadge');
-			await Util.waitForChild(parent, '.playbackSoundBadge__actions');
-			var likeButton = parent.querySelector('.playbackSoundBadge__like');
+			var likeButton = await Util.descendant(document.querySelector('.playbackSoundBadge'), '.playbackSoundBadge__like');
 
 			function sendUpdate() {
 				callback({

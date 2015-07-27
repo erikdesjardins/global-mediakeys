@@ -40,9 +40,7 @@
 			);
 		})
 		.setupAction('thumbs-up', async (callback) => {
-			var parent = document.getElementById('playerSongInfo');
-			await Util.waitForChild(parent, '.now-playing-info-wrapper');
-			var thumbUpButton = parent.querySelector('sj-icon-button[data-rating="5"]');
+			var thumbUpButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
 
 			function sendUpdate() {
 				callback({
@@ -62,9 +60,7 @@
 			return () => Util.click(thumbUpButton);
 		})
 		.setupAction('thumbs-down', async (callback) => {
-			var parent = document.getElementById('playerSongInfo');
-			await Util.waitForChild(parent, '.now-playing-info-wrapper');
-			var thumbDownButton = parent.querySelector('sj-icon-button[data-rating="1"]');
+			var thumbDownButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
 
 			function sendUpdate() {
 				callback({
