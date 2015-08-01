@@ -79,7 +79,7 @@ var TabMgr = (() => {
 
 	async function each(callback) {
 		var tabs = await isReady;
-		await Promise.all(tabs.map(tab => callback(tab.id, tab.data)));
+		await Promise.all(tabs.map(tab => callback({ tabId: tab.id, tab: tab.data })));
 	}
 
 	return {

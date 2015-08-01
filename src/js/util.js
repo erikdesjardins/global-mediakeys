@@ -89,7 +89,7 @@ var Util = (() => {
 		});
 	}
 
-	function waitForChild(ele, selector, initialCheck) {
+	function waitForChild(ele, selector, { initialCheck } = {}) {
 		if (initialCheck !== false) {
 			for (var child of Array.from(ele.children)) {
 				if (child.matches(selector)) {

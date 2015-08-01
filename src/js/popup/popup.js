@@ -1,8 +1,8 @@
 (() => {
-	function updateInfo(info = {}) {
-		document.body.style.backgroundImage = info.image;
-		document.getElementById('title').textContent = info.title;
-		document.getElementById('subtitle').textContent = info.subtitle;
+	function updateInfo({ image, title, subtitle } = {}) {
+		document.body.style.backgroundImage = image;
+		document.getElementById('title').textContent = title;
+		document.getElementById('subtitle').textContent = subtitle;
 	}
 
 	function updateActions(actions = {}) {

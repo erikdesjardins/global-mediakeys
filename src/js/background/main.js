@@ -48,7 +48,7 @@
 	Messages.addListener(Const.msg.PREV, prev);
 
 	async function stop() {
-		await TabMgr.each(async (tabId, tab) => {
+		await TabMgr.each(async ({ tabId, tab }) => {
 			if (tab.isPlaying) {
 				// Avoid promoting the tab when its state changes
 				tab.isPlaying = false;
