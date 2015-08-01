@@ -90,6 +90,9 @@ var Util = (() => {
 	}
 
 	function waitForChild(ele, selector, { initialCheck } = {}) {
+		if (!ele) {
+			throw new TypeError('ele is undefined.');
+		}
 		if (initialCheck !== false) {
 			for (var child of Array.from(ele.children)) {
 				if (child.matches(selector)) {
@@ -111,6 +114,9 @@ var Util = (() => {
 	}
 
 	function waitForEvent(ele, event) {
+		if (!ele) {
+			throw new TypeError('ele is undefined.');
+		}
 		return new Promise(resolve => {
 			ele.addEventListener(event, function fire() {
 				ele.removeEventListener(event, fire);
@@ -120,6 +126,9 @@ var Util = (() => {
 	}
 
 	function descendant(ele, selector) {
+		if (!ele) {
+			throw new TypeError('ele is undefined.');
+		}
 		var child = ele.querySelector(selector);
 		if (child) {
 			return Promise.resolve(child);
