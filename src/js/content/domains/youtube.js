@@ -6,25 +6,18 @@
 			prev: document.querySelector('.ytp-button-prev')
 		}))
 		.setupPlayState((callback, playButton) => {
-			function sendUpdate() {
-				callback(playButton.classList.contains('ytp-button-pause'));
-			}
-
-			Util.observe(
+			Util.onMutation(
 				playButton,
 				{ attributes: true, attributeFilter: ['class'] },
-				sendUpdate
+				() => callback(playButton.classList.contains('ytp-button-pause')),
+				{ initialCallback: true }
 			);
-
-			sendUpdate();
 		})
 		.setupInfo(callback => {
-			var watchElem = document.getElementById('content');
-
-			async function sendUpdate() {
-				var imageElem = watchElem.querySelector('#watch-header .video-thumb img');
-				var titleElem = watchElem.querySelector('#watch-headline-title');
-				var subtitleElem = watchElem.querySelector('#watch-header .yt-user-info');
+			async function sendUpdate(parent) {
+				var imageElem = await Util.descendant(parent, '.video-thumb img');
+				var titleElem = await Util.descendant(parent, '#watch-headline-title');
+				var subtitleElem = await Util.descendant(parent, '.yt-user-info');
 
 				await Util.waitForMutation(
 					imageElem,
@@ -38,18 +31,13 @@
 				});
 			}
 
-			Util.observe(
-				watchElem,
-				{ childList: true, subtree: true },
-				mutation => {
-					if (Array.from(mutation.addedNodes).some(node => node.id === 'watch-header')) {
-						sendUpdate();
-						return true;
-					}
-				}
+			Util.onDescendantMutation(
+				document.getElementById('content'),
+				'#watch-header',
+				{ childList: true },
+				sendUpdate,
+				{ initialCallback: true }
 			);
-
-			sendUpdate();
 		})
 		.setupAction('watch-later', callback => {
 			var button = document.querySelector('.ytp-button-watch-later');
@@ -61,13 +49,12 @@
 				});
 			}
 
-			Util.observe(
+			Util.onMutation(
 				button,
 				{ attributes: true, attributeFilter: ['class'] },
-				sendUpdate
+				sendUpdate,
+				{ initialCallback: true }
 			);
-
-			sendUpdate();
 
 			return () => Util.click(button);
 		})

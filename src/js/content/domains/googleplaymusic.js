@@ -6,25 +6,18 @@
 			prev: document.querySelector('sj-icon-button[data-id="rewind"]')
 		}))
 		.setupPlayState((callback, playButton) => {
-			function sendUpdate() {
-				callback(playButton.classList.contains('playing'));
-			}
-
-			Util.observe(
+			Util.onMutation(
 				playButton,
 				{ attributes: true, attributeFilter: ['class'] },
-				sendUpdate
+				() => callback(playButton.classList.contains('playing')),
+				{ initialCallback: true }
 			);
-
-			sendUpdate();
 		})
 		.setupInfo(callback => {
-			var watchElem = document.getElementById('playerSongInfo');
-
-			function sendUpdate() {
-				var imageElem = watchElem.querySelector('#playingAlbumArt');
-				var titleElem = watchElem.querySelector('#player-song-title');
-				var subtitleElem = watchElem.querySelector('.player-artist-album-wrapper');
+			function sendUpdate(parent) {
+				var imageElem = parent.querySelector('#playingAlbumArt');
+				var titleElem = parent.querySelector('#player-song-title');
+				var subtitleElem = parent.querySelector('.player-artist-album-wrapper');
 
 				callback({
 					image: `url(${imageElem.src.replace('=s90', '=s250')})`,
@@ -33,8 +26,8 @@
 				});
 			}
 
-			Util.observe(
-				watchElem,
+			Util.onMutation(
+				document.getElementById('playerSongInfo'),
 				{ childList: true },
 				sendUpdate
 			);
@@ -49,13 +42,12 @@
 				});
 			}
 
-			Util.observe(
+			Util.onMutation(
 				thumbUpButton,
 				{ attributes: true, attributeFilter: ['aria-label'] },
-				sendUpdate
+				sendUpdate,
+				{ initialCallback: true }
 			);
-
-			sendUpdate();
 
 			return () => Util.click(thumbUpButton);
 		})
@@ -69,13 +61,12 @@
 				});
 			}
 
-			Util.observe(
+			Util.onMutation(
 				thumbDownButton,
 				{ attributes: true, attributeFilter: ['aria-label'] },
-				sendUpdate
+				sendUpdate,
+				{ initialCallback: true }
 			);
-
-			sendUpdate();
 
 			return () => Util.click(thumbDownButton);
 		})

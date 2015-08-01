@@ -77,6 +77,37 @@ var Util = (() => {
 		return observer;
 	}
 
+	function onMutation(ele, options, callback, { initialCallback } = {}) {
+		if (initialCallback) {
+			callback(ele);
+		}
+		return observe(ele, options, () => {
+			callback(ele);
+			return true;
+		});
+	}
+
+	async function onDescendantMutation(ele, selector, options, callback, { initialCallback } = {}) {
+		var child = await descendant(ele, selector);
+		var observer = onMutation(child, options, callback, { initialCallback });
+
+		function _refreshObserver(e) {
+			observer.disconnect();
+			child = e;
+			observer = onMutation(child, options, callback, { initialCallback });
+		}
+
+		observe(ele, { childList: true, subtree: true }, mutation => {
+			if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
+				var e = ele.querySelector(selector);
+				if (e && e !== child) {
+					_refreshObserver(e);
+				}
+				return true;
+			}
+		});
+	}
+
 	function waitForMutation(ele, options, callback) {
 		return new Promise(resolve => {
 			var observer = observe(ele, options, mutation => {
@@ -135,16 +166,15 @@ var Util = (() => {
 		}
 		return new Promise(resolve => {
 			var observer = observe(ele, { childList: true, subtree: true }, mutation => {
-					if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
-						var child = ele.querySelector(selector);
-						if (child) {
-							observer.disconnect();
-							resolve(child);
-							return true;
-						}
+				if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
+					var child = ele.querySelector(selector);
+					if (child) {
+						observer.disconnect();
+						resolve(child);
 					}
+					return true;
 				}
-			)
+			});
 		});
 	}
 
@@ -158,6 +188,8 @@ var Util = (() => {
 		click,
 		empty,
 		observe,
+		onMutation,
+		onDescendantMutation,
 		waitForMutation,
 		waitForChild,
 		waitForEvent,

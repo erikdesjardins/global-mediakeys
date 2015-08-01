@@ -38,7 +38,8 @@ var Domain = (() => {
 		},
 		async go(setup) {
 			if (setup) {
-				return setup.then(() => this.go());
+				setup.then(() => this.go());
+				return;
 			}
 
 			var buttons = this._buttons();

@@ -6,17 +6,12 @@
 			prev: document.querySelector('.playControls .skipControl__previous')
 		}))
 		.setupPlayState((callback, playButton) => {
-			function sendUpdate() {
-				callback(playButton.classList.contains('playing'));
-			}
-
-			Util.observe(
+			Util.onMutation(
 				playButton,
 				{ attributes: true, attributeFilter: ['class'] },
-				sendUpdate
+				() => callback(playButton.classList.contains('playing')),
+				{ initialCallback: true }
 			);
-
-			sendUpdate();
 		})
 		.setupInfo(async (callback) => {
 			var watchElem = document.querySelector('.playbackSoundBadge');
@@ -44,24 +39,25 @@
 			sendUpdate();
 		})
 		.setupAction('like', async (callback) => {
-			var likeButton = await Util.descendant(document.querySelector('.playbackSoundBadge'), '.playbackSoundBadge__like');
+			var rootElem = document.querySelector('.playbackSoundBadge');
+			var likeSelector = '.playbackSoundBadge__like';
 
-			function sendUpdate() {
+			function sendUpdate(likeButton) {
 				callback({
 					icon: '\uf004',
 					state: likeButton.classList.contains('sc-button-selected')
 				});
 			}
 
-			Util.observe(
-				likeButton,
+			await Util.onDescendantMutation(
+				rootElem,
+				likeSelector,
 				{ attributes: true, attributeFilter: ['class'] },
-				sendUpdate
+				sendUpdate,
+				{ initialCallback: true }
 			);
 
-			sendUpdate();
-
-			return () => Util.click(likeButton);
+			return () => Util.click(rootElem.querySelector(likeSelector));
 		})
 		.go(Util.waitForChild(document.getElementById('app'), '.playControls'));
 })();
