@@ -1,6 +1,7 @@
 var Domain = (() => {
 	function Domain() {
 		this._actions = {};
+		this.actionData = {};
 	}
 
 	Util.extend(Domain.prototype, {
@@ -49,11 +50,11 @@ var Domain = (() => {
 				return;
 			}
 
-			await Messages.send(Const.msg.REGISTER);
-
 			Messages.addListener(Const.msg.PLAY_PAUSE, () => Util.click(buttons.play));
 			Messages.addListener(Const.msg.NEXT, () => Util.click(buttons.next));
 			Messages.addListener(Const.msg.PREV, () => Util.click(buttons.prev));
+
+			await Messages.send(Const.msg.REGISTER);
 
 			window.addEventListener('unload', () => Messages.send(Const.msg.UNREGISTER));
 
@@ -61,12 +62,11 @@ var Domain = (() => {
 
 			this._info(Util.debounce(info => Messages.send(Const.msg.INFO, info), 50));
 
-			var actionData = {};
-			var sendActionUpdate = Util.debounce(() => Messages.send(Const.msg.ACTIONS, actionData), 50);
+			var sendActionUpdate = Util.debounce(() => Messages.send(Const.msg.ACTIONS, this.actionData), 50);
 
 			Util.asyncMap(this._actions, (setup, type) =>
 					setup(data => {
-						actionData[type] = data;
+						this.actionData[type] = data;
 						sendActionUpdate();
 					})
 			);
