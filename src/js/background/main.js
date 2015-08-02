@@ -61,7 +61,7 @@
 	Commands.addListener(Const.cmd.STOP, stop);
 
 	// Prune unresponsive tabs (in case of crashing, etc.)
-	TabMgr.each(tabId =>
+	TabMgr.each(({ tabId }) =>
 			Messages.send(Const.msg.ECHO, tabId)
 				.catch(() => TabMgr.remove(tabId))
 	);
