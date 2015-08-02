@@ -1,3 +1,4 @@
+/* global chrome */
 (() => {
 	function updateOrFetch(messageType, key) {
 		Messages.addListener(messageType, async (data, tabId) => {
@@ -59,6 +60,15 @@
 	}
 
 	Commands.addListener(Const.cmd.STOP, stop);
+
+	Messages.addListener(Const.msg.FOCUS_TAB, async () => {
+		var { tabId } = await TabMgr.first();
+		var { windowId } = await Util.apiToPromise(chrome.tabs.get)(tabId);
+		return await Promise.all([
+			Util.apiToPromise(chrome.tabs.update)(tabId, { active: true }),
+			Util.apiToPromise(chrome.windows.update)(windowId, { focused: true })
+		]);
+	});
 
 	// Prune unresponsive tabs (in case of crashing, etc.)
 	TabMgr.each(({ tabId }) =>

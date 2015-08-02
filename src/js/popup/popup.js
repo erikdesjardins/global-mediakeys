@@ -45,6 +45,12 @@
 	document.getElementById('next')
 		.addEventListener('click', () => Messages.send(Const.msg.NEXT));
 
+	document.getElementById('header')
+		.addEventListener('click', async () => {
+			await Messages.send(Const.msg.FOCUS_TAB);
+			window.close();
+		});
+
 	Messages.addListener(Const.msg.INFO, updateInfo);
 
 	Messages.addListener(Const.msg.ACTIONS, updateActions);

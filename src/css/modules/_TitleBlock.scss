@@ -7,6 +7,11 @@
 	background-color: $highlightColor;
 	text-shadow: $bgColor 0 0 1px;
 
+	&.isClickable {
+		cursor: pointer;
+		user-select: none;
+	}
+
 	&-title {
 		font-size: 15px;
 		padding: 0 5px;

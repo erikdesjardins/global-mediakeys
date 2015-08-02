@@ -8,6 +8,7 @@ var Const = (() => {
 			INFO: 'tab-info',
 			ACTIONS: 'tab-actions',
 			DO_ACTION: 'tab-do-action',
+			FOCUS_TAB: 'tab-focus',
 
 			PLAY_PAUSE: 'tab-play-pause',
 			NEXT: 'tab-next',

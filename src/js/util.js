@@ -25,6 +25,19 @@ var Util = (() => {
 		return object;
 	}
 
+	function apiToPromise(func) {
+		return (...args) =>
+			new Promise((resolve, reject) =>
+					func(...args, (...results) => {
+						if (chrome.runtime.lastError) {
+							reject(new Error(chrome.runtime.lastError));
+						} else {
+							resolve(results.length > 1 ? results : results[0]);
+						}
+					})
+			);
+	}
+
 	function isRefType(val) {
 		return Object(val) === val;
 	}
@@ -182,6 +195,7 @@ var Util = (() => {
 		extend,
 		each,
 		asyncMap,
+		apiToPromise,
 		isRefType,
 		isPromise,
 		debounce,
