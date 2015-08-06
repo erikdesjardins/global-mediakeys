@@ -133,11 +133,11 @@ var Util = (() => {
 		});
 	}
 
-	function waitForChild(ele, selector, { initialCheck } = {}) {
+	function waitForChild(ele, selector, { initialCheck = true } = {}) {
 		if (!ele) {
 			throw new TypeError('ele is undefined.');
 		}
-		if (initialCheck !== false) {
+		if (initialCheck) {
 			for (var child of Array.from(ele.children)) {
 				if (child.matches(selector)) {
 					return Promise.resolve();
