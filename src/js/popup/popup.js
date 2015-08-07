@@ -1,8 +1,8 @@
 (() => {
-	function updateInfo({ image, title, subtitle } = {}) {
-		document.body.style.backgroundImage = image;
+	function updateInfo({ title, subtitle, image = Gradient.createRandom({ sat: 0.25, val: 0.5 }) } = {}) {
 		document.getElementById('title').textContent = title;
 		document.getElementById('subtitle').textContent = subtitle;
+		document.body.style.backgroundImage = image;
 	}
 
 	function updateActions(actions = {}) {
@@ -58,7 +58,7 @@
 	// Not using the state from this message as it may be a background tab (e.g. if we pressed stop)
 	Messages.addListener(Const.msg.PLAY_STATE, fetchPlayState);
 
-	updateInfo({ image: Gradient.createRandom({ sat: 0.25, val: 0.5 }) });
+	updateInfo();
 
 	fetchInfo();
 	fetchActions();
