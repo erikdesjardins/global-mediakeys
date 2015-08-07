@@ -14,12 +14,12 @@
 			);
 		})
 		.setupInfo(async (callback) => {
-			var watchElem = document.querySelector('.playbackSoundBadge');
+			const watchElem = document.querySelector('.playbackSoundBadge');
 
 			function sendUpdate() {
-				var imageElem = watchElem.querySelector('.image .sc-artwork');
-				var titleElem = watchElem.querySelector('.playbackSoundBadge__title span:last-of-type');
-				var subtitleElem = watchElem.querySelector('.playbackSoundBadge__context');
+				const imageElem = watchElem.querySelector('.image .sc-artwork');
+				const titleElem = watchElem.querySelector('.playbackSoundBadge__title span:last-of-type');
+				const subtitleElem = watchElem.querySelector('.playbackSoundBadge__context');
 
 				callback({
 					image: getComputedStyle(imageElem).backgroundImage.replace('50x50', '250x250'),
@@ -39,8 +39,8 @@
 			sendUpdate();
 		})
 		.setupAction('like', async (callback) => {
-			var rootElem = document.querySelector('.playbackSoundBadge');
-			var likeSelector = '.playbackSoundBadge__like';
+			const rootElem = document.querySelector('.playbackSoundBadge');
+			const likeSelector = '.playbackSoundBadge__like';
 
 			function sendUpdate(likeButton) {
 				callback({

@@ -1,7 +1,7 @@
 /* global chrome */
-var Storage = (() => {
+const Storage = (() => {
 	function set(key, value) {
-		var obj = {};
+		const obj = {};
 		obj[key] = value;
 		return new Promise((resolve, reject) => {
 			chrome.storage.local.set(obj, () =>
@@ -24,10 +24,10 @@ var Storage = (() => {
 		});
 	}
 
-	var hasListener = {};
+	const hasListener = {};
 
 	async function getAndSetOnSuspend(key, defaultValue) {
-		var val = await get(key, defaultValue);
+		const val = await get(key, defaultValue);
 		if (!Util.isRefType(val)) {
 			console.warn('Key:', key, 'value:', val, 'is not a reference type - changes will not be saved.');
 		} else if (hasListener[key]) {

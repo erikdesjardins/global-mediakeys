@@ -3,7 +3,7 @@
 // https://github.com/bgrins/TinyColor
 // Brian Grinstead, MIT License
 
-var Gradient = (() => {
+const Gradient = (() => {
 	// `hsvToRgb`
 	// Converts an HSV color value to RGB.
 	// *Assumes:* h,s,v are contained in [0, 1]
@@ -11,7 +11,7 @@ var Gradient = (() => {
 	function hsvToRgb(h, s, v) {
 		h *= 6;
 
-		var i = Math.floor(h),
+		let i = Math.floor(h),
 			f = h - i,
 			p = v * (1 - s),
 			q = v * (1 - f * s),

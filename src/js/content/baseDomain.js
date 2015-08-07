@@ -1,4 +1,4 @@
-var Domain = (() => {
+const Domain = (() => {
 	function Domain() {
 		this._actions = {};
 		this.actionData = {};
@@ -43,7 +43,7 @@ var Domain = (() => {
 				return;
 			}
 
-			var buttons = this._buttons();
+			const buttons = this._buttons();
 
 			if (!buttons.play) {
 				console.warn('No play button found.');
@@ -62,7 +62,7 @@ var Domain = (() => {
 
 			this._info(Util.debounce(info => Messages.send(Const.msg.INFO, info), 50));
 
-			var sendActionUpdate = Util.debounce(() => Messages.send(Const.msg.ACTIONS, this.actionData), 50);
+			const sendActionUpdate = Util.debounce(() => Messages.send(Const.msg.ACTIONS, this.actionData), 50);
 
 			Util.asyncMap(this._actions, (setup, type) =>
 					setup(data => {

@@ -1,6 +1,6 @@
 /* global chrome */
-var Commands = (() => {
-	var listeners = {};
+const Commands = (() => {
+	const listeners = {};
 
 	function addListener(commandName, callback) {
 		if (commandName in listeners) {

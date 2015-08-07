@@ -1,12 +1,12 @@
-var Templates = (() => {
+const Templates = (() => {
 	function populate(templateId, map) {
-		var template = document.getElementById(templateId);
+		const template = document.getElementById(templateId);
 
 		if (!template || !template.content) {
 			throw new Error(`#${templateId} is not a valid template.`);
 		}
 
-		var wrapper = document.createElement('p');
+		const wrapper = document.createElement('p');
 
 		wrapper.appendChild(document.importNode(template.content, true));
 		wrapper.innerHTML = wrapper.innerHTML.replace(/\{\{(\w+)\}\}/g, (m, key) => {

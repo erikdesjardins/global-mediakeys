@@ -15,9 +15,9 @@
 		})
 		.setupInfo(callback => {
 			async function sendUpdate(parent) {
-				var imageElem = await Util.descendant(parent, '.video-thumb img');
-				var titleElem = await Util.descendant(parent, '#watch-headline-title');
-				var subtitleElem = await Util.descendant(parent, '.yt-user-info');
+				const imageElem = await Util.descendant(parent, '.video-thumb img');
+				const titleElem = await Util.descendant(parent, '#watch-headline-title');
+				const subtitleElem = await Util.descendant(parent, '.yt-user-info');
 
 				await Util.waitForMutation(
 					imageElem,
@@ -40,7 +40,7 @@
 			);
 		})
 		.setupAction('watch-later', callback => {
-			var button = document.querySelector('.ytp-button-watch-later');
+			const button = document.querySelector('.ytp-button-watch-later');
 
 			function sendUpdate() {
 				callback({

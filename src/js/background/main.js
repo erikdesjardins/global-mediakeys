@@ -5,7 +5,7 @@
 			if (tabId) { // From tab
 				await TabMgr.update(tabId, key, data);
 			} else { // From popup
-				var { tab } = await TabMgr.first();
+				const { tab } = await TabMgr.first();
 				return tab[key];
 			}
 		});
@@ -13,14 +13,14 @@
 
 	function forwardToTab(messageType) {
 		Messages.addListener(messageType, async (data) => {
-			var { tabId } = await TabMgr.first();
+			const { tabId } = await TabMgr.first();
 			return await Messages.send(messageType, tabId, data);
 		});
 	}
 
 	function getTabSender(messageType) {
 		return async () => {
-			var { tabId } = await TabMgr.first();
+			const { tabId } = await TabMgr.first();
 			try {
 				await Messages.send(messageType, tabId);
 			} catch (e) {
@@ -39,15 +39,15 @@
 
 	forwardToTab(Const.msg.DO_ACTION);
 
-	var playPause = getTabSender(Const.msg.PLAY_PAUSE);
+	const playPause = getTabSender(Const.msg.PLAY_PAUSE);
 	Commands.addListener(Const.cmd.PLAY_PAUSE, playPause);
 	Messages.addListener(Const.msg.PLAY_PAUSE, playPause);
 
-	var next = getTabSender(Const.msg.NEXT);
+	const next = getTabSender(Const.msg.NEXT);
 	Commands.addListener(Const.cmd.NEXT, next);
 	Messages.addListener(Const.msg.NEXT, next);
 
-	var prev = getTabSender(Const.msg.PREV);
+	const prev = getTabSender(Const.msg.PREV);
 	Commands.addListener(Const.cmd.PREV, prev);
 	Messages.addListener(Const.msg.PREV, prev);
 
@@ -68,8 +68,8 @@
 	Commands.addListener(Const.cmd.STOP, stop);
 
 	Messages.addListener(Const.msg.FOCUS_TAB, async () => {
-		var { tabId } = await TabMgr.first();
-		var { windowId } = await Util.apiToPromise(chrome.tabs.get)(tabId);
+		const { tabId } = await TabMgr.first();
+		const { windowId } = await Util.apiToPromise(chrome.tabs.get)(tabId);
 		return await Promise.all([
 			Util.apiToPromise(chrome.tabs.update)(tabId, { active: true }),
 			Util.apiToPromise(chrome.windows.update)(windowId, { focused: true })

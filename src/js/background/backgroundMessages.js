@@ -1,6 +1,6 @@
 /* global chrome */
-var Messages = (() => {
-	var listeners = {};
+const Messages = (() => {
+	const listeners = {};
 
 	function addListener(messageType, callback) {
 		if (messageType in listeners) {
@@ -11,14 +11,13 @@ var Messages = (() => {
 	}
 
 	chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-		var messageType = request.type;
-		var data = request.data;
-		var tabId = sender.tab && sender.tab.id;
+		const { type, data } = request;
+		const tabId = sender.tab && sender.tab.id;
 
-		if (!(messageType in listeners)) {
+		if (!(type in listeners)) {
 			console.error('Unrecognised message type:', request, sender);
 		} else {
-			var response = listeners[messageType](data, tabId);
+			const response = listeners[type](data, tabId);
 
 			if (Util.isPromise(response)) {
 				response.then(data => sendResponse({ data }), e => sendResponse());
@@ -29,15 +28,13 @@ var Messages = (() => {
 		}
 	});
 
-	function sendMessage(messageType, tabId, data) {
-		var message = {
-			type: messageType,
-			data: data
-		};
-		var target = parseInt(tabId, 10);
+	function sendMessage(type, tabId, data) {
+		const message = { type, data };
+		const target = parseInt(tabId, 10);
+
 		return new Promise((resolve, reject) => {
 			chrome.tabs.sendMessage(target, message, response =>
-					response ? resolve(response.data) : reject(new Error(`Received empty response from type: ${messageType}`))
+					response ? resolve(response.data) : reject(new Error(`Received empty response from type: ${type}`))
 			);
 		});
 	}

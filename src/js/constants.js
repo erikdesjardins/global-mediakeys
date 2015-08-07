@@ -1,4 +1,4 @@
-var Const = {
+const Const = {
 	msg: {
 		REGISTER: 'tab-register',
 		UNREGISTER: 'tab-unregister',

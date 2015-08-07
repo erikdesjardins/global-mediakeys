@@ -15,9 +15,9 @@
 		})
 		.setupInfo(callback => {
 			function sendUpdate(parent) {
-				var imageElem = parent.querySelector('#playingAlbumArt');
-				var titleElem = parent.querySelector('#player-song-title');
-				var subtitleElem = parent.querySelector('.player-artist-album-wrapper');
+				const imageElem = parent.querySelector('#playingAlbumArt');
+				const titleElem = parent.querySelector('#player-song-title');
+				const subtitleElem = parent.querySelector('.player-artist-album-wrapper');
 
 				callback({
 					image: `url(${imageElem.src.replace('=s90', '=s250')})`,
@@ -33,7 +33,7 @@
 			);
 		})
 		.setupAction('thumbs-up', async (callback) => {
-			var thumbUpButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
+			const thumbUpButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
 
 			function sendUpdate() {
 				callback({
@@ -52,7 +52,7 @@
 			return () => Util.click(thumbUpButton);
 		})
 		.setupAction('thumbs-down', async (callback) => {
-			var thumbDownButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
+			const thumbDownButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
 
 			function sendUpdate() {
 				callback({

@@ -1,12 +1,12 @@
-var TabMgr = (() => {
-	var isReady = Storage.getWithAutosave(Const.storage.TABS, []);
+const TabMgr = (() => {
+	const isReady = Storage.getWithAutosave(Const.storage.TABS, []);
 
 	function _findIndex(tabs, tabId) {
 		return tabs.findIndex(tab => tab.id === tabId);
 	}
 
 	function _validIndex(tabs, tabId) {
-		var index = _findIndex(tabs, tabId);
+		const index = _findIndex(tabs, tabId);
 		if (index === -1) {
 			throw new Error(`Tab: ${tabId} not found.`);
 		} else {
@@ -35,7 +35,7 @@ var TabMgr = (() => {
 	}
 
 	async function add(tabId) {
-		var tabs = await isReady;
+		const tabs = await isReady;
 		if (_exists(tabs, tabId)) {
 			_remove(tabs, tabId);
 			console.warn('Tab:', tabId, 'was not unregistered, will be overwritten.');
@@ -45,7 +45,7 @@ var TabMgr = (() => {
 	}
 
 	async function remove(tabId) {
-		var tabs = await isReady;
+		const tabs = await isReady;
 		if (!_exists(tabs, tabId)) {
 			throw new Error(`Cannot unregister non-extant tab: ${tabId}`);
 		} else {
@@ -55,11 +55,11 @@ var TabMgr = (() => {
 	}
 
 	async function update(tabId, key, value) {
-		var tabs = await isReady;
+		const tabs = await isReady;
 		if (!_exists(tabs, tabId)) {
 			throw new Error(`Cannot update unregistered tab: ${tabId}`);
 		} else {
-			var tab = _get(tabs, tabId);
+			const tab = _get(tabs, tabId);
 			if (tab.data[key] !== value) {
 				tab.data[key] = value;
 				_promote(tabs, tabId);
@@ -69,7 +69,7 @@ var TabMgr = (() => {
 	}
 
 	async function first() {
-		var tabs = await isReady;
+		const tabs = await isReady;
 		if (!tabs[0]) {
 			throw new Error('There are no registered tabs.');
 		} else {
@@ -78,7 +78,7 @@ var TabMgr = (() => {
 	}
 
 	async function each(callback) {
-		var tabs = await isReady;
+		const tabs = await isReady;
 		await Promise.all(tabs.map(tab => callback({ tabId: tab.id, tab: tab.data })));
 	}
 

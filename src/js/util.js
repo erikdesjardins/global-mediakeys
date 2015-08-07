@@ -1,7 +1,7 @@
-var Util = (() => {
+const Util = (() => {
 	function extend(target, ...objects) {
 		objects.forEach(extendObj => {
-			for (var prop in extendObj) {
+			for (let prop in extendObj) {
 				if (extendObj.hasOwnProperty(prop)) {
 					target[prop] = extendObj[prop];
 				}
@@ -11,7 +11,7 @@ var Util = (() => {
 	}
 
 	function each(object, callback) {
-		for (var key in object) {
+		for (let key in object) {
 			if (object.hasOwnProperty(key)) {
 				callback(object[key], key, object);
 			}
@@ -47,7 +47,7 @@ var Util = (() => {
 	}
 
 	function debounce(callback, delay) {
-		var timeout;
+		let timeout;
 
 		function exec(...args) {
 			clearTimeout(timeout);
@@ -85,7 +85,7 @@ var Util = (() => {
 		if (!ele) {
 			throw new TypeError('ele is undefined.');
 		}
-		var observer = new MutationObserver(mutations => mutations.some(callback));
+		const observer = new MutationObserver(mutations => mutations.some(callback));
 		observer.observe(ele, options);
 		return observer;
 	}
@@ -101,8 +101,8 @@ var Util = (() => {
 	}
 
 	async function onDescendantMutation(ele, selector, options, callback, { initialCallback } = {}) {
-		var child = await descendant(ele, selector);
-		var observer = onMutation(child, options, callback, { initialCallback });
+		let child = await descendant(ele, selector);
+		let observer = onMutation(child, options, callback, { initialCallback });
 
 		function _refreshObserver(e) {
 			observer.disconnect();
@@ -112,7 +112,7 @@ var Util = (() => {
 
 		observe(ele, { childList: true, subtree: true }, mutation => {
 			if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
-				var e = ele.querySelector(selector);
+				const e = ele.querySelector(selector);
 				if (e && e !== child) {
 					_refreshObserver(e);
 				}
@@ -123,7 +123,7 @@ var Util = (() => {
 
 	function waitForMutation(ele, options, callback) {
 		return new Promise(resolve => {
-			var observer = observe(ele, options, mutation => {
+			const observer = observe(ele, options, mutation => {
 				if (!callback || callback(mutation)) {
 					observer.disconnect();
 					resolve();
@@ -138,14 +138,14 @@ var Util = (() => {
 			throw new TypeError('ele is undefined.');
 		}
 		if (initialCheck) {
-			for (var child of Array.from(ele.children)) {
+			for (let child of Array.from(ele.children)) {
 				if (child.matches(selector)) {
 					return Promise.resolve();
 				}
 			}
 		}
 		return new Promise(resolve => {
-			var observer = observe(ele, { childList: true }, mutation =>
+			const observer = observe(ele, { childList: true }, mutation =>
 					Array.from(mutation.addedNodes).some(node => {
 						if (node.nodeType === Node.ELEMENT_NODE && node.matches(selector)) {
 							observer.disconnect();
@@ -173,14 +173,14 @@ var Util = (() => {
 		if (!ele) {
 			throw new TypeError('ele is undefined.');
 		}
-		var child = ele.querySelector(selector);
+		const child = ele.querySelector(selector);
 		if (child) {
 			return Promise.resolve(child);
 		}
 		return new Promise(resolve => {
-			var observer = observe(ele, { childList: true, subtree: true }, mutation => {
+			const observer = observe(ele, { childList: true, subtree: true }, mutation => {
 				if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
-					var child = ele.querySelector(selector);
+					const child = ele.querySelector(selector);
 					if (child) {
 						observer.disconnect();
 						resolve(child);
