@@ -21,8 +21,11 @@
 	function getTabSender(messageType) {
 		return async () => {
 			var { tabId } = await TabMgr.first();
-			await Messages.send(messageType, tabId)
-				.catch(() => TabMgr.remove(tabId));
+			try {
+				await Messages.send(messageType, tabId);
+			} catch (e) {
+				await TabMgr.remove(tabId);
+			}
 		}
 	}
 
@@ -53,8 +56,11 @@
 			if (tab.isPlaying) {
 				// Avoid promoting the tab when its state changes
 				tab.isPlaying = false;
-				await Messages.send(Const.msg.PLAY_PAUSE, tabId)
-					.catch(() => TabMgr.remove(tabId));
+				try {
+					await Messages.send(Const.msg.PLAY_PAUSE, tabId);
+				} catch (e) {
+					await TabMgr.remove(tabId);
+				}
 			}
 		});
 	}
