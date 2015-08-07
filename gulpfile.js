@@ -23,7 +23,7 @@
 	gulp.task('build', function() {
 		var babelStream = gulp.src(files.babel, { cwd: files.cwd })
 			.pipe(plumber())
-			.pipe(babel({ stage: 1, blacklist: ['flow', 'react', 'reactCompat', 'jscript'] }))
+			.pipe(babel({ stage: 1, optional: ['asyncToGenerator'], blacklist: ['es6.blockScoping', 'es6.constants', 'es6.forOf', 'flow', 'react', 'reactCompat', 'jscript'] }))
 			.pipe(plumber.stop());
 
 		var sassStream = gulp.src(files.sass, { cwd: files.cwd })

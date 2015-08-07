@@ -4,7 +4,7 @@
 	"short_name": "GMK",
 	"description": "Allows websites that play media to be controlled with global keyboard shortcuts.",
 	"version": "1.2.0",
-	"minimum_chrome_version": "36",
+	"minimum_chrome_version": "39",
 	"permissions": [
 		"storage"
 	],
