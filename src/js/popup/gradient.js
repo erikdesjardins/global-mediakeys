@@ -17,24 +17,22 @@ var Gradient = (() => {
 			q = v * (1 - f * s),
 			t = v * (1 - (1 - f) * s),
 			mod = i % 6,
-			r = [v, q, p, p, t, v][mod] * 255,
-			g = [t, v, v, q, p, p][mod] * 255,
-			b = [p, p, t, v, v, q][mod] * 255;
+			r = Math.round([v, q, p, p, t, v][mod] * 255),
+			g = Math.round([t, v, v, q, p, p][mod] * 255),
+			b = Math.round([p, p, t, v, v, q][mod] * 255);
 
 		return { r, g, b };
 	}
 
-	function toHexPair(decimal) {
-		return ('00' + decimal.toString(16)).slice(-2);
-	}
-
 	function rgbToString({ r, g, b }) {
-		return '#' + toHexPair(r) + toHexPair(g) + toHexPair(b);
+		return `rgb(${r}, ${g}, ${b})`;
 	}
 
-	function createRandom(hue = 0.8, sat = 0.25, colorStops = 2, angle = Math.floor(Math.random() * 360) + 'deg') {
-		var colors = new Array(colorStops).fill(0)
-			.map(() => rgbToString(hsvToRgb(hue, sat, Math.random())));
+	function createRandom({ hue, sat, val, colorStops = 2, angle = Math.floor(Math.random() * 360) + 'deg' } = {}) {
+		const colors = new Array(colorStops).fill(0).map(() => {
+			const [h = Math.random(), s = Math.random(), v = Math.random()] = [hue, sat, val];
+			return rgbToString(hsvToRgb(h, s, v));
+		});
 		return `linear-gradient(${[angle, ...colors].join(',')})`;
 	}
 
