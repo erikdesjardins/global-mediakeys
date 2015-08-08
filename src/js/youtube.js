@@ -4,17 +4,17 @@ import Domain from'./modules/content/Domain';
 class YouTube extends Domain {
 	getButtons() {
 		return {
-			play: document.querySelector('.ytp-button-play, .ytp-button-pause'),
-			next: document.querySelector('.ytp-button-next'),
-			prev: document.querySelector('.ytp-button-prev')
+			play: document.querySelector('.ytp-play-button'),
+			next: document.querySelector('.ytp-next-button'),
+			prev: document.querySelector('.ytp-prev-button')
 		};
 	}
 
 	setupPlayState(callback, playButton) {
 		Util.onMutation(
 			playButton,
-			{ attributes: true, attributeFilter: ['class'] },
-			() => callback(playButton.classList.contains('ytp-button-pause')),
+			{ attributes: true, attributeFilter: ['aria-label'] },
+			() => callback(playButton.getAttribute('aria-label').toLowerCase().includes('pause')),
 			{ initialCallback: true }
 		);
 	}
@@ -25,13 +25,10 @@ class YouTube extends Domain {
 			const titleElem = await Util.descendant(parent, '#watch-headline-title');
 			const subtitleElem = await Util.descendant(parent, '.yt-user-info');
 
-			await Util.waitForMutation(
-				imageElem,
-				{ attributes: true, attributeFilter: ['src'] }
-			);
+			const imageUrl = imageElem.getAttribute('data-thumb') || imageElem.src;
 
 			callback({
-				image: `url(${imageElem.src.replace('/s88', '/s250')})`,
+				image: `url(${imageUrl.replace('/s88', '/s250')})`,
 				title: titleElem.textContent,
 				subtitle: subtitleElem.textContent
 			});
@@ -48,18 +45,18 @@ class YouTube extends Domain {
 
 	getActions() {
 		return [callback => {
-			const button = document.querySelector('.ytp-button-watch-later');
+			const button = document.querySelector('.ytp-watch-later-button');
 
 			function sendUpdate() {
 				callback({
 					icon: '\uf017',
-					state: button.classList.contains('html5-async-success')
+					state: button.innerHTML.includes('#ytp-svg-48')
 				});
 			}
 
 			Util.onMutation(
 				button,
-				{ attributes: true, attributeFilter: ['class'] },
+				{ childList: true },
 				sendUpdate,
 				{ initialCallback: true }
 			);
