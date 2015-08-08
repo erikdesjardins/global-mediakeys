@@ -4,57 +4,32 @@ import * as Messages from './messages';
 
 export default class Domain {
 	constructor() {
-		this._actions = {};
-		this.actionData = {};
+		this.actionData = [];
 	}
 
-	setupButtons(func) {
-		if (this._buttons) {
-			console.error('setupButtons() has already been called.');
-		} else {
-			this._buttons = func;
-		}
-		return this;
+	getButtons() {
+		throw new Error('getButtons() is not defined.');
 	}
 
-	setupPlayState(func) {
-		if (this._playState) {
-			console.error('setupPlayState() has already been called.');
-		} else {
-			this._playState = func;
-		}
-		return this;
+	setupPlayState(callback, playButton) {
+		throw new Error('setupPlayState(callback, playButton) is not defined.');
 	}
 
-	setupInfo(func) {
-		if (this._info) {
-			console.error('setupInfo() has already been called.');
-		} else {
-			this._info = func;
-		}
-		return this;
+	setupInfo(callback) {
+		throw new Error('setupInfo(callback) is not defined.');
 	}
 
-	setupAction(type, func) {
-		if (type in this._actions) {
-			console.error('Action:', type, 'already exists.');
-		} else {
-			this._actions[type] = func;
-		}
-		return this;
+	getActions() {
+		return [];
 	}
 
-	async go(setup) {
-		if (setup) {
-			setup.then(() => this.go());
-			return;
-		}
+	async go(waitFor) {
+		await waitFor;
 
-		const buttons = this._buttons();
+		const buttons = this.getButtons();
 
 		if (!buttons.play) {
-			console.warn('No play button found.');
-			return;
+			throw new Error('No play button found.');
 		}
 
 		Messages.addListener(Const.msg.PLAY_PAUSE, () => Util.click(buttons.play));
@@ -65,19 +40,19 @@ export default class Domain {
 
 		window.addEventListener('unload', () => Messages.send(Const.msg.UNREGISTER));
 
-		this._playState(Util.debounce(state => Messages.send(Const.msg.PLAY_STATE, state), 50), buttons.play);
+		this.setupPlayState(Util.debounce(state => Messages.send(Const.msg.PLAY_STATE, state), 50), buttons.play);
+		this.setupInfo(Util.debounce(info => Messages.send(Const.msg.INFO, info), 50));
 
-		this._info(Util.debounce(info => Messages.send(Const.msg.INFO, info), 50));
-
+		const actions = this.getActions();
 		const sendActionUpdate = Util.debounce(() => Messages.send(Const.msg.ACTIONS, this.actionData), 50);
 
-		Util.asyncMap(this._actions, (setup, type) =>
+		await Util.asyncMap(actions, (setup, i) =>
 				setup(data => {
-					this.actionData[type] = data;
+					this.actionData[i] = data;
 					sendActionUpdate();
 				})
 		);
 
-		Messages.addListener(Const.msg.DO_ACTION, type => this._actions[type]());
+		Messages.addListener(Const.msg.DO_ACTION, i => actions[i]());
 	}
 }

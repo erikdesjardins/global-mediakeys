@@ -1,21 +1,25 @@
 import * as Util from'./modules/util';
 import Domain from'./modules/content/Domain';
 
-new Domain()
-	.setupButtons(() => ({
-		play: document.querySelector('sj-icon-button[data-id="play-pause"]'),
-		next: document.querySelector('sj-icon-button[data-id="forward"]'),
-		prev: document.querySelector('sj-icon-button[data-id="rewind"]')
-	}))
-	.setupPlayState((callback, playButton) => {
+class GooglePlayMusic extends Domain {
+	getButtons() {
+		return {
+			play: document.querySelector('sj-icon-button[data-id="play-pause"]'),
+			next: document.querySelector('sj-icon-button[data-id="forward"]'),
+			prev: document.querySelector('sj-icon-button[data-id="rewind"]')
+		};
+	}
+
+	setupPlayState(callback, playButton) {
 		Util.onMutation(
 			playButton,
 			{ attributes: true, attributeFilter: ['class'] },
 			() => callback(playButton.classList.contains('playing')),
 			{ initialCallback: true }
 		);
-	})
-	.setupInfo(callback => {
+	}
+
+	setupInfo(callback) {
 		function sendUpdate(parent) {
 			const imageElem = parent.querySelector('#playingAlbumArt');
 			const titleElem = parent.querySelector('#player-song-title');
@@ -33,43 +37,47 @@ new Domain()
 			{ childList: true },
 			sendUpdate
 		);
-	})
-	.setupAction('thumbs-up', async (callback) => {
-		const thumbUpButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
+	}
 
-		function sendUpdate() {
-			callback({
-				icon: '\uf164',
-				state: thumbUpButton.getAttribute('aria-label').toLowerCase().includes('undo')
-			});
-		}
+	getActions() {
+		return [async (callback) => {
+			const thumbUpButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
 
-		Util.onMutation(
-			thumbUpButton,
-			{ attributes: true, attributeFilter: ['aria-label'] },
-			sendUpdate,
-			{ initialCallback: true }
-		);
+			function sendUpdate() {
+				callback({
+					icon: '\uf164',
+					state: thumbUpButton.getAttribute('aria-label').toLowerCase().includes('undo')
+				});
+			}
 
-		return () => Util.click(thumbUpButton);
-	})
-	.setupAction('thumbs-down', async (callback) => {
-		const thumbDownButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
+			Util.onMutation(
+				thumbUpButton,
+				{ attributes: true, attributeFilter: ['aria-label'] },
+				sendUpdate,
+				{ initialCallback: true }
+			);
 
-		function sendUpdate() {
-			callback({
-				icon: '\uf165',
-				state: thumbDownButton.getAttribute('aria-label').toLowerCase().includes('undo')
-			});
-		}
+			return () => Util.click(thumbUpButton);
+		}, async (callback) => {
+			const thumbDownButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
 
-		Util.onMutation(
-			thumbDownButton,
-			{ attributes: true, attributeFilter: ['aria-label'] },
-			sendUpdate,
-			{ initialCallback: true }
-		);
+			function sendUpdate() {
+				callback({
+					icon: '\uf165',
+					state: thumbDownButton.getAttribute('aria-label').toLowerCase().includes('undo')
+				});
+			}
 
-		return () => Util.click(thumbDownButton);
-	})
-	.go(Util.waitForEvent(window, 'load'));
+			Util.onMutation(
+				thumbDownButton,
+				{ attributes: true, attributeFilter: ['aria-label'] },
+				sendUpdate,
+				{ initialCallback: true }
+			);
+
+			return () => Util.click(thumbDownButton);
+		}];
+	}
+}
+
+new GooglePlayMusic().go(Util.waitForEvent(window, 'load'));

@@ -17,11 +17,11 @@ export function each(object, callback) {
 	}
 }
 
-export async function asyncMap(object, callback) {
-	await Promise.all(Object.getOwnPropertyNames(object).map(key => (async () =>
-		(object[key] = await callback(object[key], key, object))
+export async function asyncMap(arr, callback) {
+	await Promise.all(arr.map((val, i) => (async () =>
+		(arr[i] = await callback(val, i, arr))
 	)()));
-	return object;
+	return arr;
 }
 
 export function apiToPromise(func) {

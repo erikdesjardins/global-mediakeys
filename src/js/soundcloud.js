@@ -1,21 +1,25 @@
 import * as Util from'./modules/util';
 import Domain from'./modules/content/Domain';
 
-new Domain()
-	.setupButtons(() => ({
-		play: document.querySelector('.playControls .playControl'),
-		next: document.querySelector('.playControls .skipControl__next'),
-		prev: document.querySelector('.playControls .skipControl__previous')
-	}))
-	.setupPlayState((callback, playButton) => {
+class Soundcloud extends Domain {
+	getButtons() {
+		return {
+			play: document.querySelector('.playControls .playControl'),
+			next: document.querySelector('.playControls .skipControl__next'),
+			prev: document.querySelector('.playControls .skipControl__previous')
+		};
+	}
+
+	setupPlayState(callback, playButton) {
 		Util.onMutation(
 			playButton,
 			{ attributes: true, attributeFilter: ['class'] },
 			() => callback(playButton.classList.contains('playing')),
 			{ initialCallback: true }
 		);
-	})
-	.setupInfo(async (callback) => {
+	}
+
+	async setupInfo(callback) {
 		const watchElem = document.querySelector('.playbackSoundBadge');
 
 		function sendUpdate() {
@@ -39,26 +43,31 @@ new Domain()
 		await Util.waitForChild(watchElem, '*');
 
 		sendUpdate();
-	})
-	.setupAction('like', async (callback) => {
-		const rootElem = document.querySelector('.playbackSoundBadge');
-		const likeSelector = '.playbackSoundBadge__like';
+	}
 
-		function sendUpdate(likeButton) {
-			callback({
-				icon: '\uf004',
-				state: likeButton.classList.contains('sc-button-selected')
-			});
-		}
+	getActions() {
+		return [async (callback) => {
+			const rootElem = document.querySelector('.playbackSoundBadge');
+			const likeSelector = '.playbackSoundBadge__like';
 
-		await Util.onDescendantMutation(
-			rootElem,
-			likeSelector,
-			{ attributes: true, attributeFilter: ['class'] },
-			sendUpdate,
-			{ initialCallback: true }
-		);
+			function sendUpdate(likeButton) {
+				callback({
+					icon: '\uf004',
+					state: likeButton.classList.contains('sc-button-selected')
+				});
+			}
 
-		return () => Util.click(rootElem.querySelector(likeSelector));
-	})
-	.go(Util.waitForChild(document.getElementById('app'), '.playControls'));
+			await Util.onDescendantMutation(
+				rootElem,
+				likeSelector,
+				{ attributes: true, attributeFilter: ['class'] },
+				sendUpdate,
+				{ initialCallback: true }
+			);
+
+			return () => Util.click(rootElem.querySelector(likeSelector));
+		}];
+	}
+}
+
+new Soundcloud().go(Util.waitForChild(document.getElementById('app'), '.playControls'));

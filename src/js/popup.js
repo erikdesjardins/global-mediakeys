@@ -10,13 +10,13 @@ function updateInfo({ title, subtitle, image = randomGradient({ sat: 0.25, val: 
 	document.body.style.backgroundImage = image;
 }
 
-function updateActions(actions = {}) {
+function updateActions(actions = []) {
 	const container = document.getElementById('actions-container');
 	Util.empty(container);
-	Util.each(actions, (action, type) => {
+	actions.forEach((action, i) => {
 		const ele = populate('action-button', action);
 		const button = ele.firstElementChild;
-		button.addEventListener('click', () => Messages.send(Const.msg.DO_ACTION, type));
+		button.addEventListener('click', () => Messages.send(Const.msg.DO_ACTION, i));
 		button.classList.toggle('isInactive', !action.state);
 		container.appendChild(ele);
 	});
