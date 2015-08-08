@@ -1,5 +1,4 @@
 /* global chrome */
-import * as Const from '../constants';
 import { isPromise } from '../util';
 
 const listeners = {};
@@ -40,5 +39,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		}
 	}
 });
-
-addListener(Const.msg.ECHO, data => data);

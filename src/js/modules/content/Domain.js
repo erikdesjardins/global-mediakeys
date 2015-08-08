@@ -32,6 +32,8 @@ export default class Domain {
 			throw new Error('No play button found.');
 		}
 
+		Messages.addListener(Const.msg.ECHO, data => data);
+
 		Messages.addListener(Const.msg.PLAY_PAUSE, () => Util.click(buttons.play));
 		Messages.addListener(Const.msg.NEXT, () => Util.click(buttons.next));
 		Messages.addListener(Const.msg.PREV, () => Util.click(buttons.prev));

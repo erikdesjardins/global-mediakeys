@@ -1,6 +1,4 @@
 /* global chrome */
-import * as Const from '../constants';
-
 const listeners = {};
 
 export function addListener(messageType, callback) {
@@ -34,5 +32,3 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 		// Responses handled by the background page
 	}
 });
-
-addListener(Const.msg.ECHO, data => data);
