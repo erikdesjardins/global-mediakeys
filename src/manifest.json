@@ -16,43 +16,22 @@
 	},
 	"background": {
 		"scripts": [
-			"js/vendor/browser-polyfill.min.js",
-			"js/constants.js",
-			"js/util.js",
-			"js/background/backgroundMessages.js",
-			"js/background/commands.js",
-			"js/background/storage.js",
-			"js/background/tabManager.js",
-			"js/background/main.js"
+			"js/background.js"
 		],
 		"persistent": false
 	},
 	"content_scripts": [
 		{
-			"matches": [
-				"*://play.google.com/music/listen*",
-				"*://soundcloud.com/*",
-				"*://*.youtube.com/*"
-			],
-			"js": [
-				"js/vendor/browser-polyfill.min.js",
-				"js/constants.js",
-				"js/util.js",
-				"js/content/contentMessages.js",
-				"js/content/baseDomain.js"
-			]
-		},
-		{
 			"matches": ["*://play.google.com/music/listen*"],
-			"js": ["js/content/domains/googlePlayMusic.js"]
+			"js": ["js/googlePlayMusic.js"]
 		},
 		{
 			"matches": ["*://soundcloud.com/*"],
-			"js": ["js/content/domains/soundcloud.js"]
+			"js": ["js/soundcloud.js"]
 		},
 		{
 			"matches": ["*://*.youtube.com/*"],
-			"js": ["js/content/domains/youtube.js"]
+			"js": ["js/youtube.js"]
 		}
 	],
 	"browser_action": {
