@@ -1,5 +1,5 @@
 /* global chrome */
-import * as Util from '../util';
+import { isRefType } from '../util';
 
 export function set(key, value) {
 	const obj = {};
@@ -29,7 +29,7 @@ const hasListener = {};
 
 async function getAndSetOnSuspend(key, defaultValue) {
 	const val = await get(key, defaultValue);
-	if (!Util.isRefType(val)) {
+	if (!isRefType(val)) {
 		console.warn('Key:', key, 'value:', val, 'is not a reference type - changes will not be saved.');
 	} else if (hasListener[key]) {
 		console.error('Key:', key, 'has been previously fetched with autosave.');
