@@ -26,7 +26,9 @@
 		del('dist/*', cb);
 	});
 
-	gulp.task('build', ['babel', 'sass', 'copy'], function(cb) {
+	gulp.task('build', ['browserify', 'sass', 'copy']);
+
+	gulp.task('browserify', ['babel'], function(cb) {
 		globby(['dist/js/*.js'], function(err, entries) {
 			if (err) {
 				cb(err);
