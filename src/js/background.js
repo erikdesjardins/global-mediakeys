@@ -7,9 +7,9 @@ import * as TabMgr from'./modules/background/tabManager';
 
 function updateOrFetch(messageType, key) {
 	Messages.addListener(messageType, async (data, tabId) => {
-		if (tabId) { // From tab
+		if (tabId) { // From tab, update stored data
 			await TabMgr.update(tabId, key, data);
-		} else { // From popup
+		} else { // From popup, respond with stored data
 			const { tab } = await TabMgr.first();
 			return tab[key];
 		}
