@@ -34,7 +34,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		const response = listeners[type](data, tabId);
 
 		if (isPromise(response)) {
-			response.then(data => sendResponse({ data }), e => sendResponse());
+			response
+				.then(data => sendResponse({ data }))
+				.catch(error => {
+					sendResponse();
+					throw error;
+				});
 			return true;
 		} else {
 			sendResponse({ data: response });
