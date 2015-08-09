@@ -1,8 +1,8 @@
-import * as Const from'./modules/constants';
-import * as Util from'./modules/util';
-import * as Messages from'./modules/popup/messages';
-import { randomGradient } from'./modules/popup/gradient';
-import { populate } from'./modules/popup/templates';
+import * as Const from './modules/constants';
+import * as Util from './modules/util';
+import * as Messages from './modules/popup/messages';
+import { randomGradient } from './modules/popup/gradient';
+import { populate } from './modules/popup/templates';
 
 function updateInfo({ title, subtitle, image = randomGradient({ sat: 0.25, val: 0.5 }) } = {}) {
 	document.getElementById('title').textContent = title;

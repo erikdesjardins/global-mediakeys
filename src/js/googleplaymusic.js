@@ -1,5 +1,5 @@
-import * as Util from'./modules/util';
-import Domain from'./modules/content/Domain';
+import * as Util from './modules/util';
+import Domain from './modules/content/Domain';
 
 class GooglePlayMusic extends Domain {
 	getButtons() {
