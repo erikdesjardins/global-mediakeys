@@ -1,21 +1,8 @@
 {
 	"quotmark": "single",
 	"undef": true,
-	"unused": "vars",
-	"multistr": true,
-	"sub": true,
-	"loopfunc": true,
+	"unused": true,
 	"browser": true,
 	"devel": true,
-	"esnext": true,
-	"globals": {
-		"chrome": false,
-		"Const": false,
-		"Util": false,
-		"Messages": false,
-		"Commands": false,
-		"Domain": false,
-		"TabMgr": false,
-		"Storage": false
-	}
+	"esnext": true
 }
