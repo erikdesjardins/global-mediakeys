@@ -62,7 +62,7 @@
 	gulp.task('sass', function() {
 		return gulp.src(['*.scss'], { cwd: 'src/**' })
 			.pipe(sass().on('error', sass.logError))
-			.pipe(autoprefixer({ browsers: 'Chrome >= 36' }))
+			.pipe(autoprefixer({ browsers: 'Chrome >= 41' }))
 			.pipe(gulp.dest('dist'));
 	});
 	gulp.task('copy', function() {
