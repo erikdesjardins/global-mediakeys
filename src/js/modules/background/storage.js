@@ -40,4 +40,4 @@ async function getAndSetOnSuspend(key, defaultValue) {
 	return val;
 }
 
-export { getAndSetOnSuspend as getWithAutopersist };
+export { getAndSetOnSuspend as autopersist };

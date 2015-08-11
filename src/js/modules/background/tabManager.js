@@ -2,9 +2,9 @@
 import 'babel-runtime/node_modules/core-js/es6/array';
 
 import * as Const from '../constants';
-import { getWithAutopersist } from './storage';
+import { autopersist } from './storage';
 
-const isReady = getWithAutopersist(Const.storage.TABS, []);
+const isReady = autopersist(Const.storage.TABS, []);
 
 function _findIndex(tabs, tabId) {
 	return tabs.findIndex(tab => tab.id === tabId);
