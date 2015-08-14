@@ -3,7 +3,7 @@ import * as Const from './modules/constants';
 import { apiToPromise } from './modules/util';
 import * as Messages from './modules/background/messages';
 import * as Commands from './modules/background/commands';
-import * as TabMgr from './modules/background/tabManager';
+import * as TabMgr from './modules/background/tabmanager';
 
 function updateOrFetch(messageType, key) {
 	Messages.addListener(messageType, async (data, tabId) => {
