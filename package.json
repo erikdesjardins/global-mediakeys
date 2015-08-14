@@ -7,8 +7,10 @@
     "type": "git",
     "url": "https://github.com/erikdesjardins/global-mediakeys.git"
   },
+  "dependencies": {
+    "babel-runtime": "^5.8.20"
+  },
   "devDependencies": {
-    "babel-runtime": "^5.8.20",
     "browserify": "^11.0.1",
     "del": "^1.2.0",
     "globby": "^2.1.0",
