@@ -2,8 +2,7 @@
 import { isRefType } from '../util';
 
 export function set(key, value) {
-	const obj = {};
-	obj[key] = value;
+	const obj = { [key]: value };
 	return new Promise((resolve, reject) => {
 		chrome.storage.local.set(obj, () =>
 				chrome.runtime.lastError ? reject(new Error(chrome.runtime.lastError)) : resolve()
