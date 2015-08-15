@@ -1,6 +1,6 @@
 # global-mediakeys
 
-Chrome extension for controlling Soundcloud, Google Play Music, and YouTube.
+Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.
 
 ## Install
 

@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Global Media Keys",
 	"short_name": "GMK",
-	"description": "Allows websites that play media to be controlled with global keyboard shortcuts.",
+	"description": "Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.",
 	"version": "1.2.2",
 	"minimum_chrome_version": "41",
 	"permissions": [
