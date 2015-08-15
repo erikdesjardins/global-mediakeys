@@ -3,7 +3,7 @@ const listeners = {};
 
 export function addListener(commandName, callback) {
 	if (commandName in listeners) {
-		console.error('Listener for Command:', commandName, 'already exists.');
+		throw new Error('Listener for command:', commandName, 'already exists.');
 	} else {
 		listeners[commandName] = callback;
 	}

@@ -3,7 +3,7 @@ const listeners = {};
 
 export function addListener(messageType, callback) {
 	if (messageType in listeners) {
-		console.error('Listener for Message:', messageType, 'already exists.');
+		throw new Error('Listener for message type:', messageType, 'already exists.');
 	} else {
 		listeners[messageType] = callback;
 	}
@@ -14,7 +14,7 @@ function sendMessage(type, data) {
 
 	return new Promise((resolve, reject) => {
 		chrome.runtime.sendMessage(message, response =>
-				response ? resolve(response.data) : reject(new Error(`Received empty response from type: ${type}`))
+				response ? resolve(response.data) : reject(new Error(`Received empty response from message type: ${type}`))
 		);
 	});
 }

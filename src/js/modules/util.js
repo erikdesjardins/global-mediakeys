@@ -59,16 +59,15 @@ export function debounce(callback, delay) {
 
 export function click(ele) {
 	if (!ele) {
-		console.warn('Util.click: ele is undefined.');
+		throw new TypeError('ele is undefined.');
 	} else if (!ele.dispatchEvent) {
-		console.error('Cannot dispatch event on element:', ele);
-	} else {
-		ele.dispatchEvent(new MouseEvent('click', {
-			view: window,
-			bubbles: true,
-			cancelable: true
-		}));
+		throw new TypeError('Cannot dispatch event on element:', ele);
 	}
+	ele.dispatchEvent(new MouseEvent('click', {
+		view: window,
+		bubbles: true,
+		cancelable: true
+	}));
 }
 
 export function empty(ele) {
