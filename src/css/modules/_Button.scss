@@ -26,9 +26,11 @@ $Button-popDuration: 0.1s;
 	&-prev::after {
 		content: '\f048';
 	}
+
 	&-next::after {
 		content: '\f051';
 	}
+
 	&-playPause::after {
 		content: '\f04b';
 		padding-left: 5%;
@@ -38,6 +40,7 @@ $Button-popDuration: 0.1s;
 			padding-left: 0;
 		}
 	}
+
 	&-custom::after {
 		content: attr(data-icon);
 	}
