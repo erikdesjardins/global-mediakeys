@@ -5,14 +5,14 @@ $Button-popDuration: 0.1s;
 
 .Button {
 	@include size(100%);
-	cursor: pointer;
+	transition: transform $Button-popDuration;
 	border-radius: 50%;
 	background-color: $highlightColor;
 	color: $textColor;
-	text-shadow: $textColor 0 0 5px;
-	text-align: center;
 	font-family: 'fa', sans-serif;
-	transition: transform $Button-popDuration;
+	text-align: center;
+	text-shadow: $textColor 0 0 5px;
+	cursor: pointer;
 
 	&:hover:not(:active) {
 		transform: scale(1.1);
@@ -32,12 +32,12 @@ $Button-popDuration: 0.1s;
 	}
 
 	&-playPause::after {
-		content: '\f04b';
 		padding-left: 5%;
+		content: '\f04b';
 
 		.isPlaying & {
-			content: '\f04c';
 			padding-left: 0;
+			content: '\f04c';
 		}
 	}
 

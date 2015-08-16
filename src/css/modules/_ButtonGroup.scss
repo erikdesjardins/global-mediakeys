@@ -1,8 +1,8 @@
 @import '../mixins';
 
 .ButtonGroup {
-	width: 100%;
 	display: flex;
+	width: 100%;
 	flex-wrap: nowrap;
 	justify-content: space-around;
 	align-items: center;
@@ -14,14 +14,14 @@
 	&-button {
 		@include size(80px);
 		padding: 15px;
-		line-height: 50px;
 		font-size: 20px;
+		line-height: 50px;
 	}
 
 	&-smallButton {
 		@include size(50px);
 		padding: 10px;
-		line-height: 30px;
 		font-size: 10px;
+		line-height: 30px;
 	}
 }

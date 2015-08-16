@@ -13,10 +13,10 @@ body {
 	@include size(250px);
 	margin: 0;
 
+	transition: opacity $Body-fadeDuration;
 	background: $bgColor 50% no-repeat;
 	background-size: cover;
 	opacity: 0.5;
-	transition: opacity $Body-fadeDuration;
 
 	&:hover {
 		opacity: 1;

@@ -2,9 +2,9 @@
 
 .TitleBlock {
 	width: 100%;
-	text-align: center;
-	color: $textColor;
 	background-color: $highlightColor;
+	color: $textColor;
+	text-align: center;
 	text-shadow: $bgColor 0 0 1px;
 
 	&.isClickable {
@@ -13,8 +13,8 @@
 	}
 
 	&-title {
-		font-size: 15px;
 		padding: 0 5px;
+		font-size: 15px;
 
 		&--sub {
 			font-size: 10px;
