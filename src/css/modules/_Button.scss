@@ -35,7 +35,7 @@ $Button-popDuration: 0.1s;
 		content: '\f04b';
 		padding-left: 5%;
 
-		body.isPlaying & {
+		.isPlaying & {
 			content: '\f04c';
 			padding-left: 0;
 		}
