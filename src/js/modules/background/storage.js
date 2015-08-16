@@ -15,7 +15,7 @@ export function get(key, defaultValue) {
 		chrome.storage.local.get(key, items => {
 			if (chrome.runtime.lastError) {
 				reject(new Error(chrome.runtime.lastError));
-			} else if (items[key] === undefined) {
+			} else if (!(key in items)) {
 				resolve(defaultValue);
 			} else {
 				resolve(items[key]);
