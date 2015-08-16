@@ -18,9 +18,9 @@ export function each(object, callback) {
 }
 
 export async function asyncMap(arr, callback) {
-	await Promise.all(arr.map((val, i) => (async () =>
-		(arr[i] = await callback(val, i, arr))
-	)()));
+	await Promise.all(arr.map((val, i) => (async () => {
+		arr[i] = await callback(val, i, arr);
+	})()));
 	return arr;
 }
 
