@@ -1,8 +1,0 @@
-{
-	"quotmark": "single",
-	"undef": true,
-	"unused": true,
-	"browser": true,
-	"devel": true,
-	"esnext": true
-}
