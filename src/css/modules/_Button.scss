@@ -19,8 +19,8 @@ $Button-popDuration: 0.1s;
 	}
 
 	&.isInactive {
+		color: $bgColor;
 		text-shadow: none;
-		color: #333;
 	}
 
 	&-prev::after {
