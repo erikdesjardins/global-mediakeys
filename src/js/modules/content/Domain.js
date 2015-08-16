@@ -11,11 +11,11 @@ export default class Domain {
 		throw new Error('getButtons() is not defined.');
 	}
 
-	setupPlayState(callback, playButton) {
+	setupPlayState(/* callback, playButton */) {
 		throw new Error('setupPlayState(callback, playButton) is not defined.');
 	}
 
-	setupInfo(callback) {
+	setupInfo(/* callback */) {
 		throw new Error('setupInfo(callback) is not defined.');
 	}
 

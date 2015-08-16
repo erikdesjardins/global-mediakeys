@@ -26,8 +26,8 @@ function _get(tabs, tabId) {
 	return tabs[_validIndex(tabs, tabId)];
 }
 
-function _add(tabs, tabId, data) {
-	tabs.unshift({ id: tabId, data: data });
+function _add(tabs, tabId, tabData) {
+	tabs.unshift({ id: tabId, data: tabData });
 }
 
 function _remove(tabs, tabId) {
