@@ -1,3 +1,5 @@
+/* global chrome */
+
 export function extend(target, ...objects) {
 	objects.forEach(extendObj => {
 		for (const prop in extendObj) {
