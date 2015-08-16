@@ -61,7 +61,7 @@ export function click(ele) {
 	if (!ele) {
 		throw new TypeError('ele is undefined.');
 	} else if (!ele.dispatchEvent) {
-		throw new TypeError('Cannot dispatch event on element:', ele);
+		throw new TypeError('ele.dispatchEvent is undefined.');
 	}
 	ele.dispatchEvent(new MouseEvent('click', {
 		view: window,

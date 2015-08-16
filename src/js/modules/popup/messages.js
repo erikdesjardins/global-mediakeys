@@ -3,10 +3,9 @@ const listeners = {};
 
 export function addListener(messageType, callback) {
 	if (messageType in listeners) {
-		throw new Error('Listener for message type:', messageType, 'already exists.');
-	} else {
-		listeners[messageType] = callback;
+		throw new Error(`Listener for message type: ${messageType} already exists.`);
 	}
+	listeners[messageType] = callback;
 }
 
 function sendMessage(type, data) {

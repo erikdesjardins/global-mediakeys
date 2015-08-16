@@ -14,9 +14,8 @@ function _validIndex(tabs, tabId) {
 	const index = _findIndex(tabs, tabId);
 	if (index === -1) {
 		throw new Error(`Tab: ${tabId} not found.`);
-	} else {
-		return index;
 	}
+	return index;
 }
 
 function _exists(tabs, tabId) {
@@ -53,23 +52,21 @@ export async function remove(tabId) {
 	const tabs = await isReady;
 	if (!_exists(tabs, tabId)) {
 		throw new Error(`Cannot unregister non-extant tab: ${tabId}`);
-	} else {
-		_remove(tabs, tabId);
-		console.info('Unregistered tab:', tabId);
 	}
+	_remove(tabs, tabId);
+	console.info('Unregistered tab:', tabId);
 }
 
 export async function update(tabId, key, value) {
 	const tabs = await isReady;
 	if (!_exists(tabs, tabId)) {
 		throw new Error(`Cannot update unregistered tab: ${tabId}`);
-	} else {
-		const tab = _get(tabs, tabId);
-		if (tab.data[key] !== value) {
-			tab.data[key] = value;
-			_promote(tabs, tabId);
-			console.log('Updated tab:', tabId, 'with:', key, '=', value);
-		}
+	}
+	const tab = _get(tabs, tabId);
+	if (tab.data[key] !== value) {
+		tab.data[key] = value;
+		_promote(tabs, tabId);
+		console.log('Updated tab:', tabId, 'with:', key, '=', value);
 	}
 }
 
@@ -77,9 +74,8 @@ export async function first() {
 	const tabs = await isReady;
 	if (!tabs[0]) {
 		throw new Error('There are no registered tabs.');
-	} else {
-		return { tabId: tabs[0].id, tab: tabs[0].data };
 	}
+	return { tabId: tabs[0].id, tab: tabs[0].data };
 }
 
 export async function each(callback) {
