@@ -151,7 +151,7 @@ export function waitForChild(ele, selector, { initialCheck = true } = {}) {
 						return true;
 					}
 				})
-		)
+		);
 	});
 }
 
@@ -164,7 +164,7 @@ export function waitForEvent(ele, event) {
 			ele.removeEventListener(event, fire);
 			resolve();
 		});
-	})
+	});
 }
 
 export function descendant(ele, selector) {
