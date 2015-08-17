@@ -11,8 +11,11 @@
     "babel-runtime": "^5.8.20"
   },
   "devDependencies": {
+    "babel-eslint": "^4.0.8",
     "browserify": "^11.0.1",
     "del": "^1.2.0",
+    "eslint": "^1.1.0",
+    "eslint-plugin-babel": "^2.1.0",
     "globby": "^2.1.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
@@ -25,5 +28,8 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "scripts": {
+    "travis": "scss-lint src/ && eslint src/"
+  }
 }

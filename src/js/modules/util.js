@@ -1,6 +1,8 @@
+/* global chrome */
+
 export function extend(target, ...objects) {
 	objects.forEach(extendObj => {
-		for (let prop in extendObj) {
+		for (const prop in extendObj) {
 			if (extendObj.hasOwnProperty(prop)) {
 				target[prop] = extendObj[prop];
 			}
@@ -10,7 +12,7 @@ export function extend(target, ...objects) {
 }
 
 export function each(object, callback) {
-	for (let key in object) {
+	for (const key in object) {
 		if (object.hasOwnProperty(key)) {
 			callback(object[key], key, object);
 		}
@@ -18,9 +20,9 @@ export function each(object, callback) {
 }
 
 export async function asyncMap(arr, callback) {
-	await Promise.all(arr.map((val, i) => (async () =>
-		(arr[i] = await callback(val, i, arr))
-	)()));
+	await Promise.all(arr.map((val, i) => (async () => {
+		arr[i] = await callback(val, i, arr);
+	})()));
 	return arr;
 }
 
@@ -136,7 +138,7 @@ export function waitForChild(ele, selector, { initialCheck = true } = {}) {
 		throw new TypeError('ele is undefined.');
 	}
 	if (initialCheck) {
-		for (let child of Array.from(ele.children)) {
+		for (const child of Array.from(ele.children)) {
 			if (child.matches(selector)) {
 				return Promise.resolve();
 			}
@@ -151,7 +153,7 @@ export function waitForChild(ele, selector, { initialCheck = true } = {}) {
 						return true;
 					}
 				})
-		)
+		);
 	});
 }
 
@@ -164,7 +166,7 @@ export function waitForEvent(ele, event) {
 			ele.removeEventListener(event, fire);
 			resolve();
 		});
-	})
+	});
 }
 
 export function descendant(ele, selector) {

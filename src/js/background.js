@@ -31,12 +31,12 @@ function getTabSender(messageType) {
 		} catch (e) {
 			await TabMgr.remove(tabId);
 		}
-	}
+	};
 }
 
 Messages.addListener(Const.msg.REGISTER, (data, tabId) => TabMgr.add(tabId));
 // Synchronous to ensure response is sent before unload
-Messages.addListener(Const.msg.UNREGISTER, (data, tabId) => { TabMgr.remove(tabId) });
+Messages.addListener(Const.msg.UNREGISTER, (data, tabId) => { TabMgr.remove(tabId); });
 
 updateOrFetch(Const.msg.PLAY_STATE, 'isPlaying');
 updateOrFetch(Const.msg.INFO, 'info');

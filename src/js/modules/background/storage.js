@@ -15,7 +15,7 @@ export function get(key, defaultValue) {
 		chrome.storage.local.get(key, items => {
 			if (chrome.runtime.lastError) {
 				reject(new Error(chrome.runtime.lastError));
-			} else if (items[key] === undefined) {
+			} else if (!(key in items)) {
 				resolve(defaultValue);
 			} else {
 				resolve(items[key]);
@@ -28,14 +28,16 @@ const hasListener = {};
 
 async function getAndSetOnSuspend(key, defaultValue) {
 	const val = await get(key, defaultValue);
+
 	if (!isRefType(val)) {
-		console.warn('Key:', key, 'value:', val, 'is not a reference type - changes cannot be persisted.');
+		throw new TypeError(`Key: ${key}, value: ${val}, is not a reference type - changes cannot be persisted.`);
 	} else if (hasListener[key]) {
-		console.error('Key:', key, 'has been previously fetched with autopersist.');
-	} else {
-		chrome.runtime.onSuspend.addListener(() => set(key, val));
-		hasListener[key] = true;
+		throw new Error(`Key: ${key}, has been previously fetched with autopersist.`);
 	}
+
+	chrome.runtime.onSuspend.addListener(() => set(key, val));
+	hasListener[key] = true;
+
 	return val;
 }
 

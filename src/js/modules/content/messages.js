@@ -26,20 +26,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	const { type, data } = request;
 
 	if (!(type in listeners)) {
-		console.error('Unrecognised message type:', request, sender);
-	} else {
-		const response = listeners[type](data);
-
-		if (isPromise(response)) {
-			response
-				.then(data => sendResponse({ data }))
-				.catch(error => {
-					sendResponse();
-					throw error;
-				});
-			return true;
-		} else {
-			sendResponse({ data: response });
-		}
+		throw new Error(`Unrecognised message type: ${type}`);
 	}
+
+	const response = listeners[type](data);
+
+	if (isPromise(response)) {
+		response
+			.then(data => sendResponse({ data }))
+			.catch(error => {
+				sendResponse();
+				throw error;
+			});
+		return true;
+	}
+	sendResponse({ data: response });
 });

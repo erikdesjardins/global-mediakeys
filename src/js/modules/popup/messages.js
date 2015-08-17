@@ -25,9 +25,9 @@ chrome.runtime.onMessage.addListener((request, sender) => {
 	const tabId = sender.tab && sender.tab.id;
 
 	if (!(type in listeners)) {
-		console.error('Unrecognised message type:', request, sender);
-	} else {
-		listeners[type](data, tabId);
-		// Responses handled by the background page
+		throw new Error(`Unrecognised message type: ${type}`);
 	}
+
+	listeners[type](data, tabId);
+	// Responses handled by the background page
 });
