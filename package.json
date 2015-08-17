@@ -14,22 +14,20 @@
     "babel-eslint": "^4.0.8",
     "browserify": "^11.0.1",
     "del": "^1.2.0",
-    "eslint": "^1.1.0",
     "eslint-plugin-babel": "^2.1.0",
     "globby": "^2.1.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-babel": "^5.1.0",
+    "gulp-eslint": "^1.0.0",
     "gulp-insert": "^0.5.0",
     "gulp-plumber": "^1.0.1",
     "gulp-sass": "^2.0.4",
+    "gulp-scss-lint": "^0.2.3",
     "gulp-zip": "^3.0.2",
     "merge-stream": "^0.1.8",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
-  "license": "GPL-3.0",
-  "scripts": {
-    "travis": "scss-lint src/ && eslint src/"
-  }
+  "license": "GPL-3.0"
 }

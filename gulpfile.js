@@ -13,6 +13,8 @@
 	var merge = require('merge-stream');
 	var plumber = require('gulp-plumber');
 	var zip = require('gulp-zip');
+	var eslint = require('gulp-eslint');
+	var scsslint = require('gulp-scss-lint');
 
 	gulp.task('default', ['clean'], function() {
 		gulp.start('watch');
@@ -74,5 +76,19 @@
 		return gulp.src('dist/**')
 			.pipe(zip('GMK.zip'))
 			.pipe(gulp.dest('dist'));
+	});
+
+	gulp.task('travis', ['eslint', 'scsslint']);
+
+	gulp.task('eslint', function() {
+		return gulp.src(['*.js'], { cwd: 'src/**' })
+			.pipe(eslint())
+			.pipe(eslint.formatEach())
+			.pipe(eslint.failAfterError());
+	});
+	gulp.task('scsslint', function() {
+		return gulp.src(['*.scss'], { cwd: 'src/**' })
+			.pipe(scsslint({ maxBuffer: 1024 * 1024 }))
+			.pipe(scsslint.failReporter());
 	});
 })();

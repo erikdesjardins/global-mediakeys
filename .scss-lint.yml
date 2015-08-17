@@ -1,5 +1,5 @@
-#Inherits from default config
-#https://github.com/brigade/scss-lint/blob/master/config/default.yml
+# Inherits from default config
+# https://github.com/brigade/scss-lint/blob/master/config/default.yml
 
 linters:
   Indentation:
