@@ -17,7 +17,6 @@ Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouT
 
 Before:
 
-	npm i -g eslint eslint-plugin-babel
 	gem install scss_lint
 
 Run tests:

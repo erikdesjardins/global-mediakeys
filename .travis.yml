@@ -3,6 +3,6 @@ language: node_js
 node_js:
   - "0.12"
 before_script:
-  - npm i -g eslint eslint-plugin-babel
+  - npm i -g gulp
   - gem install scss_lint
-script: npm run travis
+script: gulp travis
