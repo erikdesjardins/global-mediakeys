@@ -25,7 +25,7 @@
 
 		"comma-dangle": 2,
 		"no-cond-assign": 2,
-		"no-console": 1, //maybe
+		"no-console": 1,
 		"no-constant-condition": 2,
 		"no-control-regex": 2,
 		"no-debugger": 2,
@@ -51,7 +51,7 @@
 		"no-unexpected-multiline": 2,
 
 		"accessor-pairs": 2,
-		"complexity": 1, //maybe
+		"complexity": 1,
 		"consistent-return": 2,
 		"curly": 2,
 		"default-case": 2,
