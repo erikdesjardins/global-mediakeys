@@ -23,7 +23,7 @@
 	"content_scripts": [
 		{
 			"matches": ["*://play.google.com/music/listen*"],
-			"js": ["js/googlePlayMusic.js"]
+			"js": ["js/googleplaymusic.js"]
 		},
 		{
 			"matches": ["*://soundcloud.com/*"],
