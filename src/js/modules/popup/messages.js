@@ -1,24 +1,44 @@
+/**
+ * @file A wrapper around the <tt>sendMessage</tt> and <tt>onMessage</tt> APIs,
+ * supporting message types and optionally asynchronous handlers.
+ * @module popup/messages
+ */
+
 /* global chrome */
 const listeners = {};
 
-export function addListener(messageType, callback) {
-	if (messageType in listeners) {
-		throw new Error(`Listener for message type: ${messageType} already exists.`);
+/**
+ * Register a listener to be invoked whenever a message of <tt>type</tt> is received.
+ * No responses will be sent, and the return value of <tt>callback</tt> is ignored.
+ * @template T
+ * @param {string} type
+ * @param {function(*, number): void} callback Accepts the message data and tabId of the sender, if available.
+ * @throws {Error} If a listener for <tt>messageType</tt> already exists.
+ * @returns {void}
+ */
+export function addListener(type, callback) {
+	if (type in listeners) {
+		throw new Error(`Listener for message type: ${type} already exists.`);
 	}
-	listeners[messageType] = callback;
+	listeners[type] = callback;
 }
 
-function sendMessage(type, data) {
+/**
+ * Send a message to the background page.
+ * @param {string} type
+ * @param {*} data
+ * @returns {Promise<*, Error>} Rejects if an invalid response is received,
+ * resolves with the response data otherwise.
+ */
+export function send(type, data) {
 	const message = { type, data };
 
 	return new Promise((resolve, reject) => {
 		chrome.runtime.sendMessage(message, response =>
-				response ? resolve(response.data) : reject(new Error(`Received empty response from message type: ${type}`))
+				response ? resolve(response.data) : reject(new Error(`Received invalid response from message type: ${type}`))
 		);
 	});
 }
-
-export { sendMessage as send };
 
 chrome.runtime.onMessage.addListener((request, sender) => {
 	const { type, data } = request;

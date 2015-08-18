@@ -1,3 +1,9 @@
+/**
+ * @file Manages a stack of tabs, bringing each one to the top when it is updated.
+ * Each tab has a unique <tt>tabId</tt> and stores a set of key-value data.
+ * @module background/tabmanager
+ */
+
 // Babel runtime doesn't polyfill prototype functions
 import 'babel-runtime/node_modules/core-js/es6/array';
 
@@ -38,6 +44,12 @@ function _promote(tabs, tabId) {
 	tabs.unshift(_remove(tabs, tabId));
 }
 
+/**
+ * Adds a new tab to the registry.
+ * If a tab with the same <tt>tabId</tt> exists in the registry, it will be overwritten.
+ * @param {number} tabId The id used by Chrome to identify the tab.
+ * @returns {Promise<void>} Resolves when the tab has been added.
+ */
 export async function add(tabId) {
 	const tabs = await isReady;
 	if (_exists(tabs, tabId)) {
@@ -48,6 +60,12 @@ export async function add(tabId) {
 	console.info('Registered tab:', tabId);
 }
 
+/**
+ * Removes a tab from the registry.
+ * @param {number} tabId The id used by Chrome to identify the tab.
+ * @returns {Promise<void, Error>} Rejects if the tab does not exist in the registry,
+ * resolves when the tab has been removed otherwise.
+ */
 export async function remove(tabId) {
 	const tabs = await isReady;
 	if (!_exists(tabs, tabId)) {
@@ -57,6 +75,14 @@ export async function remove(tabId) {
 	console.info('Unregistered tab:', tabId);
 }
 
+/**
+ * Updates the data stored for a specified tab with a key-value pair.
+ * @param {number} tabId The id used by Chrome to identify the tab.
+ * @param {string} key
+ * @param {*} value
+ * @returns {Promise<void, Error>} Rejects if the tab does not exist in the registry,
+ * resolves when the data has been updated otherwise.
+ */
 export async function update(tabId, key, value) {
 	const tabs = await isReady;
 	if (!_exists(tabs, tabId)) {
@@ -70,6 +96,18 @@ export async function update(tabId, key, value) {
 	}
 }
 
+/**
+ * Information about a tab.
+ * @typedef {!Object} TabInfo
+ * @property {number} tabId The id used by Chrome to identify the tab.
+ * @property {!Object} tab The data associated with the tab.
+ */
+
+/**
+ * Gets the information about the tab on top of the stack.
+ * @returns {Promise<TabInfo, Error>} Rejects if no tabs are registered,
+ * resolves with info about the tab otherwise.
+ */
 export async function first() {
 	const tabs = await isReady;
 	if (!tabs[0]) {
@@ -78,6 +116,13 @@ export async function first() {
 	return { tabId: tabs[0].id, tab: tabs[0].data };
 }
 
+/**
+ * Executes a callback for each tab in the stack.
+ * Order of execution is not defined.
+ * @param {function(TabInfo): *} callback
+ * @returns {Promise<void>} Resolves when the promises returned by each <tt>callback</tt> invocation have been resolved.
+ * Return values are cast to <tt>Promise</tt> by standard ES6 rules.
+ */
 export async function each(callback) {
 	const tabs = await isReady;
 	await Promise.all(tabs.map(tab => callback({ tabId: tab.id, tab: tab.data })));
