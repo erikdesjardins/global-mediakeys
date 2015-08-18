@@ -21,4 +21,4 @@ Before:
 
 Run tests:
 
-	npm run travis
+	gulp travis
