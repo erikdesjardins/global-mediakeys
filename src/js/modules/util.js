@@ -56,9 +56,7 @@ export async function asyncMap(arr, callback) {
  * @param {function(...*, function(...*): void): void} func
  * @returns {function(...*): Promise<void|*|*[], Error>} <tt>func</tt>, in a wrapper that will append a callback to the argument list and return a <tt>Promise</tt>.
  * The <tt>Promise</tt> will reject if <tt>chrome.runtime.lastError</tt> is set,
- * resolving with no value if the callback is invoked with no arguments,
- * resolving with the callback's only argument if it is invoked with one argument,
- * resolving with an array of the callback's arguments otherwise.
+ * resolving with the result passed to the callback or an array of results otherwise.
  */
 export function apiToPromise(func) {
 	return (...args) =>
