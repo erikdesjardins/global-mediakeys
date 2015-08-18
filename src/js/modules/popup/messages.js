@@ -12,7 +12,7 @@ const listeners = {};
  * No responses will be sent, and the return value of <tt>callback</tt> is ignored.
  * @template T
  * @param {string} type
- * @param {function(*, number): void} callback Accepts the message data and tabId of the sender, if available.
+ * @param {function(*, number=): void} callback Accepts the message data and tabId of the sender, if available.
  * @throws {Error} If a listener for <tt>messageType</tt> already exists.
  * @returns {void}
  */

@@ -14,7 +14,7 @@ const listeners = {};
  * Responses may be sent synchronously or asynchronously, depending on the return value of <tt>callback</tt>.
  * @template T
  * @param {string} type
- * @param {function(*, number): (T|Promise<T, *>)} callback Accepts the message data and tabId of the sender, if available.
+ * @param {function(*, number=): (T|Promise<T, *>)} callback Accepts the message data and tabId of the sender, if available.
  * If <tt>callback</tt> returns a non-promise value, a response will be sent synchronously.
  * If <tt>callback</tt> returns a <tt>Promise</tt>, a response will be sent asynchronously when it resolves.
  * If it rejects, an invalid response will be sent to close the message channel.
