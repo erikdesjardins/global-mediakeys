@@ -287,7 +287,7 @@ export function waitForEvent(ele, event) {
 
 /**
  * Selects a descendant of <tt>ele</tt> that may not yet exist.
- * Devolves to an efficient <tt>querySelector</tt> call if a matching element is already present.
+ * Equivalent to <tt>querySelector</tt> when a matching element exists.
  * @param {!Element} ele
  * @param {string} selector
  * @returns {Promise<Element, Error>} Rejects if <tt>ele</tt> is not defined,
