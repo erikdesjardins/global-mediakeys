@@ -31,7 +31,7 @@ export function addListener(type, callback) {
 /**
  * Send a message to the background page and popup, if available.
  * @param {string} type
- * @param {*} data
+ * @param {*} [data]
  * @returns {Promise<*, Error>} Rejects if an invalid response is received,
  * resolves with the response data otherwise.
  */
