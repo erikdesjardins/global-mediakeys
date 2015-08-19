@@ -110,7 +110,7 @@ export function debounce(callback, delay) {
 
 /**
  * <tt>$.fn.click</tt>
- * @param {!Element} ele
+ * @param {!EventTarget} ele
  * @returns {void}
  */
 export function click(ele) {
@@ -128,7 +128,7 @@ export function click(ele) {
 
 /**
  * <tt>$.fn.empty</tt>
- * @param {!Element} ele
+ * @param {!Node} ele
  * @returns {void}
  */
 export function empty(ele) {
@@ -142,7 +142,7 @@ export function empty(ele) {
 
 /**
  * Shorthand for setting up a <tt>MutationObserver</tt> on <tt>ele</tt>.
- * @param {!Element} ele
+ * @param {!Node} ele
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
  * @param {function(MutationRecord, number, MutationRecord[]): *} callback Invoked for each <tt>MutationRecord</tt>.
  * Return a truthy value to stop handling mutations from this batch.
@@ -159,9 +159,9 @@ export function observe(ele, options, callback) {
 
 /**
  * Similar to {@link observe}, except <tt>callback</tt> is invoked with <tt>ele</tt>.
- * @param {!Element} ele
+ * @param {!Node} ele
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
- * @param {function(!Element): void} callback Invoked once per batch of mutations.
+ * @param {function(!Node): void} callback Invoked once per batch of mutations.
  * @param {boolean} [initialCallback=false] Whether the <tt>callback</tt> should be immediately invoked.
  * @returns {MutationObserver} The attached observer.
  */
@@ -182,10 +182,10 @@ export function onMutation(ele, options, callback, { initialCallback = false } =
  * Similar to {@link onMutation}, except the observed element is a descendant of <tt>ele</tt>.
  * This descendant may be added or removed from the DOM at any time, and the observer will be reattached.
  * Specifically, the first descendant of <tt>ele</tt> matching <tt>selector</tt> will be observed.
- * @param {!Element} ele
+ * @param {!Node} ele
  * @param {string} selector
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
- * @param {function(!Element): void} callback Invoked once per batch of mutations.
+ * @param {function(!Node): void} callback Invoked once per batch of mutations.
  * @param {boolean} [initialCallback=false] Whether the <tt>callback</tt> should be immediately invoked when the descendant is found or replaced.
  * @returns {Promise<void, Error>} Rejects if <tt>ele</tt> is not defined,
  * resolves when a matching descendant is found otherwise.
@@ -213,7 +213,7 @@ export async function onDescendantMutation(ele, selector, options, callback, { i
 
 /**
  * Waits for a mutation to occur (optionally filtered by a callback).
- * @param {!Element} ele
+ * @param {!Node} ele
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
  * @param {function(MutationRecord): *} [callback] Invoked for each <tt>MutationRecord</tt>.
  * Return a falsy value to filter out the mutation.
@@ -268,7 +268,7 @@ export function waitForChild(ele, selector, { initialCheck = true } = {}) {
 
 /**
  * Waits for <tt>event</tt> to occur on <tt>ele</tt>.
- * @param {!Element} ele
+ * @param {!EventTarget} ele
  * @param {string} event
  * @returns {Promise<void, Error>} Rejects if <tt>ele</tt> is not defined,
  * resolves when the <tt>event</tt> occurs otherwise.
