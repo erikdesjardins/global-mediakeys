@@ -34,7 +34,7 @@ class Soundcloud extends Domain {
 			});
 		}
 
-		Util.observe(
+		Util.onMutation(
 			watchElem,
 			{ childList: true },
 			sendUpdate
