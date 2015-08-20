@@ -1,3 +1,8 @@
+/**
+ * @file Constants used for message types, command types, and storage keys.
+ * @module constants
+ */
+
 export const msg = {
 	REGISTER: 'tab-register',
 	UNREGISTER: 'tab-unregister',
