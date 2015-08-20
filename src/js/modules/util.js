@@ -39,16 +39,13 @@ export function each(object, callback) {
 /**
  * <tt>Array.prototype.map</tt> except mapped to <tt>Promise</tt> results.
  * @template T
- * @param {T[]} arr
+ * @param {T[]} array
  * @param {function(T, number, T[])} callback Each return value will be casted to <tt>Promise</tt>.
  * @returns {Promise<T[], *>} Rejects if any promises returned by the callback reject,
- * resolves with <tt>arr</tt> otherwise.
+ * resolves with a new mapped array otherwise.
  */
-export async function asyncMap(arr, callback) {
-	await Promise.all(arr.map((val, i) => (async () => {
-		arr[i] = await callback(val, i, arr);
-	})()));
-	return arr;
+export async function asyncMap(array, callback) {
+	return await Promise.all(array.map((val, i) => callback(val, i, array)));
 }
 
 /**

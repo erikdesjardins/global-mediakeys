@@ -109,10 +109,9 @@ export default class Domain {
 		this.setupInfo(Util.debounce(info => Messages.send(Const.msg.INFO, info), 50));
 
 		const actionData = [];
-		const actions = this.getActions();
 		const sendActionUpdate = Util.debounce(() => Messages.send(Const.msg.ACTIONS, actionData), 50);
 
-		await Util.asyncMap(actions, (setup, i) =>
+		const actions = await Util.asyncMap(this.getActions(), (setup, i) =>
 				setup(data => {
 					actionData[i] = data;
 					sendActionUpdate();
