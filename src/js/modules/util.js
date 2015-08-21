@@ -106,16 +106,25 @@ export function debounce(callback, delay) {
 }
 
 /**
+ * @param {*} obj Cast to <tt>Object</tt>, allowing <tt>typeCheck(true, Boolean)</tt>.
+ * @param {!Function} type
+ * @throws {TypeError} If <tt>obj</tt> is not an instance of <tt>type</tt>.
+ * @returns {void}
+ */
+export function typeCheck(obj, type) {
+	if (!(Object(obj) instanceof type)) {
+		throw new TypeError(`${obj} is not an instance of ${type.name}.`);
+	}
+}
+
+/**
  * <tt>$.fn.click</tt>
  * @param {!EventTarget} ele
  * @returns {void}
  */
 export function click(ele) {
-	if (!ele) {
-		throw new TypeError('ele is undefined.');
-	} else if (!ele.dispatchEvent) {
-		throw new TypeError('ele.dispatchEvent is undefined.');
-	}
+	typeCheck(ele, EventTarget);
+
 	ele.dispatchEvent(new MouseEvent('click', {
 		view: window,
 		bubbles: true,
@@ -129,9 +138,8 @@ export function click(ele) {
  * @returns {void}
  */
 export function empty(ele) {
-	if (!ele) {
-		throw new TypeError('ele is undefined.');
-	}
+	typeCheck(ele, Node);
+
 	while (ele.lastChild) {
 		ele.removeChild(ele.lastChild);
 	}
@@ -146,9 +154,8 @@ export function empty(ele) {
  * @returns {MutationObserver} The attached observer.
  */
 export function observe(ele, options, callback) {
-	if (!ele) {
-		throw new TypeError('ele is undefined.');
-	}
+	typeCheck(ele, Node);
+
 	const observer = new MutationObserver(mutations => mutations.some(callback));
 	observer.observe(ele, options);
 	return observer;
@@ -163,9 +170,8 @@ export function observe(ele, options, callback) {
  * @returns {MutationObserver} The attached observer.
  */
 export function onMutation(ele, options, callback, { initialCallback = false } = {}) {
-	if (!ele) {
-		throw new TypeError('ele is undefined.');
-	}
+	typeCheck(ele, Node);
+
 	if (initialCallback) {
 		callback(ele);
 	}
@@ -179,12 +185,12 @@ export function onMutation(ele, options, callback, { initialCallback = false } =
  * Similar to {@link onMutation}, except the observed element is a descendant of <tt>ele</tt>.
  * This descendant may be added or removed from the DOM at any time, and the observer will be reattached.
  * Specifically, the first descendant of <tt>ele</tt> matching <tt>selector</tt> will be observed.
- * @param {!Node} ele
+ * @param {!Element} ele
  * @param {string} selector
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
  * @param {function(!Node): void} callback Invoked once per batch of mutations.
  * @param {boolean} [initialCallback=false] Whether the <tt>callback</tt> should be immediately invoked when the descendant is found or replaced.
- * @returns {Promise<void, Error>} Rejects if <tt>ele</tt> is not defined,
+ * @returns {Promise<void, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves when a matching descendant is found otherwise.
  */
 export async function onDescendantMutation(ele, selector, options, callback, { initialCallback = false } = {}) {
@@ -214,7 +220,7 @@ export async function onDescendantMutation(ele, selector, options, callback, { i
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
  * @param {function(MutationRecord): *} [callback] Invoked for each <tt>MutationRecord</tt>.
  * Return a falsy value to filter out the mutation.
- * @returns {Promise<void, Error>} Rejects if <tt>ele</tt> is not defined,
+ * @returns {Promise<void, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves when an unfiltered mutation occurs otherwise.
  */
 export function waitForMutation(ele, options, callback) {
@@ -236,30 +242,25 @@ export function waitForMutation(ele, options, callback) {
  * @param {!Element} ele
  * @param {string} selector
  * @param {boolean} [initialCheck=true] Whether <tt>ele</tt>'s preexisting children should be checked for a match.
- * @returns {Promise<void, Error>} Rejects if <tt>ele</tt> is not defined,
+ * @returns {Promise<void, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves when a matching child appears otherwise.
  */
 export function waitForChild(ele, selector, { initialCheck = true } = {}) {
-	if (!ele) {
-		return Promise.reject(new TypeError('ele is undefined.'));
-	}
-	if (initialCheck) {
-		for (const child of Array.from(ele.children)) {
-			if (child.matches(selector)) {
-				return Promise.resolve();
-			}
-		}
-	}
 	return new Promise(resolve => {
-		const observer = observe(ele, { childList: true }, mutation =>
-				Array.from(mutation.addedNodes).some(node => {
-					if (node.nodeType === Node.ELEMENT_NODE && node.matches(selector)) {
-						observer.disconnect();
-						resolve();
-						return true;
-					}
-				})
-		);
+		typeCheck(ele, Element);
+
+		if (initialCheck && Array.from(ele.children).some(child => child.matches(selector))) {
+			resolve();
+			return;
+		}
+
+		const observer = observe(ele, { childList: true }, mutation => {
+			if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE && node.matches(selector))) {
+				observer.disconnect();
+				resolve();
+				return true;
+			}
+		});
 	});
 }
 
@@ -267,14 +268,13 @@ export function waitForChild(ele, selector, { initialCheck = true } = {}) {
  * Waits for <tt>event</tt> to occur on <tt>ele</tt>.
  * @param {!EventTarget} ele
  * @param {string} event
- * @returns {Promise<void, Error>} Rejects if <tt>ele</tt> is not defined,
+ * @returns {Promise<void, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves when the <tt>event</tt> occurs otherwise.
  */
 export function waitForEvent(ele, event) {
-	if (!ele) {
-		return Promise.reject(new TypeError('ele is undefined.'));
-	}
 	return new Promise(resolve => {
+		typeCheck(ele, EventTarget);
+
 		ele.addEventListener(event, function fire() {
 			ele.removeEventListener(event, fire);
 			resolve();
@@ -287,18 +287,19 @@ export function waitForEvent(ele, event) {
  * Equivalent to <tt>querySelector</tt> when a matching element exists.
  * @param {!Element} ele
  * @param {string} selector
- * @returns {Promise<Element, Error>} Rejects if <tt>ele</tt> is not defined,
+ * @returns {Promise<Element, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves with the selected element otherwise.
  */
 export function descendant(ele, selector) {
-	if (!ele) {
-		return Promise.reject(new TypeError('ele is undefined.'));
-	}
-	const child = ele.querySelector(selector);
-	if (child) {
-		return Promise.resolve(child);
-	}
 	return new Promise(resolve => {
+		typeCheck(ele, Element);
+
+		const child = ele.querySelector(selector);
+		if (child) {
+			resolve(child);
+			return;
+		}
+
 		const observer = observe(ele, { childList: true, subtree: true }, mutation => {
 			if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
 				const child = ele.querySelector(selector);
