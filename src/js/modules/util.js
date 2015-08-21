@@ -37,6 +37,21 @@ export function each(object, callback) {
 }
 
 /**
+ * Compares two values.
+ * If they are objects, compares their enumerable properties recursively.
+ * @param {*} a
+ * @param {*} b
+ * @returns {boolean} Whether <tt>a</tt> and <tt>b</tt> are equivalent.
+ */
+export function equals(a, b) {
+	if (a instanceof Object && b instanceof Object) {
+		const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+		return Array.from(keys.values()).every(k => equals(a[k], b[k]));
+	}
+	return a === b;
+}
+
+/**
  * <tt>Array.prototype.map</tt> except mapped to <tt>Promise</tt> results.
  * @template T
  * @param {T[]} array

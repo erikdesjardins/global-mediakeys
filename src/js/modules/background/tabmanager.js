@@ -8,6 +8,7 @@
 import 'babel-runtime/node_modules/core-js/es6/array';
 
 import * as Const from '../constants';
+import { equals } from '../util';
 import { autopersist } from './storage';
 
 const isReady = autopersist(Const.storage.TABS, []);
@@ -77,6 +78,7 @@ export async function remove(tabId) {
 
 /**
  * Updates the data stored for a specified tab with a key-value pair.
+ * An update may not be performed if the existing value is equivalent.
  * @param {number} tabId The id used by Chrome to identify the tab.
  * @param {string} key
  * @param {*} value
@@ -89,7 +91,7 @@ export async function update(tabId, key, value) {
 		throw new Error(`Cannot update unregistered tab: ${tabId}`);
 	}
 	const tab = _get(tabs, tabId);
-	if (tab.data[key] !== value) {
+	if (!equals(tab.data[key], value)) {
 		tab.data[key] = value;
 		_promote(tabs, tabId);
 		console.log('Updated tab:', tabId, 'with:', key, '=', value);
