@@ -31,7 +31,7 @@ export function addListener(type, callback) {
 /**
  * Send a message to the content script at a specified <tt>tabId</tt>.
  * @param {string} type
- * @param {number} tabId
+ * @param {number|string} tabId
  * @param {*} [data]
  * @returns {Promise<*, Error>} Rejects if an invalid response is received,
  * resolves with the response data otherwise.
