@@ -1,25 +1,21 @@
 /**
  * @file A simple <tt>Promise</tt>-based wrapper around <tt>chrome.storage.local</tt>.
- * @module background/storage
+ * @module api/storage
  */
 
 /* global chrome */
-import { isRefType } from '../util';
+import { isRefType, apiToPromise } from '../util';
 
 /**
  * Wraps <tt>chrome.storage.local.set</tt>.
  * @param {string} key
  * @param {*} value
  * @returns {Promise<void, Error>} Rejects if <tt>chrome.runtime.lastError</tt> is set,
- * resolves otherwise.
+ * resolves when the <tt>value</tt> is set otherwise.
  */
-export function set(key, value) {
-	const obj = { [key]: value };
-	return new Promise((resolve, reject) => {
-		chrome.storage.local.set(obj, () =>
-				chrome.runtime.lastError ? reject(new Error(chrome.runtime.lastError)) : resolve()
-		);
-	});
+export async function set(key, value) {
+	const items = { [key]: value };
+	await apiToPromise(chrome.storage.local.set)(items);
 }
 
 /**
@@ -31,18 +27,22 @@ export function set(key, value) {
  * resolves with <tt>defaultValue</tt> if <tt>key</tt> does not exist in storage,
  * resolves with the value fetched from storage otherwise.
  */
-export function get(key, defaultValue) {
-	return new Promise((resolve, reject) => {
-		chrome.storage.local.get(key, items => {
-			if (chrome.runtime.lastError) {
-				reject(new Error(chrome.runtime.lastError));
-			} else if (!(key in items)) {
-				resolve(defaultValue);
-			} else {
-				resolve(items[key]);
-			}
-		});
-	});
+export async function get(key, defaultValue) {
+	const items = await apiToPromise(chrome.storage.local.get)(key);
+	if (!(key in items)) {
+		return defaultValue;
+	}
+	return items[key];
+}
+
+/**
+ * Wraps <tt>chrome.storage.local.remove</tt>.
+ * @param {...string} keys
+ * @returns {Promise<void, Error>} Rejects if <tt>chrome.runtime.lastError</tt> is set,
+ * resolves when the <tt>keys</tt> have been removed otherwise.
+ */
+export async function remove(...keys) {
+	await apiToPromise(chrome.storage.local.remove)(keys);
 }
 
 const hasListener = {};

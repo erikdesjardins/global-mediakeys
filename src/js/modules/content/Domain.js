@@ -6,7 +6,7 @@
 
 import * as Const from '../constants';
 import * as Util from '../util';
-import * as Messages from './messages';
+import * as Messages from '../api/messages';
 
 export default class Domain {
 	constructor() {}
@@ -105,11 +105,11 @@ export default class Domain {
 
 		window.addEventListener('unload', () => Messages.send(Const.msg.UNREGISTER));
 
-		this.setupPlayState(Util.debounce(state => Messages.send(Const.msg.PLAY_STATE, state), 50), buttons.play);
-		this.setupInfo(Util.debounce(info => Messages.send(Const.msg.INFO, info), 50));
+		this.setupPlayState(Util.debounce(state => Messages.send({ type: Const.msg.PLAY_STATE, data: state }), 50), buttons.play);
+		this.setupInfo(Util.debounce(info => Messages.send({ type: Const.msg.INFO, data: info }), 50));
 
 		const actionData = [];
-		const sendActionUpdate = Util.debounce(() => Messages.send(Const.msg.ACTIONS, actionData), 50);
+		const sendActionUpdate = Util.debounce(() => Messages.send({ type: Const.msg.ACTIONS, data: actionData }), 50);
 
 		const actions = await Util.asyncMap(this.getActions(), (setup, i) =>
 				setup(data => {

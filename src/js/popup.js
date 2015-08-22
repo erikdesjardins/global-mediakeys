@@ -1,6 +1,6 @@
 import * as Const from './modules/constants';
 import * as Util from './modules/util';
-import * as Messages from './modules/popup/messages';
+import * as Messages from './modules/api/messages';
 import { randomGradient } from './modules/popup/gradient';
 import { populate } from './modules/popup/templates';
 
@@ -16,7 +16,7 @@ function updateActions(actions = []) {
 	actions.forEach((action, i) => {
 		const ele = populate('action-button', action);
 		const button = ele.firstElementChild;
-		button.addEventListener('click', () => Messages.send(Const.msg.DO_ACTION, i));
+		button.addEventListener('click', () => Messages.send({ type: Const.msg.DO_ACTION, data: i }));
 		button.classList.toggle('isInactive', !action.state);
 		container.appendChild(ele);
 	});
@@ -56,12 +56,13 @@ document.getElementById('header')
 		window.close();
 	});
 
-Messages.addListener(Const.msg.INFO, updateInfo);
+// Responses handled by the background page
+Messages.addListener(Const.msg.INFO, updateInfo, { silent: true });
 
-Messages.addListener(Const.msg.ACTIONS, updateActions);
+Messages.addListener(Const.msg.ACTIONS, updateActions, { silent: true });
 
 // Not using the state from this message as it may be a background tab (e.g. if we pressed stop)
-Messages.addListener(Const.msg.PLAY_STATE, fetchPlayState);
+Messages.addListener(Const.msg.PLAY_STATE, fetchPlayState, { silent: true });
 
 updateInfo();
 
