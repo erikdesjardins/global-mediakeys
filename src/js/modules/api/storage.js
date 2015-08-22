@@ -15,7 +15,7 @@ import { isRefType, apiToPromise } from '../util';
  */
 export async function set(key, value) {
 	const items = { [key]: value };
-	await apiToPromise(chrome.storage.local.set)(items);
+	await apiToPromise(::chrome.storage.local.set)(items);
 }
 
 /**
@@ -28,7 +28,7 @@ export async function set(key, value) {
  * resolves with the value fetched from storage otherwise.
  */
 export async function get(key, defaultValue) {
-	const items = await apiToPromise(chrome.storage.local.get)(key);
+	const items = await apiToPromise(::chrome.storage.local.get)(key);
 	if (!(key in items)) {
 		return defaultValue;
 	}
@@ -42,7 +42,7 @@ export async function get(key, defaultValue) {
  * resolves when the <tt>keys</tt> have been removed otherwise.
  */
 export async function remove(...keys) {
-	await apiToPromise(chrome.storage.local.remove)(keys);
+	await apiToPromise(::chrome.storage.local.remove)(keys);
 }
 
 const hasListener = {};
