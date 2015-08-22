@@ -1,15 +1,15 @@
 /* global chrome */
 import * as Const from './modules/constants';
 import { apiToPromise } from './modules/util';
-import * as Messages from './modules/background/messages';
-import * as Commands from './modules/background/commands';
+import * as Messages from './modules/api/messages';
+import * as Commands from './modules/api/commands';
 import * as TabMgr from './modules/background/tabmanager';
 
-function getTabSender(messageType) {
+function getTabSender(type) {
 	return async (data) => {
 		const { tabId } = await TabMgr.first();
 		try {
-			return await Messages.send(messageType, tabId, data);
+			return await Messages.send({ type, tabId, data });
 		} catch (e) {
 			await TabMgr.remove(tabId);
 		}
@@ -60,7 +60,7 @@ Commands.addListener(Const.cmd.STOP, () =>
 				// Avoid promoting the tab when its state changes
 				tab.isPlaying = false;
 				try {
-					await Messages.send(Const.msg.PLAY_PAUSE, tabId);
+					await Messages.send({ type: Const.msg.PLAY_PAUSE, tabId });
 				} catch (e) {
 					await TabMgr.remove(tabId);
 				}
@@ -79,6 +79,6 @@ Messages.addListener(Const.msg.FOCUS_TAB, async () => {
 
 // Prune unresponsive tabs (in case of crashing, etc.)
 TabMgr.each(({ tabId }) =>
-		Messages.send(Const.msg.ECHO, tabId)
+		Messages.send({ type: Const.msg.ECHO, tabId })
 			.catch(() => TabMgr.remove(tabId))
 );

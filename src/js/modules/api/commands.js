@@ -1,6 +1,6 @@
 /**
  * @file A simple wrapper around <tt>chrome.commands</tt>.
- * @module background/commands
+ * @module api/commands
  */
 
 /* global chrome */

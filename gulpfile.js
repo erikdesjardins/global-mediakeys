@@ -57,7 +57,7 @@
 	gulp.task('babel', function() {
 		return gulp.src(['*.js'], { cwd: 'src/**' })
 			.pipe(plumber())
-			.pipe(babel({ stage: 1, optional: ['asyncToGenerator', 'runtime'], blacklist: ['strict', 'es6.blockScoping', 'es6.constants', 'es6.forOf', 'flow', 'react', 'reactCompat', 'jscript'] }))
+			.pipe(babel({ stage: 0, optional: ['asyncToGenerator', 'runtime'], blacklist: ['strict', 'es6.blockScoping', 'es6.constants', 'es6.forOf', 'flow', 'react', 'reactCompat', 'jscript'] }))
 			.pipe(plumber.stop())
 			.pipe(gulp.dest('dist'));
 	});

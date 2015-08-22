@@ -9,7 +9,7 @@ import 'babel-runtime/node_modules/core-js/es6/array';
 
 import * as Const from '../constants';
 import { equals } from '../util';
-import { autopersist } from './storage';
+import { autopersist } from '../api/storage';
 
 const isReady = autopersist(Const.storage.TABS, []);
 
