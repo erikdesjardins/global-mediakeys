@@ -1,5 +1,5 @@
-import * as Util from './modules/util';
-import Domain from './modules/content/Domain';
+import { click, onMutation, onDescendantMutation, waitForChild } from './modules/util/dom';
+import Domain from './base/Domain';
 
 class Soundcloud extends Domain {
 	getButtons() {
@@ -11,7 +11,7 @@ class Soundcloud extends Domain {
 	}
 
 	setupPlayState(callback, playButton) {
-		Util.onMutation(
+		onMutation(
 			playButton,
 			{ attributes: true, attributeFilter: ['class'] },
 			() => callback(playButton.classList.contains('playing')),
@@ -34,13 +34,13 @@ class Soundcloud extends Domain {
 			});
 		}
 
-		Util.onMutation(
+		onMutation(
 			watchElem,
 			{ childList: true },
 			sendUpdate
 		);
 
-		await Util.waitForChild(watchElem, '*');
+		await waitForChild(watchElem, '*');
 
 		sendUpdate();
 	}
@@ -57,7 +57,7 @@ class Soundcloud extends Domain {
 				});
 			}
 
-			await Util.onDescendantMutation(
+			await onDescendantMutation(
 				rootElem,
 				likeSelector,
 				{ attributes: true, attributeFilter: ['class'] },
@@ -65,9 +65,9 @@ class Soundcloud extends Domain {
 				{ initialCallback: true }
 			);
 
-			return () => Util.click(rootElem.querySelector(likeSelector));
+			return () => click(rootElem.querySelector(likeSelector));
 		}];
 	}
 }
 
-new Soundcloud().go(Util.waitForChild(document.getElementById('app'), '.playControls'));
+new Soundcloud().go(waitForChild(document.getElementById('app'), '.playControls'));

@@ -5,7 +5,8 @@
  */
 
 /* global chrome */
-import { isPromise, apiToPromise, typeCheck } from '../util';
+import { apiToPromise } from '../util/function';
+import { isPromise, typeCheck } from '../util/types';
 
 const listeners = {};
 
