@@ -51,7 +51,7 @@
 			)
 				.pipe(insert.prepend('"use strict";\n'))
 				.pipe(gulp.dest('.'))
-				.on('end', del.bind(null, 'dist/js/modules', cb));
+				.on('end', del.bind(null, ['dist/js/*', '!dist/js/*.js'], cb));
 		});
 	});
 	gulp.task('babel', function() {
