@@ -28,15 +28,6 @@ export function isRefType(val) {
 }
 
 /**
- * Check if <tt>val</tt> is a <tt>Promise</tt>-like object.
- * @param {*} val
- * @returns {boolean} Whether <tt>val.then</tt> is a function.
- */
-export function isPromise(val) {
-	return !!val && (typeof val === 'object' || typeof val === 'function') && typeof val.then === 'function';
-}
-
-/**
  * @param {*} obj Cast to <tt>Object</tt>, allowing <tt>typeCheck(true, Boolean)</tt>.
  * @param {!Function} type
  * @throws {TypeError} If <tt>obj</tt> is not an instance of <tt>type</tt>.

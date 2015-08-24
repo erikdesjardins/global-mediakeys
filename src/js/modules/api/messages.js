@@ -6,7 +6,7 @@
 
 /* global chrome */
 import { apiToPromise } from '../util/function';
-import { isPromise, typeCheck } from '../util/types';
+import { typeCheck } from '../util/types';
 
 const listeners = {};
 
@@ -75,7 +75,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 		return false;
 	}
 
-	if (isPromise(response)) {
+	if (response instanceof Promise) {
 		response
 			.then(data => sendResponse({ data }))
 			.catch(error => {
