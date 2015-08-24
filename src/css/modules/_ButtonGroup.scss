@@ -2,10 +2,10 @@
 
 .ButtonGroup {
 	display: flex;
-	width: 100%;
 	flex-wrap: nowrap;
-	justify-content: space-around;
 	align-items: center;
+	justify-content: space-around;
+	width: 100%;
 
 	&--pullRight {
 		justify-content: flex-end;

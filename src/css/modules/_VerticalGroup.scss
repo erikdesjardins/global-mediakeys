@@ -1,8 +1,8 @@
 .VerticalGroup {
 	display: flex;
-	height: 100%;
 	flex-direction: column;
 	flex-wrap: nowrap;
+	height: 100%;
 
 	&-content {
 		flex-shrink: 0;
