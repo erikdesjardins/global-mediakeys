@@ -1,5 +1,5 @@
-import * as Util from './modules/util';
-import Domain from './modules/content/Domain';
+import { click, onMutation, onDescendantMutation, waitForChild, descendant } from './modules/util/dom';
+import Domain from './base/Domain';
 
 class YouTube extends Domain {
 	getButtons() {
@@ -11,7 +11,7 @@ class YouTube extends Domain {
 	}
 
 	setupPlayState(callback, playButton) {
-		Util.onMutation(
+		onMutation(
 			playButton,
 			{ attributes: true, attributeFilter: ['aria-label'] },
 			() => callback(playButton.getAttribute('aria-label').toLowerCase().includes('pause')),
@@ -21,9 +21,9 @@ class YouTube extends Domain {
 
 	setupInfo(callback) {
 		async function sendUpdate(parent) {
-			const imageElem = await Util.descendant(parent, '.video-thumb img');
-			const titleElem = await Util.descendant(parent, '#watch-headline-title');
-			const subtitleElem = await Util.descendant(parent, '.yt-user-info');
+			const imageElem = await descendant(parent, '.video-thumb img');
+			const titleElem = await descendant(parent, '#watch-headline-title');
+			const subtitleElem = await descendant(parent, '.yt-user-info');
 
 			const imageUrl = imageElem.getAttribute('data-thumb') || imageElem.src;
 
@@ -34,7 +34,7 @@ class YouTube extends Domain {
 			});
 		}
 
-		Util.onDescendantMutation(
+		onDescendantMutation(
 			document.getElementById('content'),
 			'#watch-header',
 			{ childList: true },
@@ -54,16 +54,16 @@ class YouTube extends Domain {
 				});
 			}
 
-			Util.onMutation(
+			onMutation(
 				button,
 				{ childList: true },
 				sendUpdate,
 				{ initialCallback: true }
 			);
 
-			return () => Util.click(button);
+			return () => click(button);
 		}];
 	}
 }
 
-new YouTube().go(Util.waitForChild(document.getElementById('player-api'), '.html5-video-player'));
+new YouTube().go(waitForChild(document.getElementById('player-api'), '.html5-video-player'));

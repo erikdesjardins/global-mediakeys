@@ -1,6 +1,6 @@
 /**
  * @file A primitive utility for templating HTML.
- * @module popup/templates
+ * @module util/templates
  */
 
 /**

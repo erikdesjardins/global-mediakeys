@@ -1,6 +1,5 @@
 /**
  * @file Constants used for message types, command types, and storage keys.
- * @module constants
  */
 
 export const msg = {

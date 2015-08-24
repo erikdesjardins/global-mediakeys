@@ -1,8 +1,8 @@
-import * as Const from './modules/constants';
-import * as Util from './modules/util';
+import * as Const from './base/constants';
 import * as Messages from './modules/api/messages';
-import { randomGradient } from './modules/popup/gradient';
-import { populate } from './modules/popup/templates';
+import { empty } from './modules/util/dom';
+import { randomGradient } from './modules/util/gradient';
+import { populate } from './modules/util/templates';
 
 function updateInfo({ title, subtitle, image = randomGradient({ sat: 0.25, val: 0.5 }) } = {}) {
 	document.getElementById('title').textContent = title;
@@ -12,7 +12,7 @@ function updateInfo({ title, subtitle, image = randomGradient({ sat: 0.25, val: 
 
 function updateActions(actions = []) {
 	const container = document.getElementById('actions-container');
-	Util.empty(container);
+	empty(container);
 	actions.forEach((action, i) => {
 		const ele = populate('action-button', action);
 		const button = ele.firstElementChild;

@@ -1,17 +1,21 @@
 /* global chrome */
-import * as Const from './modules/constants';
-import { apiToPromise } from './modules/util';
+import * as Const from './base/constants';
 import * as Messages from './modules/api/messages';
 import * as Commands from './modules/api/commands';
-import * as TabMgr from './modules/background/tabmanager';
+import { apiToPromise } from './modules/util/function';
+import Logger from './modules/util/Logger';
+import OrderedMap from './modules/data/OrderedMap';
+import AutopersistWrapper from './modules/data/AutopersistWrapper';
+
+const tabs = new AutopersistWrapper(new OrderedMap(new Logger('TabMgr')), Const.storage.TABS);
 
 function getTabSender(type) {
 	return async (data) => {
-		const { tabId } = await TabMgr.first();
+		const { id: tabId } = await tabs.peek();
 		try {
 			return await Messages.send({ type, tabId, data });
 		} catch (e) {
-			await TabMgr.remove(tabId);
+			await tabs.remove(tabId);
 		}
 	};
 }
@@ -19,9 +23,9 @@ function getTabSender(type) {
 function updateOrFetch(messageType, key) {
 	Messages.addListener(messageType, async (data, tabId) => {
 		if (tabId) { // From tab, update stored data
-			await TabMgr.update(tabId, key, data);
+			await tabs.update(tabId, { [key]: data });
 		} else { // From popup, respond with stored data
-			const { tab } = await TabMgr.first();
+			const { data: tab } = await tabs.peek();
 			return tab[key];
 		}
 	});
@@ -35,9 +39,9 @@ function commandToTab(commandType, messageType) {
 	Commands.addListener(commandType, getTabSender(messageType));
 }
 
-Messages.addListener(Const.msg.REGISTER, (data, tabId) => TabMgr.add(tabId));
+Messages.addListener(Const.msg.REGISTER, (data, tabId) => tabs.add(tabId));
 // Synchronous to ensure response is sent before unload
-Messages.addListener(Const.msg.UNREGISTER, (data, tabId) => { TabMgr.remove(tabId); });
+Messages.addListener(Const.msg.UNREGISTER, (data, tabId) => { tabs.remove(tabId); });
 
 Messages.addListener(Const.msg.ECHO, data => data);
 
@@ -55,21 +59,21 @@ commandToTab(Const.cmd.NEXT, Const.msg.NEXT);
 commandToTab(Const.cmd.PREV, Const.msg.PREV);
 
 Commands.addListener(Const.cmd.STOP, () =>
-		TabMgr.each(async ({ tabId, tab }) => {
+		tabs.each(async ({ id: tabId, data: tab }) => {
 			if (tab.isPlaying) {
 				// Avoid promoting the tab when its state changes
 				tab.isPlaying = false;
 				try {
 					await Messages.send({ type: Const.msg.PLAY_PAUSE, tabId });
 				} catch (e) {
-					await TabMgr.remove(tabId);
+					await tabs.remove(tabId);
 				}
 			}
 		})
 );
 
 Messages.addListener(Const.msg.FOCUS_TAB, async () => {
-	const { tabId } = await TabMgr.first();
+	const { id: tabId } = await tabs.peek();
 	const { windowId } = await apiToPromise(chrome.tabs.get)(tabId);
 	return await Promise.all([
 		apiToPromise(chrome.tabs.update)(tabId, { active: true }),
@@ -78,7 +82,7 @@ Messages.addListener(Const.msg.FOCUS_TAB, async () => {
 });
 
 // Prune unresponsive tabs (in case of crashing, etc.)
-TabMgr.each(({ tabId }) =>
+tabs.each(({ id: tabId }) =>
 		Messages.send({ type: Const.msg.ECHO, tabId })
-			.catch(() => TabMgr.remove(tabId))
+			.catch(() => tabs.remove(tabId))
 );

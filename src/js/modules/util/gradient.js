@@ -1,6 +1,6 @@
 /**
  * @file A primitive utility for generating random <tt>linear-gradient</tt>s.
- * @module popup/gradient
+ * @module util/gradient
  */
 
 // Babel runtime doesn't polyfill prototype functions

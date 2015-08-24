@@ -4,7 +4,8 @@
  */
 
 /* global chrome */
-import { isRefType, apiToPromise } from '../util';
+import { apiToPromise } from '../util/function';
+import { isRefType } from '../util/types';
 
 /**
  * Wraps <tt>chrome.storage.local.set</tt>.

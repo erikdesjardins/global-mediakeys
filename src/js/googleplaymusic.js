@@ -1,5 +1,5 @@
-import * as Util from './modules/util';
-import Domain from './modules/content/Domain';
+import { click, onMutation, waitForEvent, descendant } from './modules/util/dom';
+import Domain from './base/Domain';
 
 class GooglePlayMusic extends Domain {
 	getButtons() {
@@ -11,7 +11,7 @@ class GooglePlayMusic extends Domain {
 	}
 
 	setupPlayState(callback, playButton) {
-		Util.onMutation(
+		onMutation(
 			playButton,
 			{ attributes: true, attributeFilter: ['class'] },
 			() => callback(playButton.classList.contains('playing')),
@@ -32,7 +32,7 @@ class GooglePlayMusic extends Domain {
 			});
 		}
 
-		Util.onMutation(
+		onMutation(
 			document.getElementById('playerSongInfo'),
 			{ childList: true },
 			sendUpdate
@@ -41,7 +41,7 @@ class GooglePlayMusic extends Domain {
 
 	getActions() {
 		return [async (callback) => {
-			const thumbUpButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
+			const thumbUpButton = await descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
 
 			function sendUpdate() {
 				callback({
@@ -50,16 +50,16 @@ class GooglePlayMusic extends Domain {
 				});
 			}
 
-			Util.onMutation(
+			onMutation(
 				thumbUpButton,
 				{ attributes: true, attributeFilter: ['aria-label'] },
 				sendUpdate,
 				{ initialCallback: true }
 			);
 
-			return () => Util.click(thumbUpButton);
+			return () => click(thumbUpButton);
 		}, async (callback) => {
-			const thumbDownButton = await Util.descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
+			const thumbDownButton = await descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
 
 			function sendUpdate() {
 				callback({
@@ -68,16 +68,16 @@ class GooglePlayMusic extends Domain {
 				});
 			}
 
-			Util.onMutation(
+			onMutation(
 				thumbDownButton,
 				{ attributes: true, attributeFilter: ['aria-label'] },
 				sendUpdate,
 				{ initialCallback: true }
 			);
 
-			return () => Util.click(thumbDownButton);
+			return () => click(thumbDownButton);
 		}];
 	}
 }
 
-new GooglePlayMusic().go(Util.waitForEvent(window, 'load'));
+new GooglePlayMusic().go(waitForEvent(window, 'load'));
