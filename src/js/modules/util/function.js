@@ -49,3 +49,14 @@ export function noop() {}
 export function identity(value) {
 	return value;
 }
+
+// Semi-functional until Chrome has proxies
+export function catchAll(...props) {
+	const obj = {};
+	props.forEach(prop => obj[prop] = noop);
+	return obj;
+}
+
+// No proxies :(
+// export const catchAll = new Proxy(() => catchAll, { get: () => catchAll });
+// export const noop = new Proxy(() => {}, { get: () => noop });

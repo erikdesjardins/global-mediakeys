@@ -8,9 +8,10 @@
 // Babel runtime doesn't polyfill prototype functions
 import 'babel-runtime/node_modules/core-js/es6/array';
 
-import { noop } from '../util/function';
+import { catchAll } from '../util/function';
 import { extend } from '../util/object';
 import { equals } from '../util/types';
+import Logger from '../util/Logger';
 import { inject, wrappable } from './Wrapper';
 
 export default
@@ -18,11 +19,12 @@ export default
 class OrderedMap {
 	/**
 	 * @class
-	 * @param {Logger} [logger] Logs add, remove, and update operations.
+	 * @param {string} [tag] Passed to {@link Logger}.
+	 * If specified, will log add, remove, and update operations.
 	 */
-	constructor(logger = noop) {
+	constructor(tag) {
 		this._v = [];
-		this._log = logger;
+		this._log = tag ? new Logger(tag) : catchAll('w', 'i', 'd');
 	}
 
 	_findIndex(id) {

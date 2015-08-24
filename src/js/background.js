@@ -3,11 +3,10 @@ import * as Const from './base/constants';
 import * as Messages from './modules/api/messages';
 import * as Commands from './modules/api/commands';
 import { apiToPromise } from './modules/util/function';
-import Logger from './modules/util/Logger';
 import OrderedMap from './modules/data/OrderedMap';
 import AutopersistWrapper from './modules/data/AutopersistWrapper';
 
-const tabs = new AutopersistWrapper(new OrderedMap(new Logger('TabMgr')), Const.storage.TABS);
+const tabs = new AutopersistWrapper(new OrderedMap('TabMgr'), Const.storage.TABS);
 
 function getTabSender(type) {
 	return async (data) => {
