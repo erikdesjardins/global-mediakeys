@@ -127,10 +127,11 @@ class OrderedMap {
 	 */
 	@wrappable
 	peek() {
-		if (!this._v[0]) {
+		if (!this._v.length) {
 			throw new Error('The map is empty.');
 		}
-		return { id: this._v[0].id, data: this._v[0].data };
+		const [{ id, data }] = this._v;
+		return { id, data };
 	}
 
 	/**
