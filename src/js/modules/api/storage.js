@@ -46,7 +46,7 @@ export async function remove(...keys) {
 	await apiToPromise(::chrome.storage.local.remove)(keys);
 }
 
-const hasListener = {};
+const fetchedKeys = new Set();
 
 /**
  * Fetches a stored reference type with {@link get}, and stores it during <tt>chrome.runtime.onSuspend</tt> with {@link set}.
@@ -60,7 +60,7 @@ const hasListener = {};
  * resolves with the value resolved from {@link get} otherwise.
  */
 export async function autopersist(key, defaultValue) {
-	if (hasListener[key]) {
+	if (fetchedKeys.has(key)) {
 		throw new Error(`Key: ${key}, has been previously fetched with autopersist.`);
 	}
 
@@ -71,7 +71,7 @@ export async function autopersist(key, defaultValue) {
 	}
 
 	chrome.runtime.onSuspend.addListener(() => set(key, val));
-	hasListener[key] = true;
+	fetchedKeys.add(key);
 
 	return val;
 }

@@ -4,7 +4,7 @@
  */
 
 /* global chrome */
-const listeners = {};
+const listeners = new Map();
 
 /**
  * Register a listener to be invoked whenever <tt>commandName</tt> is fired.
@@ -14,15 +14,15 @@ const listeners = {};
  * @returns {void}
  */
 export function addListener(commandName, callback) {
-	if (commandName in listeners) {
+	if (listeners.has(commandName)) {
 		throw new Error(`Listener for command: ${commandName} already exists.`);
 	}
-	listeners[commandName] = callback;
+	listeners.set(commandName, callback);
 }
 
 chrome.commands.onCommand.addListener(commandName => {
-	if (!(commandName in listeners)) {
+	if (!listeners.has(commandName)) {
 		throw new Error(`Unrecognised command: ${commandName}`);
 	}
-	listeners[commandName]();
+	listeners.get(commandName)();
 });

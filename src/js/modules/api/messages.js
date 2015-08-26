@@ -8,7 +8,7 @@
 import { apiToPromise } from '../util/function';
 import { typeCheck } from '../util/types';
 
-const listeners = {};
+const listeners = new Map();
 
 /**
  * Register a listener to be invoked whenever a message of <tt>type</tt> is received.
@@ -25,13 +25,13 @@ const listeners = {};
  * @returns {void}
  */
 export function addListener(type, callback, { silent = false } = {}) {
-	if (type in listeners) {
+	if (listeners.has(type)) {
 		throw new Error(`Listener for message type: ${type} already exists.`);
 	}
-	listeners[type] = {
+	listeners.set(type, {
 		options: { silent },
 		callback
-	};
+	});
 }
 
 /**
@@ -65,13 +65,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 	const { type, data } = request;
 	const tabId = sender.tab && sender.tab.id;
 
-	if (!(type in listeners)) {
+	if (!listeners.has(type)) {
 		throw new Error(`Unrecognised message type: ${type}`);
 	}
+	const listener = listeners.get(type);
 
-	const response = listeners[type].callback(data, tabId);
+	const response = listener.callback(data, tabId);
 
-	if (listeners[type].options.silent) {
+	if (listener.options.silent) {
 		return false;
 	}
 
