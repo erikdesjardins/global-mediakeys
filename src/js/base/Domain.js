@@ -2,7 +2,7 @@
  * @file The base class for content scripts that handles setup and communication with the background page.
  */
 
-import * as Const from './constants';
+import { MSG } from './constants';
 import * as Messages from '../modules/api/messages';
 import { asyncMap } from '../modules/util/array';
 import { click } from '../modules/util/dom';
@@ -93,21 +93,21 @@ export default class Domain {
 			throw new Error('No play button found.');
 		}
 
-		Messages.addListener(Const.msg.ECHO, data => data);
+		Messages.addListener(MSG.ECHO, data => data);
 
-		Messages.addListener(Const.msg.PLAY_PAUSE, () => click(buttons.play));
-		Messages.addListener(Const.msg.NEXT, () => click(buttons.next));
-		Messages.addListener(Const.msg.PREV, () => click(buttons.prev));
+		Messages.addListener(MSG.PLAY_PAUSE, () => click(buttons.play));
+		Messages.addListener(MSG.NEXT, () => click(buttons.next));
+		Messages.addListener(MSG.PREV, () => click(buttons.prev));
 
-		await Messages.send(Const.msg.REGISTER);
+		await Messages.send(MSG.REGISTER);
 
-		window.addEventListener('unload', () => Messages.send(Const.msg.UNREGISTER));
+		window.addEventListener('unload', () => Messages.send(MSG.UNREGISTER));
 
-		this.setupPlayState(debounce(state => Messages.send({ type: Const.msg.PLAY_STATE, data: state }), 50), buttons.play);
-		this.setupInfo(debounce(info => Messages.send({ type: Const.msg.INFO, data: info }), 50));
+		this.setupPlayState(debounce(state => Messages.send({ type: MSG.PLAY_STATE, data: state }), 50), buttons.play);
+		this.setupInfo(debounce(info => Messages.send({ type: MSG.INFO, data: info }), 50));
 
 		const actionData = [];
-		const sendActionUpdate = debounce(() => Messages.send({ type: Const.msg.ACTIONS, data: actionData }), 50);
+		const sendActionUpdate = debounce(() => Messages.send({ type: MSG.ACTIONS, data: actionData }), 50);
 
 		const actions = await asyncMap(this.getActions(), (setup, i) =>
 				setup(data => {
@@ -116,6 +116,6 @@ export default class Domain {
 				})
 		);
 
-		Messages.addListener(Const.msg.DO_ACTION, i => actions[i]());
+		Messages.addListener(MSG.DO_ACTION, i => actions[i]());
 	}
 }

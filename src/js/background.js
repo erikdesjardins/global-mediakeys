@@ -1,12 +1,12 @@
 /* global chrome */
-import * as Const from './base/constants';
+import { MSG, CMD, STORAGE } from './base/constants';
 import * as Messages from './modules/api/messages';
 import * as Commands from './modules/api/commands';
 import { apiToPromise } from './modules/util/function';
 import OrderedMap from './modules/data/OrderedMap';
 import AutopersistWrapper from './modules/data/AutopersistWrapper';
 
-const tabs = new AutopersistWrapper(new OrderedMap('TabMgr'), Const.storage.TABS);
+const tabs = new AutopersistWrapper(new OrderedMap('TabMgr'), STORAGE.TABS);
 
 function getTabSender(type) {
 	return async (data) => {
@@ -38,32 +38,32 @@ function commandToTab(commandType, messageType) {
 	Commands.addListener(commandType, getTabSender(messageType));
 }
 
-Messages.addListener(Const.msg.REGISTER, (data, tabId) => tabs.add(tabId));
+Messages.addListener(MSG.REGISTER, (data, tabId) => tabs.add(tabId));
 // Synchronous to ensure response is sent before unload
-Messages.addListener(Const.msg.UNREGISTER, (data, tabId) => { tabs.remove(tabId); });
+Messages.addListener(MSG.UNREGISTER, (data, tabId) => { tabs.remove(tabId); });
 
-Messages.addListener(Const.msg.ECHO, data => data);
+Messages.addListener(MSG.ECHO, data => data);
 
-updateOrFetch(Const.msg.PLAY_STATE, 'isPlaying');
-updateOrFetch(Const.msg.INFO, 'info');
-updateOrFetch(Const.msg.ACTIONS, 'actions');
+updateOrFetch(MSG.PLAY_STATE, 'isPlaying');
+updateOrFetch(MSG.INFO, 'info');
+updateOrFetch(MSG.ACTIONS, 'actions');
 
-forwardToTab(Const.msg.DO_ACTION);
-forwardToTab(Const.msg.PLAY_PAUSE);
-forwardToTab(Const.msg.NEXT);
-forwardToTab(Const.msg.PREV);
+forwardToTab(MSG.DO_ACTION);
+forwardToTab(MSG.PLAY_PAUSE);
+forwardToTab(MSG.NEXT);
+forwardToTab(MSG.PREV);
 
-commandToTab(Const.cmd.PLAY_PAUSE, Const.msg.PLAY_PAUSE);
-commandToTab(Const.cmd.NEXT, Const.msg.NEXT);
-commandToTab(Const.cmd.PREV, Const.msg.PREV);
+commandToTab(CMD.PLAY_PAUSE, MSG.PLAY_PAUSE);
+commandToTab(CMD.NEXT, MSG.NEXT);
+commandToTab(CMD.PREV, MSG.PREV);
 
-Commands.addListener(Const.cmd.STOP, () =>
+Commands.addListener(CMD.STOP, () =>
 		tabs.each(async ({ id: tabId, data: tab }) => {
 			if (tab.isPlaying) {
 				// Avoid promoting the tab when its state changes
 				tab.isPlaying = false;
 				try {
-					await Messages.send({ type: Const.msg.PLAY_PAUSE, tabId });
+					await Messages.send({ type: MSG.PLAY_PAUSE, tabId });
 				} catch (e) {
 					await tabs.remove(tabId);
 				}
@@ -71,7 +71,7 @@ Commands.addListener(Const.cmd.STOP, () =>
 		})
 );
 
-Messages.addListener(Const.msg.FOCUS_TAB, async () => {
+Messages.addListener(MSG.FOCUS_TAB, async () => {
 	const { id: tabId } = await tabs.peek();
 	const { windowId } = await apiToPromise(chrome.tabs.get)(tabId);
 	return await Promise.all([
@@ -82,6 +82,6 @@ Messages.addListener(Const.msg.FOCUS_TAB, async () => {
 
 // Prune unresponsive tabs (in case of crashing, etc.)
 tabs.each(({ id: tabId }) =>
-		Messages.send({ type: Const.msg.ECHO, tabId })
+		Messages.send({ type: MSG.ECHO, tabId })
 			.catch(() => tabs.remove(tabId))
 );

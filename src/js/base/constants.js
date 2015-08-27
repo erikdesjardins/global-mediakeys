@@ -2,7 +2,7 @@
  * @file Constants used for message types, command types, and storage keys.
  */
 
-export const msg = {
+export const MSG = {
 	REGISTER: 'tab-register',
 	UNREGISTER: 'tab-unregister',
 	PLAY_STATE: 'tab-playstate',
@@ -19,13 +19,13 @@ export const msg = {
 	ECHO: 'echo'
 };
 
-export const cmd = {
+export const CMD = {
 	PLAY_PAUSE: 'media-play-pause',
 	NEXT: 'media-next',
 	PREV: 'media-prev',
 	STOP: 'media-stop'
 };
 
-export const storage = {
+export const STORAGE = {
 	TABS: 'registered-tabs'
 };

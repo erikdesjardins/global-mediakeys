@@ -1,4 +1,4 @@
-import * as Const from './base/constants';
+import { MSG } from './base/constants';
 import * as Messages from './modules/api/messages';
 import { empty } from './modules/util/dom';
 import { randomGradient } from './modules/util/gradient';
@@ -16,7 +16,7 @@ function updateActions(actions = []) {
 	actions.forEach((action, i) => {
 		const ele = populate('action-button', action);
 		const button = ele.firstElementChild;
-		button.addEventListener('click', () => Messages.send({ type: Const.msg.DO_ACTION, data: i }));
+		button.addEventListener('click', () => Messages.send({ type: MSG.DO_ACTION, data: i }));
 		button.classList.toggle('isInactive', !action.state);
 		container.appendChild(ele);
 	});
@@ -27,42 +27,42 @@ function updatePlayState(state = false) {
 }
 
 function fetchInfo() {
-	Messages.send(Const.msg.INFO)
+	Messages.send(MSG.INFO)
 		.then(updateInfo);
 }
 
 function fetchActions() {
-	Messages.send(Const.msg.ACTIONS)
+	Messages.send(MSG.ACTIONS)
 		.then(updateActions);
 }
 
 function fetchPlayState() {
-	Messages.send(Const.msg.PLAY_STATE)
+	Messages.send(MSG.PLAY_STATE)
 		.then(updatePlayState);
 }
 
 document.getElementById('prev')
-	.addEventListener('click', () => Messages.send(Const.msg.PREV));
+	.addEventListener('click', () => Messages.send(MSG.PREV));
 
 document.getElementById('play-pause')
-	.addEventListener('click', () => Messages.send(Const.msg.PLAY_PAUSE));
+	.addEventListener('click', () => Messages.send(MSG.PLAY_PAUSE));
 
 document.getElementById('next')
-	.addEventListener('click', () => Messages.send(Const.msg.NEXT));
+	.addEventListener('click', () => Messages.send(MSG.NEXT));
 
 document.getElementById('header')
 	.addEventListener('click', async () => {
-		await Messages.send(Const.msg.FOCUS_TAB);
+		await Messages.send(MSG.FOCUS_TAB);
 		window.close();
 	});
 
 // Responses handled by the background page
-Messages.addListener(Const.msg.INFO, updateInfo, { silent: true });
+Messages.addListener(MSG.INFO, updateInfo, { silent: true });
 
-Messages.addListener(Const.msg.ACTIONS, updateActions, { silent: true });
+Messages.addListener(MSG.ACTIONS, updateActions, { silent: true });
 
 // Not using the state from this message as it may be a background tab (e.g. if we pressed stop)
-Messages.addListener(Const.msg.PLAY_STATE, fetchPlayState, { silent: true });
+Messages.addListener(MSG.PLAY_STATE, fetchPlayState, { silent: true });
 
 updateInfo();
 
