@@ -11,6 +11,6 @@
  * @returns {Promise<V[], *>} Rejects if any promises returned by the callback reject,
  * resolves with a new mapped array otherwise.
  */
-export async function asyncMap(array, callback) {
-	return await Promise.all(array.map((val, i) => callback(val, i, array)));
+export function asyncMap(array, callback) {
+	return Promise.all(array.map((val, i) => callback(val, i, array)));
 }
