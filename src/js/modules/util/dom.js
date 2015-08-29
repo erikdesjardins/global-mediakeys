@@ -73,7 +73,7 @@ export function onMutation(ele, options, callback, { initialCallback = false } =
  * Similar to {@link onMutation}, except the observed element is a descendant of <tt>ele</tt>.
  * This descendant may be added or removed from the DOM at any time, and the observer will be reattached.
  * Specifically, the first descendant of <tt>ele</tt> matching <tt>selector</tt> will be observed.
- * @param {!Element} ele
+ * @param {!Element|Document} ele
  * @param {string} selector
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
  * @param {function(!Node): void} callback Invoked once per batch of mutations.
@@ -127,7 +127,7 @@ export function waitForMutation(ele, options, callback) {
  * Waits for a direct child of <tt>ele</tt> matching <tt>selector</tt>.
  * Does not retrieve the matching element, use {@link descendant} instead.
  * This is due to <tt>MutationRecord</tt> nodes not being live in some situations.
- * @param {!Element} ele
+ * @param {!Element|Document} ele
  * @param {string} selector
  * @param {boolean} [initialCheck=true] Whether <tt>ele</tt>'s preexisting children should be checked for a match.
  * @returns {Promise<void, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
@@ -135,7 +135,7 @@ export function waitForMutation(ele, options, callback) {
  */
 export function waitForChild(ele, selector, { initialCheck = true } = {}) {
 	return new Promise(resolve => {
-		typeCheck(ele, Element);
+		typeCheck(ele, Element, Document);
 
 		if (initialCheck && Array.from(ele.children).some(child => child.matches(selector))) {
 			resolve();
@@ -173,14 +173,14 @@ export function waitForEvent(ele, event) {
 /**
  * Selects a descendant of <tt>ele</tt> that may not yet exist.
  * Equivalent to <tt>querySelector</tt> when a matching element exists.
- * @param {!Element} ele
+ * @param {!Element|Document} ele
  * @param {string} selector
  * @returns {Promise<Element, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves with the selected element otherwise.
  */
 export function descendant(ele, selector) {
 	return new Promise(resolve => {
-		typeCheck(ele, Element);
+		typeCheck(ele, Element, Document);
 
 		const child = ele.querySelector(selector);
 		if (child) {
