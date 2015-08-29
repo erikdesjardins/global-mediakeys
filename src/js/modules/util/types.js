@@ -29,12 +29,13 @@ export function isRefType(val) {
 
 /**
  * @param {*} obj Cast to <tt>Object</tt>, allowing <tt>typeCheck(true, Boolean)</tt>.
- * @param {!Function} type
- * @throws {TypeError} If <tt>obj</tt> is not an instance of <tt>type</tt>.
+ * @param {...!Function} types
+ * @throws {TypeError} If <tt>obj</tt> is not an instance of one of the <tt>types</tt>.
  * @returns {void}
  */
-export function typeCheck(obj, type) {
-	if (!(Object(obj) instanceof type)) {
-		throw new TypeError(`${obj} is not an instance of ${type.name}.`);
+export function typeCheck(obj, ...types) {
+	const wrapped = Object(obj);
+	if (!types.some(type => wrapped instanceof type)) {
+		throw new TypeError(`${obj} is not an instance of ${types.map(t => t.name).join(' or ')}.`);
 	}
 }
