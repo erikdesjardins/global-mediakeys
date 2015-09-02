@@ -13,12 +13,10 @@ Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouT
 
 	gulp
 
-## Test
-
-Before:
+## Lint
 
 	gem install scss_lint
 
-Run tests:
+then
 
 	gulp travis
