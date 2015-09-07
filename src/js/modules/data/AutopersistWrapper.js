@@ -10,22 +10,23 @@ import Wrapper from './Wrapper';
 export default class AutopersistWrapper extends Wrapper {
 	/**
 	 * @class
-	 * @param {!Object} underlyingInstance
 	 * @param {string} storageKey Will be passed to {@link Storage}<tt>.autopersist</tt>.
 	 */
-	constructor(underlyingInstance, storageKey) {
-		super(underlyingInstance);
-
-		const isReady = this._setup(storageKey);
-
-		this._wrapAccessors();
-		this._wrapFunctions(func => async (...args) => {
-			await isReady;
-			return func(...args);
-		});
+	constructor(storageKey) {
+		super();
+		this._key = storageKey;
 	}
 
-	async _setup(storageKey) {
-		this._inject(await Storage.autopersist(storageKey, this._getDefaultValue()));
+	_onWrap() {
+		this._isReady = this._setup();
+	}
+
+	async _functionWrapper(func, args) {
+		await this._isReady;
+		return func(...args);
+	}
+
+	async _setup() {
+		this._inject(await Storage.autopersist(this._key, this._getDefaultValue()));
 	}
 }

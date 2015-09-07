@@ -46,10 +46,6 @@ export function debounce(callback, delay) {
 
 export function noop() {}
 
-export function identity(value) {
-	return value;
-}
-
 // Semi-functional until Chrome has proxies
 export function catchAll(...props) {
 	const obj = {};

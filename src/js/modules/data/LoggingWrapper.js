@@ -9,25 +9,25 @@ import Wrapper from './Wrapper';
 export default class LoggingWrapper extends Wrapper {
 	/**
 	 * @class
-	 * @param {!Object} underlyingInstance
 	 * @param {string} tag Will be passed to {@link Logger}.
 	 */
-	constructor(underlyingInstance, tag) {
-		super(underlyingInstance);
+	constructor(tag) {
+		super();
+		this._log = new Logger(tag);
+	}
 
-		const log = new Logger(tag);
+	_functionWrapper(func, args, name) {
+		this._log.v(`${name}()`);
+		return func(...args);
+	}
 
-		this._wrapAccessors((get, name) => () => {
-			log.v(name, '=>');
-			return get();
-		}, (set, name) => value => {
-			log.v(name, '<=');
-			set(value);
-		});
+	_getterWrapper(get, name) {
+		this._log.v(name, '=>');
+		return get();
+	}
 
-		this._wrapFunctions((func, name) => (...args) => {
-			log.v(`${name}()`);
-			return func(...args);
-		});
+	_setterWrapper(set, value, name) {
+		this._log.v(name, '<=');
+		set(value);
 	}
 }
