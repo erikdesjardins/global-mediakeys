@@ -5,8 +5,6 @@
  * @module data/Wrapper
  */
 
-import { identity as id } from '../util/function';
-
 const DEFAULT_VALUE = Symbol('defaultValue');
 const INJECT_PROP = Symbol('injectProperty');
 const WRAPPABLE_FUNCTIONS = Symbol('wrappableFunctions');
@@ -18,54 +16,64 @@ export default
 @inject(wrapperInjectTarget)
 class Wrapper {
 	/**
-	 * @class
-	 * @param {!Object} underlyingInstance The object to be wrapped.
+	 * Assigns an underlying object for this wrapper.
+	 * @param {!Object} underlyingInstance The instance to be wrapped.
+	 * @returns {Wrapper} This instance.
 	 */
-	constructor(underlyingInstance) {
+	wrap(underlyingInstance) {
 		this._underlying = underlyingInstance;
-		this._exposeWrappableProperties();
+		this.__wrapFunctions();
+		this.__wrapAccessors();
+		this.__exposeWrappableProperties();
+		this._onWrap();
+		return this;
 	}
 
 	/**
-	 * Subclasses must call this function in their constructors.
-	 * <tt>wrapperFactory</tt> accepts a function to be wrapped and its property name,
-	 * and should return a function wrapping it.
+	 * Invoked after {@link wrap}.
+	 * @abstract
 	 * @protected
-	 * @param {function(function(...*): *, string): function(...*): *} [wrapperFactory=identity]
 	 * @returns {void}
 	 */
-	_wrapFunctions(wrapperFactory = id) {
-		const properties = this._underlying[WRAPPABLE_FUNCTIONS] || [];
-		// Until Chrome supports ES6 proxies
-		properties.forEach(propName => {
-			this[propName] = wrapperFactory(::this._underlying[propName], propName);
-		});
+	_onWrap() {}
+
+	/**
+	 * Invoked when a wrapped function is invoked.
+	 * @abstract
+	 * @protected
+	 * @param {function(...*): *} func The underlying function.
+	 * @param {*[]} args The arguments with which the function was invoked.
+	 * @param {string} name The function's property name.
+	 * @returns {*} The value to be returned from the wrapped function.
+	 */
+	_functionWrapper(func, args, name) {
+		return func(...args);
 	}
 
 	/**
-	 * Subclasses must call this function in their constructors.
-	 * <tt>getterFactory</tt> accepts a function that will invoke the underlying getter and its property name,
-	 * and should return a function wrapping it.
-	 * <tt>setterFactory</tt> behaves identically for the respective setter.
+	 * Invoked when a wrapped getter is invoked.
+	 * @abstract
+	 * @protected
+	 * @param {function(): *} get A function that will invoke the underlying getter.
+	 * @param {string} name The getter's property name.
+	 * @returns {*} The value to be returned from the wrapped getter.
+	 */
+	_getterWrapper(get, name) {
+		return get();
+	}
+
+	/**
+	 * Invoked when a wrapped setter is invoked.
+	 * @abstract
 	 * @protected
 	 * @template T
-	 * @param {function(function(): T, string): function(): *} [getterFactory=identity]
-	 * @param {function(function(T): void, string): function(T): void} [setterFactory=identity]
+	 * @param {function(T): void} set A function that will invoke the underlying setter.
+	 * @param {T} value The value assigned to the setter.
+	 * @param {string} name The setter's property name.
 	 * @returns {void}
 	 */
-	_wrapAccessors(getterFactory = id, setterFactory = id) {
-		const properties = this._underlying[WRAPPABLE_ACCESSORS] || [];
-		// Until Chrome supports ES6 proxies
-		properties.forEach(([propName, hasGetter, hasSetter]) => {
-			const descriptor = {};
-			if (hasGetter) {
-				descriptor.get = getterFactory(() => this._underlying[propName], propName);
-			}
-			if (hasSetter) {
-				descriptor.set = setterFactory(value => this._underlying[propName] = value, propName);
-			}
-			Reflect.defineProperty(this, propName, descriptor);
-		});
+	_setterWrapper(set, value, name) {
+		set(value);
 	}
 
 	/**
@@ -105,11 +113,44 @@ class Wrapper {
 	}
 
 	/**
+	 * Applies wrappers to functions decorated with {@link wrappable}.
+	 * @private
+	 * @returns {void}
+	 */
+	__wrapFunctions() {
+		const properties = this._underlying[WRAPPABLE_FUNCTIONS] || [];
+		// Until Chrome supports ES6 proxies
+		properties.forEach(propName => {
+			this[propName] = (...args) => this._functionWrapper((...a) => this._underlying[propName](...a), args, propName);
+		});
+	}
+
+	/**
+	 * Applies wrappers to accessors decorated with {@link wrappable}.
+	 * @private
+	 * @returns {void}
+	 */
+	__wrapAccessors() {
+		const properties = this._underlying[WRAPPABLE_ACCESSORS] || [];
+		// Until Chrome supports ES6 proxies
+		properties.forEach(([propName, hasGetter, hasSetter]) => {
+			const descriptor = {};
+			if (hasGetter) {
+				descriptor.get = () => this._getterWrapper(() => this._underlying[propName], propName);
+			}
+			if (hasSetter) {
+				descriptor.set = value => this._setterWrapper(v => this._underlying[propName] = v, value, propName);
+			}
+			Reflect.defineProperty(this, propName, descriptor);
+		});
+	}
+
+	/**
 	 * Allows the wrapper itself to be wrapped.
 	 * @private
 	 * @returns {void}
 	 */
-	_exposeWrappableProperties() {
+	__exposeWrappableProperties() {
 		this[DEFAULT_VALUE] = this._underlying[DEFAULT_VALUE];
 
 		// Not using .push() to avoid modifying the prototype

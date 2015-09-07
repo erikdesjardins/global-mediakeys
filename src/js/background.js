@@ -6,7 +6,7 @@ import { apiToPromise } from './modules/util/function';
 import OrderedMap from './modules/data/OrderedMap';
 import AutopersistWrapper from './modules/data/AutopersistWrapper';
 
-const tabs = new AutopersistWrapper(new OrderedMap('TabMgr'), STORAGE.TABS);
+const tabs = new AutopersistWrapper(STORAGE.TABS).wrap(new OrderedMap('TabMgr'));
 
 function getTabSender(type) {
 	return async (data) => {
