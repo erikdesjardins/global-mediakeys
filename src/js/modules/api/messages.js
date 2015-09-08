@@ -11,15 +11,23 @@ import { typeCheck } from '../util/types';
 const listeners = new Map();
 
 /**
- * Register a listener to be invoked whenever a message of <tt>type</tt> is received.
- * Responses may be sent synchronously or asynchronously, depending on the return value of <tt>callback</tt>.
+ * @callback MessageListener
  * @template T
- * @param {string} type
- * @param {function(*, number=): (T|Promise<T, *>)} callback Accepts the message data and tabId of the sender, if available.
+ * @param {*} data The message data.
+ * @param {number} [tabId] The tabId of the sender, if sent by a tab's content script.
+ * @returns {T|Promise<T, *>} The response data, optionally wrapped in a <tt>Promise</tt>.
+ * Ignored if the listener is silent.
+ */
+
+/**
+ * Register a listener to be invoked whenever a message of <tt>type</tt> is received.
+ * Responses may be sent synchronously or asynchronously:
  * If <tt>silent</tt> is true, no response will be sent.
  * If <tt>callback</tt> returns a non-promise value, a response will be sent synchronously.
  * If <tt>callback</tt> returns a <tt>Promise</tt>, a response will be sent asynchronously when it resolves.
  * If it rejects, an invalid response will be sent to close the message channel.
+ * @param {string} type
+ * @param {MessageListener} callback
  * @param {boolean} [silent=false]
  * @throws {Error} If a listener for <tt>messageType</tt> already exists.
  * @returns {void}
