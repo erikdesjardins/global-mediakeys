@@ -43,8 +43,8 @@ export function addListener(type, callback, { silent = false } = {}) {
 }
 
 /**
- * Send a message to the background page or the content script at a specified <tt>tabId</tt>.
- * Accepts either an options object or a string for <tt>type</tt>.
+ * Send a message to non-content scripts or to the content script at <tt>tabId</tt> (if specified).
+ * Accepts one argument: either an options object or a string for <tt>type</tt>.
  * @param {string} type
  * @param {number|string} [tabId]
  * @param {*} [data]
