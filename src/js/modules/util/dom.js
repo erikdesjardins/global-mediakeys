@@ -72,7 +72,7 @@ export function onMutation(ele, options, callback, { initialCallback = false } =
 /**
  * @typedef {Object} DescendantMutationUtil
  * @property {function(): void} disconnect Disconnects the observer.
- * @property {function(): !Node} descendant Returns the current descendant.
+ * @property {function(): !Element} descendant Returns the current descendant.
  * The returned node may not be present in the DOM.
  */
 
@@ -83,7 +83,7 @@ export function onMutation(ele, options, callback, { initialCallback = false } =
  * @param {!Element|Document} ele
  * @param {string} selector
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
- * @param {function(!Node): void} callback Invoked with the descendant once per batch of mutations.
+ * @param {function(!Element): void} callback Invoked with the descendant once per batch of mutations.
  * @param {boolean} [initialCallback=false] Whether the <tt>callback</tt> should be immediately invoked when the descendant is found or replaced.
  * @returns {Promise<DescendantMutationUtil, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves when a matching descendant is found otherwise.
