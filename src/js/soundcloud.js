@@ -47,9 +47,6 @@ class Soundcloud extends Domain {
 
 	getActions() {
 		return [async (callback) => {
-			const rootElem = document.querySelector('.playbackSoundBadge');
-			const likeSelector = '.playbackSoundBadge__like';
-
 			function sendUpdate(likeButton) {
 				callback({
 					icon: '\uf004',
@@ -57,15 +54,15 @@ class Soundcloud extends Domain {
 				});
 			}
 
-			await onDescendantMutation(
-				rootElem,
-				likeSelector,
+			const { descendant } = await onDescendantMutation(
+				document.querySelector('.playbackSoundBadge'),
+				'.playbackSoundBadge__like',
 				{ attributes: true, attributeFilter: ['class'] },
 				sendUpdate,
 				{ initialCallback: true }
 			);
 
-			return () => click(rootElem.querySelector(likeSelector));
+			return () => click(descendant());
 		}];
 	}
 }

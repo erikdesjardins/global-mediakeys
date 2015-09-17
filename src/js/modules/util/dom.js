@@ -70,15 +70,22 @@ export function onMutation(ele, options, callback, { initialCallback = false } =
 }
 
 /**
+ * @typedef {Object} DescendantMutationUtil
+ * @property {function(): void} disconnect Disconnects the observer.
+ * @property {function(): !Node} descendant Returns the current descendant.
+ * The returned node may not be present in the DOM.
+ */
+
+/**
  * Similar to {@link onMutation}, except the observed element is a descendant of <tt>ele</tt>.
  * This descendant may be added or removed from the DOM at any time, and the observer will be reattached.
  * Specifically, the first descendant of <tt>ele</tt> matching <tt>selector</tt> will be observed.
  * @param {!Element|Document} ele
  * @param {string} selector
  * @param {!Object} options Should be a <tt>MutationObserverInit</tt>.
- * @param {function(!Node): void} callback Invoked once per batch of mutations.
+ * @param {function(!Node): void} callback Invoked with the descendant once per batch of mutations.
  * @param {boolean} [initialCallback=false] Whether the <tt>callback</tt> should be immediately invoked when the descendant is found or replaced.
- * @returns {Promise<void, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
+ * @returns {Promise<DescendantMutationUtil, TypeError>} Rejects if <tt>ele</tt> is the incorrect type,
  * resolves when a matching descendant is found otherwise.
  */
 export async function onDescendantMutation(ele, selector, options, callback, { initialCallback = false } = {}) {
@@ -91,7 +98,7 @@ export async function onDescendantMutation(ele, selector, options, callback, { i
 		observer = onMutation(child, options, callback, { initialCallback });
 	}
 
-	observe(ele, { childList: true, subtree: true }, mutation => {
+	const outerObserver = observe(ele, { childList: true, subtree: true }, mutation => {
 		if (Array.from(mutation.addedNodes).some(node => node.nodeType === Node.ELEMENT_NODE)) {
 			const e = ele.querySelector(selector);
 			if (e && e !== child) {
@@ -100,6 +107,16 @@ export async function onDescendantMutation(ele, selector, options, callback, { i
 			return true;
 		}
 	});
+
+	return {
+		disconnect() {
+			outerObserver.disconnect();
+			observer.disconnect();
+		},
+		descendant() {
+			return child;
+		}
+	};
 }
 
 /**
