@@ -3,11 +3,15 @@ import * as Messages from './modules/api/messages';
 import { empty } from './modules/util/dom';
 import { randomGradient } from './modules/util/gradient';
 import { populate } from './modules/util/templates';
+import Logger from './modules/util/Logger';
+
+const log = new Logger('Popup');
 
 function updateInfo({ title, subtitle, image = randomGradient({ sat: 0.25, val: 0.5 }) } = {}) {
 	document.getElementById('title').textContent = title;
 	document.getElementById('subtitle').textContent = subtitle;
 	document.body.style.backgroundImage = image;
+	log.d('Updated info:\n', title, '\n', subtitle, '\n', image);
 }
 
 function updateActions(actions = []) {
@@ -20,10 +24,12 @@ function updateActions(actions = []) {
 		button.classList.toggle('isInactive', !action.state);
 		container.appendChild(ele);
 	});
+	log.d('Updated actions:', actions);
 }
 
 function updatePlayState(state = false) {
 	document.body.classList.toggle('isPlaying', state);
+	log.d('Updated play state:', state);
 }
 
 function fetchInfo() {
