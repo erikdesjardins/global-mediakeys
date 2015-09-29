@@ -3,10 +3,22 @@ import { MSG, CMD, STORAGE } from './base/constants';
 import * as Messages from './modules/api/messages';
 import * as Commands from './modules/api/commands';
 import { apiToPromise } from './modules/util/function';
+import Logger from './modules/util/Logger';
+import { chain } from './modules/data/Wrapper';
 import OrderedMap from './modules/data/OrderedMap';
 import AutopersistWrapper from './modules/data/AutopersistWrapper';
+import AdvisorWrapper from './modules/data/AdvisorWrapper';
 
-const tabs = new AutopersistWrapper(STORAGE.TABS).wrap(new OrderedMap('TabMgr'));
+const log = new Logger('TabMgr');
+const tabs = chain(
+	new OrderedMap(),
+	new AdvisorWrapper({
+		add: ([tabId]) => log.i('Added id:', tabId),
+		remove: ([tabId]) => log.i('Removed id:', tabId),
+		update: ([tabId, data], updated) => updated && log.d('Updated id:', tabId, 'with:', data)
+	}),
+	new AutopersistWrapper(STORAGE.TABS)
+);
 
 function getTabSender(type) {
 	return async (data) => {

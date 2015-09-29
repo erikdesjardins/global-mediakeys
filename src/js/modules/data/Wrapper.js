@@ -206,3 +206,14 @@ export function wrappable(target, name, descriptor) {
 		target[WRAPPABLE_ACCESSORS].push([name, 'get' in descriptor, 'set' in descriptor]);
 	}
 }
+
+/**
+ * Sugar for applying multiple wrappers in series.
+ * Equivalent of <tt>wrappers[1].wrap(wrappers[0].wrap(target))</tt>, etc.
+ * @param {!Object} target
+ * @param {...!Wrapper} wrappers
+ * @returns {Wrapper} <tt>target</tt>, with <tt>wrappers</tt> around it.
+ */
+export function chain(target, ...wrappers) {
+	return wrappers.reduce((t, wrapper) => wrapper.wrap(t), target);
+}
