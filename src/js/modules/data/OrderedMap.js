@@ -86,6 +86,7 @@ class OrderedMap {
 	 * @param {number} id
 	 * @param {!Object} data Each key-value pair in <tt>data</tt> will be copied to the entry.
 	 * @throws {Error} If no entry with <tt>id</tt> exists.
+	 * @returns {boolean} True if an update was performed, false otherwise.
 	 */
 	@wrappable
 	update(id, data) {
@@ -97,7 +98,9 @@ class OrderedMap {
 		if (!equals(entry.data, newData)) {
 			entry.data = newData;
 			this._promote(id);
+			return true;
 		}
+		return false;
 	}
 
 	/**
