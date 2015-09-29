@@ -1,8 +1,9 @@
 /**
- * @file A {@link Wrapper} that logs function and accessor calls.
+ * @file A {@link Wrapper} that logs all function and accessor calls.
  * @module data/LoggingWrapper
  */
 
+import { intersperse } from '../util/array';
 import Logger from '../util/Logger';
 import Wrapper from './Wrapper';
 
@@ -17,17 +18,19 @@ export default class LoggingWrapper extends Wrapper {
 	}
 
 	_functionWrapper(func, args, name) {
-		this._log.v(`${name}()`);
-		return func(...args);
+		const result = func(...args);
+		this._log.v(name, '(', ...intersperse(args, ','), ')', '=>', result);
+		return result;
 	}
 
 	_getterWrapper(get, name) {
-		this._log.v(name, '=>');
-		return get();
+		const value = get();
+		this._log.v(name, '=>', value);
+		return value;
 	}
 
 	_setterWrapper(set, value, name) {
-		this._log.v(name, '<=');
 		set(value);
+		this._log.v(name, '<=', value);
 	}
 }
