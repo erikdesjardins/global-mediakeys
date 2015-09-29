@@ -7,8 +7,13 @@ import * as Messages from '../modules/api/messages';
 import { asyncMap } from '../modules/util/array';
 import { click } from '../modules/util/dom';
 import { debounce } from '../modules/util/function';
+import Logger from '../modules/util/Logger';
 
 export default class Domain {
+	constructor() {
+		this._log = new Logger(this.constructor.name);
+	}
+
 	/**
 	 * Buttons for controlling play/pause, next, and prev track.
 	 * Dispatching a click event on these should result in the desired action.
@@ -85,7 +90,11 @@ export default class Domain {
 	 * resolves when initialization is complete otherwise.
 	 */
 	async go(waitFor) {
+		this._log.d('Waiting for init...');
+
 		await waitFor;
+
+		this._log.d('Starting init...');
 
 		const buttons = this.getButtons();
 
@@ -99,6 +108,8 @@ export default class Domain {
 		Messages.addListener(MSG.NEXT, () => click(buttons.next));
 		Messages.addListener(MSG.PREV, () => click(buttons.prev));
 
+		this._log.d('Waiting for registration...');
+
 		await Messages.send(MSG.REGISTER);
 
 		window.addEventListener('unload', () => Messages.send(MSG.UNREGISTER));
@@ -109,6 +120,8 @@ export default class Domain {
 		const actionData = [];
 		const sendActionUpdate = debounce(() => Messages.send({ type: MSG.ACTIONS, data: actionData }), 50);
 
+		this._log.d('Setting up actions...');
+
 		const actions = await asyncMap(this.getActions(), (setup, i) =>
 				setup(data => {
 					actionData[i] = data;
@@ -117,5 +130,7 @@ export default class Domain {
 		);
 
 		Messages.addListener(MSG.DO_ACTION, i => actions[i]());
+
+		this._log.d('Init complete.');
 	}
 }
