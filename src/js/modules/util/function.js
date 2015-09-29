@@ -56,3 +56,21 @@ export function catchAll(...props) {
 // No proxies :(
 // export const catchAll = new Proxy(() => catchAll, { get: () => catchAll });
 // export const noop = new Proxy(() => {}, { get: () => noop });
+
+/**
+ * Creates a wrapper that will invoke <tt>func</tt> only once,
+ * returning the same value in all future invocations.
+ * @template T
+ * @param {function(): T} func
+ * @returns {function(): T} Returns the value returned by <tt>func</tt>.
+ */
+export function once(func) {
+	let defined, value;
+	return () => {
+		if (!defined) {
+			value = func();
+			defined = true;
+		}
+		return value;
+	};
+}
