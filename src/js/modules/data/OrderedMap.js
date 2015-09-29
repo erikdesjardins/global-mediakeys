@@ -8,23 +8,15 @@
 // Babel runtime doesn't polyfill prototype functions
 import 'babel-runtime/node_modules/core-js/es6/array';
 
-import { catchAll } from '../util/function';
 import { extend } from '../util/object';
 import { equals } from '../util/types';
-import Logger from '../util/Logger';
 import { inject, wrappable } from './Wrapper';
 
 export default
 @inject('_v', [])
 class OrderedMap {
-	/**
-	 * @class
-	 * @param {string} [tag] Passed to {@link Logger}.
-	 * If specified, will log add, remove, and update operations.
-	 */
-	constructor(tag) {
+	constructor() {
 		this._v = [];
-		this._log = tag ? new Logger(tag) : catchAll('w', 'i', 'd');
 	}
 
 	_findIndex(id) {
@@ -70,10 +62,8 @@ class OrderedMap {
 	add(id, data = {}) {
 		if (this._exists(id)) {
 			this._remove(id);
-			this._log.w('Id:', id, 'already exists, will be overwritten.');
 		}
 		this._add(id, extend({}, data));
-		this._log.i('Added id:', id, 'with:', data);
 	}
 
 	/**
@@ -88,7 +78,6 @@ class OrderedMap {
 			throw new Error(`Cannot remove non-extant id: ${id}`);
 		}
 		this._remove(id);
-		this._log.i('Removed id:', id);
 	}
 
 	/**
@@ -97,7 +86,6 @@ class OrderedMap {
 	 * @param {number} id
 	 * @param {!Object} data Each key-value pair in <tt>data</tt> will be copied to the entry.
 	 * @throws {Error} If no entry with <tt>id</tt> exists.
-	 * @returns {void}
 	 */
 	@wrappable
 	update(id, data) {
@@ -109,7 +97,6 @@ class OrderedMap {
 		if (!equals(entry.data, newData)) {
 			entry.data = newData;
 			this._promote(id);
-			this._log.d('Updated id:', id, 'with:', data);
 		}
 	}
 
