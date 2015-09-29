@@ -33,3 +33,19 @@ export function each(object, callback) {
 		}
 	}
 }
+
+/**
+ * Creates a map from <tt>object</tt>.
+ * @param {!Object} object
+ * @returns {Map} A map containing <tt>object</tt>'s own properties.
+ */
+export function toMap(object) {
+	function* ownPropertyKeyValuePairs(obj) {
+		for (const key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				yield [key, object[key]];
+			}
+		}
+	}
+	return new Map(ownPropertyKeyValuePairs(object));
+}
