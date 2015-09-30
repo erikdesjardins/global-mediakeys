@@ -1,4 +1,4 @@
-import { MSG } from './base/constants';
+import { MSG } from './shared/constants';
 import * as Messages from './modules/api/messages';
 import { empty } from './modules/util/dom';
 import { randomGradient } from './modules/util/gradient';

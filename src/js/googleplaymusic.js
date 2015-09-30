@@ -1,5 +1,5 @@
 import { click, onMutation, waitForEvent, descendant } from './modules/util/dom';
-import Domain from './base/Domain';
+import Domain from './shared/Domain';
 
 class GooglePlayMusic extends Domain {
 	getButtons() {

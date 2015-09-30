@@ -1,5 +1,5 @@
 /* global chrome */
-import { MSG, CMD, STORAGE } from './base/constants';
+import { MSG, CMD, STORAGE } from './shared/constants';
 import * as Messages from './modules/api/messages';
 import * as Commands from './modules/api/commands';
 import { apiToPromise } from './modules/util/function';
