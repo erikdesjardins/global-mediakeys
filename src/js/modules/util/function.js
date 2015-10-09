@@ -6,10 +6,10 @@
 /* global chrome */
 
 /**
- * Wraps an asynchronous API call in a <tt>Promise</tt>.
+ * Wraps an asynchronous API call in a promise.
  * @param {function(...*, function(...*): void): void} func
- * @returns {function(...*): Promise<void|*|*[], Error>} <tt>func</tt>, in a wrapper that will append a callback to the argument list and return a <tt>Promise</tt>.
- * The <tt>Promise</tt> will reject if <tt>chrome.runtime.lastError</tt> is set,
+ * @returns {function(...*): Promise<void|*|*[], Error>} <tt>func</tt>, in a wrapper that will append a callback to the argument list and return a promise.
+ * The promise will reject if <tt>chrome.runtime.lastError</tt> is set,
  * resolving with the result passed to the callback or an array of results otherwise.
  */
 export function apiToPromise(func) {

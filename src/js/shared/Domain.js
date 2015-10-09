@@ -73,7 +73,7 @@ export default class Domain {
 	 * @param {function(ActionDefinition): void} callback Should be invoked whenever state of the action changes,
 	 * and when initial state is known.
 	 * @returns {function|Promise<function>} Will be called when the action is invoked.
-	 * If a <tt>Promise</tt> is returned, no action invocations will be accepted until the <tt>Promise</tt> is resolved.
+	 * If a promise is returned, no action invocations will be accepted until the promise is resolved.
 	 */
 
 	/**
@@ -84,7 +84,7 @@ export default class Domain {
 	}
 
 	/**
-	 * @param {Promise<void, Error>} [waitFor] Initialization will be delayed until this <tt>Promise</tt> resolves.
+	 * @param {Promise<void, Error>} [waitFor] Initialization will be delayed until this promise resolves.
 	 * @returns {Promise<void, Error>} Rejects if <tt>waitFor</tt> rejects,
 	 * rejects if {@link getButtons} does not return a valid play button,
 	 * resolves when initialization is complete otherwise.

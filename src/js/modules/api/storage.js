@@ -1,5 +1,5 @@
 /**
- * @file A simple <tt>Promise</tt>-based wrapper around <tt>chrome.storage.local</tt>.
+ * @file A simple promise-based wrapper around <tt>chrome.storage.local</tt>.
  * @module api/storage
  */
 

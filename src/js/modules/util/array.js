@@ -4,7 +4,7 @@
  */
 
 /**
- * <tt>Array.prototype.map</tt> but mapped to <tt>Promise</tt> results.
+ * <tt>Array.prototype.map</tt> but mapped to promise results.
  * @template T, V
  * @param {T[]} array
  * @param {function(T, number, T[]): (V|Promise<V>)} callback

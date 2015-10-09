@@ -15,7 +15,7 @@ const listeners = new Map();
  * @template T
  * @param {*} data The message data.
  * @param {number} [tabId] The tabId of the sender, if sent by a tab's content script.
- * @returns {T|Promise<T, *>} The response data, optionally wrapped in a <tt>Promise</tt>.
+ * @returns {T|Promise<T, *>} The response data, optionally wrapped in a promise.
  * Ignored if the listener is silent.
  */
 
@@ -24,7 +24,7 @@ const listeners = new Map();
  * Responses may be sent synchronously or asynchronously:
  * If <tt>silent</tt> is true, no response will be sent.
  * If <tt>callback</tt> returns a non-promise value, a response will be sent synchronously.
- * If <tt>callback</tt> returns a <tt>Promise</tt>, a response will be sent asynchronously when it resolves.
+ * If <tt>callback</tt> returns a promise, a response will be sent asynchronously when it resolves.
  * If it rejects, an invalid response will be sent to close the message channel.
  * @param {string} type
  * @param {MessageListener} callback
