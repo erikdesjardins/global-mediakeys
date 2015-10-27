@@ -8,7 +8,6 @@
 // Babel runtime doesn't polyfill prototype functions
 import 'babel-runtime/node_modules/core-js/es6/array';
 
-import { extend } from '../util/object';
 import { equals } from '../util/types';
 import { inject, wrappable } from './Wrapper';
 
@@ -63,7 +62,7 @@ class OrderedMap {
 		if (this._exists(id)) {
 			this._remove(id);
 		}
-		this._add(id, extend({}, data));
+		this._add(id, Object.assign({}, data));
 	}
 
 	/**
@@ -94,7 +93,7 @@ class OrderedMap {
 			throw new Error(`Cannot update non-extant id: ${id}`);
 		}
 		const entry = this._get(id);
-		const newData = extend({}, entry.data, data);
+		const newData = Object.assign({}, entry.data, data);
 		if (!equals(entry.data, newData)) {
 			entry.data = newData;
 			this._promote(id);
