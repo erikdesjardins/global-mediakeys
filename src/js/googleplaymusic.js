@@ -4,9 +4,9 @@ import Domain from './shared/Domain';
 class GooglePlayMusic extends Domain {
 	getButtons() {
 		return {
-			play: document.querySelector('sj-icon-button[data-id="play-pause"]'),
-			next: document.querySelector('sj-icon-button[data-id="forward"]'),
-			prev: document.querySelector('sj-icon-button[data-id="rewind"]')
+			play: document.querySelector('#player [data-id="play-pause"]'),
+			next: document.querySelector('#player [data-id="forward"]'),
+			prev: document.querySelector('#player [data-id="rewind"]')
 		};
 	}
 
@@ -41,7 +41,7 @@ class GooglePlayMusic extends Domain {
 
 	getActions() {
 		return [async (callback) => {
-			const thumbUpButton = await descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="5"]');
+			const thumbUpButton = await descendant(document.getElementById('playerSongInfo'), '[data-rating="5"]');
 
 			function sendUpdate() {
 				callback({
@@ -59,7 +59,7 @@ class GooglePlayMusic extends Domain {
 
 			return () => click(thumbUpButton);
 		}, async (callback) => {
-			const thumbDownButton = await descendant(document.getElementById('playerSongInfo'), 'sj-icon-button[data-rating="1"]');
+			const thumbDownButton = await descendant(document.getElementById('playerSongInfo'), '[data-rating="1"]');
 
 			function sendUpdate() {
 				callback({
