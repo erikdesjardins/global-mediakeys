@@ -46,13 +46,13 @@ class GooglePlayMusic extends Domain {
 			function sendUpdate() {
 				callback({
 					icon: '\uf164',
-					state: thumbUpButton.getAttribute('aria-label').toLowerCase().includes('undo')
+					state: thumbUpButton.title.toLowerCase().includes('undo')
 				});
 			}
 
 			onMutation(
 				thumbUpButton,
-				{ attributes: true, attributeFilter: ['aria-label'] },
+				{ attributes: true, attributeFilter: ['title'] },
 				sendUpdate,
 				{ initialCallback: true }
 			);
@@ -64,13 +64,13 @@ class GooglePlayMusic extends Domain {
 			function sendUpdate() {
 				callback({
 					icon: '\uf165',
-					state: thumbDownButton.getAttribute('aria-label').toLowerCase().includes('undo')
+					state: thumbDownButton.title.toLowerCase().includes('undo')
 				});
 			}
 
 			onMutation(
 				thumbDownButton,
-				{ attributes: true, attributeFilter: ['aria-label'] },
+				{ attributes: true, attributeFilter: ['title'] },
 				sendUpdate,
 				{ initialCallback: true }
 			);
