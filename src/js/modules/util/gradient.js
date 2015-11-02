@@ -3,9 +3,6 @@
  * @module util/gradient
  */
 
-// Babel runtime doesn't polyfill prototype functions
-import 'babel-runtime/node_modules/core-js/es6/array';
-
 // adapted from:
 // TinyColor v1.1.2
 // https://github.com/bgrins/TinyColor

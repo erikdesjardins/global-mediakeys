@@ -5,9 +5,6 @@
  * @module data/OrderedMap
  */
 
-// Babel runtime doesn't polyfill prototype functions
-import 'babel-runtime/node_modules/core-js/es6/array';
-
 import { equals } from '../util/types';
 import { inject, wrappable } from './Wrapper';
 
