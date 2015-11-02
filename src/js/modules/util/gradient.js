@@ -44,7 +44,7 @@ function rgbToString({ r, g, b }) {
  * @param {string} [angle] A valid CSS angle.
  * @returns {string} A valid CSS <tt>linear-gradient</tt>.
  */
-export function randomGradient({ hue, sat, val, colorStops = 2, angle = Math.floor(Math.random() * 360) + 'deg' } = {}) {
+export function randomGradient({ hue, sat, val, colorStops = 2, angle = `${Math.floor(Math.random() * 360)}deg` } = {}) {
 	const colors = new Array(colorStops).fill(0).map(() => {
 		const [h = Math.random(), s = Math.random(), v = Math.random()] = [hue, sat, val];
 		return rgbToString(hsvToRgb(h, s, v));

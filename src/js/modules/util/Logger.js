@@ -30,7 +30,7 @@ export function setLogLevel(level) {
 
 export default class Logger {
 	constructor(tag) {
-		this._tag = '[' + tag + ']';
+		this._tag = `[${tag}]`;
 	}
 
 	e(...info) {
