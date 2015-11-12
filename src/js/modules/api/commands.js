@@ -3,7 +3,6 @@
  * @module api/commands
  */
 
-/* global chrome */
 const listeners = new Map();
 
 /**

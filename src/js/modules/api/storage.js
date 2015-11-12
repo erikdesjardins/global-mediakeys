@@ -3,7 +3,6 @@
  * @module api/storage
  */
 
-/* global chrome */
 import { apiToPromise } from '../util/function';
 import { isRefType } from '../util/types';
 

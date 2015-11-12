@@ -4,7 +4,8 @@
 		"babel"
 	],
 	"env": {
-		"browser": true
+		"browser": true,
+		"webextensions": true
 	},
 	"rules": {
 		// Reimplemented for ES6/7 compatibility

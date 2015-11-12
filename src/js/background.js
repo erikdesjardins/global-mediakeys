@@ -1,4 +1,3 @@
-/* global chrome */
 import { MSG, CMD, STORAGE } from './shared/constants';
 import * as Messages from './modules/api/messages';
 import * as Commands from './modules/api/commands';

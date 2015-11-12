@@ -4,7 +4,6 @@
  * @module api/messages
  */
 
-/* global chrome */
 import { apiToPromise } from '../util/function';
 import { typeCheck } from '../util/types';
 

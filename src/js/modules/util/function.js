@@ -3,8 +3,6 @@
  * @module util/function
  */
 
-/* global chrome */
-
 /**
  * Wraps an asynchronous API call in a promise.
  * @param {function(...*, function(...*): void): void} func
