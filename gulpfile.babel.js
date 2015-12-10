@@ -1,17 +1,15 @@
-/* global require */
-
-const gulp = require('gulp');
-const del = require('del');
-const path = require('path');
-const source = require('vinyl-source-stream');
-const globby = require('globby');
-const browserify = require('browserify');
-const sass = require('gulp-sass');
-const autoprefixer = require('gulp-autoprefixer');
-const merge = require('merge-stream');
-const zip = require('gulp-zip');
-const eslint = require('gulp-eslint');
-const scsslint = require('gulp-scss-lint');
+import gulp from 'gulp';
+import del from 'del';
+import path from 'path';
+import source from 'vinyl-source-stream';
+import globby from 'globby';
+import browserify from 'browserify';
+import sass from 'gulp-sass';
+import autoprefixer from 'gulp-autoprefixer';
+import merge from 'merge-stream';
+import zip from 'gulp-zip';
+import eslint from 'gulp-eslint';
+import scsslint from 'gulp-scss-lint';
 
 gulp.task('default', ['clean'], () => {
 	gulp.start('watch');
