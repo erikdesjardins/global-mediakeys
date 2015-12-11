@@ -50,7 +50,7 @@ class YouTube extends Domain {
 			function sendUpdate() {
 				callback({
 					icon: '\uf017',
-					state: button.innerHTML.includes('#ytp-svg-48')
+					state: button.innerHTML.includes('#ytp-svg-53')
 				});
 			}
 
