@@ -2,7 +2,9 @@ import { click, onMutation, onDescendantMutation, waitForChild } from './modules
 import Domain from './shared/Domain';
 
 class Soundcloud extends Domain {
-	getButtons() {
+	async getButtons() {
+		await waitForChild(document.getElementById('app'), '.playControls');
+
 		return {
 			play: document.querySelector('.playControls .playControl'),
 			next: document.querySelector('.playControls .skipControl__next'),
@@ -67,4 +69,4 @@ class Soundcloud extends Domain {
 	}
 }
 
-new Soundcloud().go(waitForChild(document.getElementById('app'), '.playControls'));
+new Soundcloud().go();

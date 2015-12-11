@@ -2,7 +2,9 @@ import { click, onMutation, onDescendantMutation, waitForChild, descendant } fro
 import Domain from './shared/Domain';
 
 class YouTube extends Domain {
-	getButtons() {
+	async getButtons() {
+		await waitForChild(document.getElementById('player-api'), '.html5-video-player');
+
 		return {
 			play: document.querySelector('.ytp-play-button'),
 			next: document.querySelector('.ytp-next-button'),
@@ -66,4 +68,4 @@ class YouTube extends Domain {
 	}
 }
 
-new YouTube().go(waitForChild(document.getElementById('player-api'), '.html5-video-player'));
+new YouTube().go();

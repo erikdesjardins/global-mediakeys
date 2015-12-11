@@ -1,12 +1,14 @@
-import { click, onMutation, waitForEvent, descendant } from './modules/util/dom';
+import { click, onMutation, descendant } from './modules/util/dom';
 import Domain from './shared/Domain';
 
 class GooglePlayMusic extends Domain {
-	getButtons() {
+	async getButtons() {
+		const player = document.getElementById('player');
+
 		return {
-			play: document.querySelector('#player [data-id="play-pause"]'),
-			next: document.querySelector('#player [data-id="forward"]'),
-			prev: document.querySelector('#player [data-id="rewind"]')
+			play: await descendant(player, '[data-id="play-pause"]'),
+			next: await descendant(player, '[data-id="forward"]'),
+			prev: await descendant(player, '[data-id="rewind"]')
 		};
 	}
 
@@ -80,4 +82,4 @@ class GooglePlayMusic extends Domain {
 	}
 }
 
-new GooglePlayMusic().go(waitForEvent(window, 'load'));
+new GooglePlayMusic().go();

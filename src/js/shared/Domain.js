@@ -26,7 +26,7 @@ export default class Domain {
 
 	/**
 	 * @abstract
-	 * @returns {!ButtonDefinition} The three main buttons.
+	 * @returns {!ButtonDefinition|Promise<ButtonDefinition, *>} The three main buttons.
 	 */
 	getButtons() {
 		throw new Error('getButtons() is not defined.');
@@ -84,19 +84,14 @@ export default class Domain {
 	}
 
 	/**
-	 * @param {Promise<void, Error>} [waitFor] Initialization will be delayed until this promise resolves.
-	 * @returns {Promise<void, Error>} Rejects if <tt>waitFor</tt> rejects,
+	 * @returns {Promise<void, Error>} Rejects if {@link getButtons} rejects,
 	 * rejects if {@link getButtons} does not return a valid play button,
 	 * resolves when initialization is complete otherwise.
 	 */
-	async go(waitFor) {
-		this._log.d('Waiting for init...');
+	async go() {
+		this._log.d('Waiting for buttons...');
 
-		await waitFor;
-
-		this._log.d('Starting init...');
-
-		const buttons = this.getButtons();
+		const buttons = await this.getButtons();
 
 		if (!buttons.play) {
 			throw new Error('No play button found.');
