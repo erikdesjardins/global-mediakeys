@@ -4,6 +4,7 @@ import path from 'path';
 import source from 'vinyl-source-stream';
 import globby from 'globby';
 import browserify from 'browserify';
+import watchify from 'watchify';
 import sass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
 import merge from 'merge-stream';
@@ -25,21 +26,26 @@ gulp.task('clean', () =>
 
 gulp.task('build', ['browserify', 'sass', 'copy']);
 
-gulp.task('browserify', async () => {
-	const s = merge((await globby(['src/js/*.js'])).map(file =>
-		browserify(file)
-			.transform('babelify')
-			.bundle()
-			.on('error', function handler(err) {
-				console.error(err.message); // eslint-disable-line no-console
-				this.emit('end'); // eslint-disable-line no-invalid-this
-			})
-			.pipe(source(path.relative('src', file)))
-	))
-		.pipe(gulp.dest('dist'));
+const browserifyStreams = globby.sync(['src/js/*.js']).map(file => [
+	path.relative('src', file),
+	browserify(file, { plugin: [watchify], cache: {}, packageCache: {} })
+		.transform('babelify')
+]);
 
-	return new Promise(r => s.on('end', r));
-});
+gulp.task('browserify', () =>
+	merge(
+		browserifyStreams.map(([dest, stream]) =>
+			stream
+				.bundle()
+				.on('error', function handler(err) {
+					console.error(err.message); // eslint-disable-line no-console
+					this.emit('end'); // eslint-disable-line no-invalid-this
+				})
+				.pipe(source(dest))
+		)
+	)
+		.pipe(gulp.dest('dist'))
+);
 
 gulp.task('sass', () =>
 	gulp.src(['*.scss'], { cwd: 'src/**' })

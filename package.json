@@ -25,7 +25,8 @@
     "gulp-scss-lint": "^0.3.8",
     "gulp-zip": "^3.0.2",
     "merge-stream": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.6.1"
   },
   "license": "GPL-3.0"
 }
