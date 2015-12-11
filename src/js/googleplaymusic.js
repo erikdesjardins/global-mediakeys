@@ -21,9 +21,9 @@ class GooglePlayMusic extends Domain {
 
 	setupInfo(callback) {
 		function sendUpdate(parent) {
-			const imageElem = parent.querySelector('#playingAlbumArt');
-			const titleElem = parent.querySelector('#player-song-title');
-			const subtitleElem = parent.querySelector('.player-artist-album-wrapper');
+			const imageElem = parent.querySelector('#playerBarArt');
+			const titleElem = parent.querySelector('#currently-playing-title');
+			const subtitleElem = parent.querySelector('.currently-playing-details');
 
 			callback({
 				image: `url(${imageElem.src.replace('=s90', '=s250')})`,
