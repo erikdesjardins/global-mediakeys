@@ -28,10 +28,7 @@ export async function set(key, value) {
  * resolves with the value fetched from storage otherwise.
  */
 export async function get(key, defaultValue) {
-	const items = await apiToPromise(::chrome.storage.local.get)(key);
-	if (!(key in items)) {
-		return defaultValue;
-	}
+	const items = await apiToPromise(::chrome.storage.local.get)({ [key]: defaultValue });
 	return items[key];
 }
 
