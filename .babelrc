@@ -1,23 +1,9 @@
 {
+	"presets": ["stage-0"],
 	"plugins": [
-		// stage 0
-		"transform-do-expressions",
-		"transform-function-bind",
-
-		// stage 1
-		"transform-class-constructor-call",
-		"transform-class-properties",
-		//"transform-decorators",
+		// extra
+		"transform-runtime",
 		"transform-decorators-legacy",
-		"transform-export-extensions",
-
-		// stage 2
-		"syntax-trailing-function-commas",
-		"transform-object-rest-spread",
-
-		// stage 3
-		"transform-async-to-generator",
-		"transform-exponentiation-operator",
 
 		// es2015
 		"check-es2015-constants",
@@ -34,9 +20,6 @@
 		"transform-es2015-shorthand-properties",
 		"transform-es2015-spread",
 		"transform-es2015-sticky-regex",
-		"transform-es2015-unicode-regex",
-
-		// extra
-		"transform-runtime"
+		"transform-es2015-unicode-regex"
 	]
 }
