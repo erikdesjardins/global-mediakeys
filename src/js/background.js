@@ -20,7 +20,7 @@ const tabs = chain(
 );
 
 function getTabSender(type) {
-	return async (data) => {
+	return async data => {
 		const { id: tabId } = await tabs.peek();
 		try {
 			return await Messages.send({ type, tabId, data });

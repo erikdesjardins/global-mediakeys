@@ -42,7 +42,7 @@ class GooglePlayMusic extends Domain {
 	}
 
 	getActions() {
-		return [async (callback) => {
+		return [async callback => {
 			const thumbUpButton = await descendant(document.getElementById('playerSongInfo'), '[data-rating="5"]');
 
 			function sendUpdate() {
@@ -60,7 +60,7 @@ class GooglePlayMusic extends Domain {
 			);
 
 			return () => click(thumbUpButton);
-		}, async (callback) => {
+		}, async callback => {
 			const thumbDownButton = await descendant(document.getElementById('playerSongInfo'), '[data-rating="1"]');
 
 			function sendUpdate() {

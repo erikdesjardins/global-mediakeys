@@ -48,7 +48,7 @@ class Soundcloud extends Domain {
 	}
 
 	getActions() {
-		return [async (callback) => {
+		return [async callback => {
 			function sendUpdate(likeButton) {
 				callback({
 					icon: '\uf004',

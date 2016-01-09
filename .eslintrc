@@ -13,7 +13,8 @@
 		"babel/new-cap": 2,
 		"babel/object-curly-spacing": [2, "always"],
 		"babel/object-shorthand": 2,
-		//"babel/arrow-parens": [2, "as-needed"],
+		"babel/arrow-parens": [2, "as-needed"],
+		"babel/no-await-in-loop": 2,
 
 		// ES6
 		//"arrow-body-style": 2,
@@ -154,7 +155,7 @@
 		//"id-length": 2,
 		//"id-match": 2,
 		"indent": [2, "tab"],
-		//"jsx-quotes": 2,
+		"jsx-quotes": 2,
 		"key-spacing": 2,
 		//"linebreak-style": 2,
 		"lines-around-comment": [2, { "allowBlockStart": true }],
