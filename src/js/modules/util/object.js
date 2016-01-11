@@ -4,7 +4,7 @@
  */
 
 /**
- * <tt>_.each</tt> but only for objects.
+ * `_.each` but only for objects.
  * @param {!Object} object
  * @param {function(*, string, !Object): void} callback
  * @returns {void}
@@ -18,9 +18,9 @@ export function each(object, callback) {
 }
 
 /**
- * Creates a map from <tt>object</tt>.
+ * Creates a map from `object`.
  * @param {!Object} object
- * @returns {Map} A map containing <tt>object</tt>'s own properties.
+ * @returns {Map} A map containing `object`'s own properties.
  */
 export function toMap(object) {
 	function* ownPropertyKeyValuePairs(obj) {

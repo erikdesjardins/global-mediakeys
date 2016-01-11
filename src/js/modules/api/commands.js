@@ -1,15 +1,15 @@
 /**
- * @file A simple wrapper around <tt>chrome.commands</tt>.
+ * @file A simple wrapper around `chrome.commands`.
  * @module api/commands
  */
 
 const listeners = new Map();
 
 /**
- * Register a listener to be invoked whenever <tt>commandName</tt> is fired.
+ * Register a listener to be invoked whenever `commandName` is fired.
  * @param {string} commandName
  * @param {function(): void} callback
- * @throws {Error} If a listener for <tt>commandName</tt> already exists.
+ * @throws {Error} If a listener for `commandName` already exists.
  * @returns {void}
  */
 export function addListener(commandName, callback) {

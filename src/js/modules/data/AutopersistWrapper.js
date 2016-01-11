@@ -1,6 +1,6 @@
 /**
- * @file A {@link Wrapper} that fetches/stores the value using {@link Storage}<tt>.autopersist</tt>.
- * All <tt>@wrappable</tt> functions will be wrapped in promises.
+ * @file A {@link Wrapper} that fetches/stores the value using {@link Storage#autopersist}.
+ * All `@wrappable` functions will be wrapped in promises.
  * @module data/AutopersistWrapper
  */
 
@@ -10,7 +10,7 @@ import Wrapper from './Wrapper';
 export default class AutopersistWrapper extends Wrapper {
 	/**
 	 * @class
-	 * @param {string} storageKey Will be passed to {@link Storage}<tt>.autopersist</tt>.
+	 * @param {string} storageKey Will be passed to {@link Storage#autopersist}.
 	 */
 	constructor(storageKey) {
 		super();

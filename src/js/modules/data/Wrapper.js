@@ -166,7 +166,7 @@ class Wrapper {
  * A decorator for classes only (not methods).
  * Wrappable data types must be annotated with this function.
  * Subclasses of {@link Wrapper} may be annotated with this function,
- * but <tt>defaultValue</tt> will be overwritten by the default value of the wrapped object.
+ * but `defaultValue` will be overwritten by the default value of the wrapped object.
  * @param {string|!Symbol} prop The property describing the underlying data store used by the wrapped class.
  * @param {*} [defaultValue] The value to be injected by default.
  * @returns {function(Function, string): void} The annotator function.
@@ -209,10 +209,10 @@ export function wrappable(target, name, descriptor) {
 
 /**
  * Sugar for applying multiple wrappers in series.
- * Equivalent of <tt>wrappers[1].wrap(wrappers[0].wrap(target))</tt>, etc.
+ * Equivalent of `wrappers[1].wrap(wrappers[0].wrap(target))`, etc.
  * @param {!Object} target
  * @param {...!Wrapper} wrappers
- * @returns {Wrapper} <tt>target</tt>, with <tt>wrappers</tt> around it.
+ * @returns {Wrapper} `target`, with `wrappers` around it.
  */
 export function chain(target, ...wrappers) {
 	return wrappers.reduce((t, wrapper) => wrapper.wrap(t), target);

@@ -1,5 +1,5 @@
 /**
- * @file A simple promise-based wrapper around <tt>chrome.storage.local</tt>.
+ * @file A simple promise-based wrapper around `chrome.storage.local`.
  * @module api/storage
  */
 
@@ -7,11 +7,11 @@ import { apiToPromise } from '../util/function';
 import { isRefType } from '../util/types';
 
 /**
- * Wraps <tt>chrome.storage.local.set</tt>.
+ * Wraps `chrome.storage.local.set`.
  * @param {string} key
  * @param {*} value
- * @returns {Promise<void, Error>} Rejects if <tt>chrome.runtime.lastError</tt> is set,
- * resolves when the <tt>value</tt> is set otherwise.
+ * @returns {Promise<void, Error>} Rejects if `chrome.runtime.lastError` is set,
+ * resolves when the `value` is set otherwise.
  */
 export async function set(key, value) {
 	const items = { [key]: value };
@@ -19,12 +19,12 @@ export async function set(key, value) {
 }
 
 /**
- * Wraps <tt>chrome.storage.local.get</tt>.
+ * Wraps `chrome.storage.local.get`.
  * @template T
  * @param {string} key
  * @param {T} defaultValue
- * @returns {Promise<T, Error>} Rejects if <tt>chrome.runtime.lastError</tt> is set,
- * resolves with <tt>defaultValue</tt> if <tt>key</tt> does not exist in storage,
+ * @returns {Promise<T, Error>} Rejects if `chrome.runtime.lastError` is set,
+ * resolves with `defaultValue` if `key` does not exist in storage,
  * resolves with the value fetched from storage otherwise.
  */
 export async function get(key, defaultValue) {
@@ -33,10 +33,10 @@ export async function get(key, defaultValue) {
 }
 
 /**
- * Wraps <tt>chrome.storage.local.remove</tt>.
+ * Wraps `chrome.storage.local.remove`.
  * @param {...string} keys
- * @returns {Promise<void, Error>} Rejects if <tt>chrome.runtime.lastError</tt> is set,
- * resolves when the <tt>keys</tt> have been removed otherwise.
+ * @returns {Promise<void, Error>} Rejects if `chrome.runtime.lastError` is set,
+ * resolves when the `keys` have been removed otherwise.
  */
 export async function remove(...keys) {
 	await apiToPromise(::chrome.storage.local.remove)(keys);
@@ -45,12 +45,12 @@ export async function remove(...keys) {
 const fetchedKeys = new Set();
 
 /**
- * Fetches a stored reference type with {@link get}, and stores it during <tt>chrome.runtime.onSuspend</tt> with {@link set}.
+ * Fetches a stored reference type with {@link get}, and stores it during `chrome.runtime.onSuspend` with {@link set}.
  * Persistence cannot be guaranteed.
  * @template T
  * @param {string} key
  * @param {T} defaultValue
- * @returns {Promise<T, Error>} Rejects if it has been previously called with the same <tt>key</tt>,
+ * @returns {Promise<T, Error>} Rejects if it has been previously called with the same `key`,
  * rejects if {@link get} would reject if called with the same arguments,
  * rejects if the value resolved from {@link get} is not a reference type,
  * resolves with the value resolved from {@link get} otherwise.

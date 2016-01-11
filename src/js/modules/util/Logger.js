@@ -1,5 +1,5 @@
 /**
- * @file A basic logging class, similar to Android's <tt>Log</tt>.
+ * @file A basic logging class, similar to Android's `Log`.
  * @module util/Logger
  */
 

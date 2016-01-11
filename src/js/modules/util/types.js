@@ -8,7 +8,7 @@
  * If they are objects, compares their enumerable properties recursively.
  * @param {*} a
  * @param {*} b
- * @returns {boolean} Whether <tt>a</tt> and <tt>b</tt> are equivalent.
+ * @returns {boolean} Whether `a` and `b` are equivalent.
  */
 export function equals(a, b) {
 	if (a instanceof Object && b instanceof Object) {
@@ -19,18 +19,18 @@ export function equals(a, b) {
 }
 
 /**
- * Check if <tt>val</tt> is a reference type.
+ * Check if `val` is a reference type.
  * @param {*} val
- * @returns {boolean} Whether <tt>val</tt> is a reference type.
+ * @returns {boolean} Whether `val` is a reference type.
  */
 export function isRefType(val) {
 	return Object(val) === val;
 }
 
 /**
- * @param {*} obj Cast to <tt>Object</tt>, allowing <tt>typeCheck(true, Boolean)</tt>.
+ * @param {*} obj Cast to `Object`, allowing `typeCheck(true, Boolean)`.
  * @param {...!Function} types
- * @throws {TypeError} If <tt>obj</tt> is not an instance of one of the <tt>types</tt>.
+ * @throws {TypeError} If `obj` is not an instance of one of the `types`.
  * @returns {void}
  */
 export function typeCheck(obj, ...types) {

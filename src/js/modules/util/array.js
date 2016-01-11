@@ -4,7 +4,7 @@
  */
 
 /**
- * <tt>Array.prototype.map</tt> but mapped to promise results.
+ * `Array.prototype.map` but mapped to promise results.
  * @template T, V
  * @param {T[]} array
  * @param {function(T, number, T[]): (V|Promise<V>)} callback
@@ -16,11 +16,11 @@ export function asyncMap(array, callback) {
 }
 
 /**
- * Essentially, <tt>Array.prototype.join</tt> without converting to <tt>string</tt>.
+ * Essentially, `Array.prototype.join` without converting to `string`.
  * @template T
  * @param {T[]} array
  * @param {*} element
- * @returns {T[]} <tt>array</tt> with <tt>element</tt> inserted between each element.
+ * @returns {T[]} `array` with `element` inserted between each element.
  */
 export function intersperse(array, element) {
 	if (!array.length) {

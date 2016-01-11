@@ -49,9 +49,9 @@ class OrderedMap {
 
 	/**
 	 * Adds a new entry to the map.
-	 * If an entry with the same <tt>id</tt> exists, it will be overwritten.
+	 * If an entry with the same `id` exists, it will be overwritten.
 	 * @param {number} id
-	 * @param {Object} [data] Each key-value pair in <tt>data</tt> will be copied to the new entry.
+	 * @param {Object} [data] Each key-value pair in `data` will be copied to the new entry.
 	 * @returns {void}
 	 */
 	@wrappable
@@ -65,7 +65,7 @@ class OrderedMap {
 	/**
 	 * Removes an entry from the map.
 	 * @param {number} id
-	 * @throws {Error} If no entry with <tt>id</tt> exists.
+	 * @throws {Error} If no entry with `id` exists.
 	 * @returns {void}
 	 */
 	@wrappable
@@ -80,8 +80,8 @@ class OrderedMap {
 	 * Updates the data stored in a specific entry.
 	 * An update may not be performed if the data would not be changed.
 	 * @param {number} id
-	 * @param {!Object} data Each key-value pair in <tt>data</tt> will be copied to the entry.
-	 * @throws {Error} If no entry with <tt>id</tt> exists.
+	 * @param {!Object} data Each key-value pair in `data` will be copied to the entry.
+	 * @throws {Error} If no entry with `id` exists.
 	 * @returns {boolean} True if an update was performed, false otherwise.
 	 */
 	@wrappable
@@ -124,9 +124,9 @@ class OrderedMap {
 	 * Executes a callback for each entry in the map.
 	 * Order of execution is not defined.
 	 * @param {function(Entry): *} callback
-	 * @returns {Promise<void, *>} Rejects if any of the promises returned by <tt>callback</tt> reject,
+	 * @returns {Promise<void, *>} Rejects if any of the promises returned by `callback` reject,
 	 * resolves when all promises resolve otherwise.
-	 * Return values are cast to <tt>Promise</tt>.
+	 * Return values are cast to `Promise`.
 	 */
 	@wrappable
 	async each(callback) {

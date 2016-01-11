@@ -4,9 +4,9 @@
  */
 
 /**
- * Populate a template with values from <tt>map</tt>.
- * Template keys may be formatted as follows: <tt>{{key}}</tt>.
- * @param {string} templateId The id of the HTML <tt>&lt;template&gt;</tt> element to be populated.
+ * Populate a template with values from `map`.
+ * Template keys may be formatted as follows: `{{key}}`.
+ * @param {string} templateId The id of the HTML `<template>` element to be populated.
  * @param {!Object} map Should contain a value for every key in the template.
  * @returns {Element} The populated template.
  */

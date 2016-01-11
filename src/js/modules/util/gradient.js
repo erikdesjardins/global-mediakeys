@@ -1,5 +1,5 @@
 /**
- * @file A primitive utility for generating random <tt>linear-gradient</tt>s.
+ * @file A primitive utility for generating random `linear-gradient`s.
  * @module util/gradient
  */
 
@@ -13,7 +13,7 @@ import tinycolor from 'tinycolor2';
  * @param {number} [val] A number in [0, 1].
  * @param {number} [colorStops=2] An integer at least 2.
  * @param {string} [angle] A valid CSS angle.
- * @returns {string} A valid CSS <tt>linear-gradient</tt>.
+ * @returns {string} A valid CSS `linear-gradient`.
  */
 export function randomGradient({ hue, sat, val, colorStops = 2, angle = `${Math.floor(Math.random() * 360)}deg` } = {}) {
 	const colors = new Array(colorStops).fill(0).map(() => {

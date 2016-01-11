@@ -36,7 +36,7 @@ export default class Domain {
 	 * @abstract
 	 * @param {function(boolean): void} callback Should be invoked when the play state changes,
 	 * and when the initial play state is known.
-	 * @param {!Element} playButton The <tt>play</tt> property of the {@link ButtonDefinition} returned by {@link getButtons}.
+	 * @param {!Element} playButton The `play` property of the {@link ButtonDefinition} returned by {@link getButtons}.
 	 * @returns {void}
 	 */
 	setupPlayState(callback, playButton) {
@@ -62,7 +62,7 @@ export default class Domain {
 	}
 
 	/**
-	 * A custom action supported by the <tt>Domain</tt>.
+	 * A custom action supported by the `Domain`.
 	 * @typedef {Object} ActionDefinition
 	 * @property {string} icon A CSS-encoded character from Font Awesome.
 	 * @property {boolean} state Whether the action icon should appear selected.
