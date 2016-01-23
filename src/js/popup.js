@@ -63,12 +63,12 @@ document.getElementById('header')
 	});
 
 // Responses handled by the background page
-Messages.addListener(MSG.INFO, updateInfo, { silent: true });
+Messages.addListener(MSG.INFO, (data, tabId) => tabId && updateInfo(data), { silent: true });
 
-Messages.addListener(MSG.ACTIONS, updateActions, { silent: true });
+Messages.addListener(MSG.ACTIONS, (data, tabId) => tabId && updateActions(data), { silent: true });
 
 // Not using the state from this message as it may be a background tab (e.g. if we pressed stop)
-Messages.addListener(MSG.PLAY_STATE, fetchPlayState, { silent: true });
+Messages.addListener(MSG.PLAY_STATE, (data, tabId) => tabId && fetchPlayState(), { silent: true });
 
 updateInfo();
 
