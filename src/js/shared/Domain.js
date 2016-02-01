@@ -4,7 +4,6 @@
 
 import { MSG } from './constants';
 import * as Messages from '../modules/api/messages';
-import { asyncMap } from '../modules/util/array';
 import { click } from '../modules/util/dom';
 import { debounce } from '../modules/util/function';
 import Logger from '../modules/util/Logger';
@@ -117,12 +116,12 @@ export default class Domain {
 
 		this._log.d('Setting up actions...');
 
-		const actions = await asyncMap(this.getActions(), (setup, i) =>
-				setup(data => {
-					actionData[i] = data;
-					sendActionUpdate();
-				})
-		);
+		const actions = await Promise.all(this.getActions().map((setup, i) =>
+			setup(data => {
+				actionData[i] = data;
+				sendActionUpdate();
+			})
+		));
 
 		Messages.addListener(MSG.DO_ACTION, i => actions[i]());
 
