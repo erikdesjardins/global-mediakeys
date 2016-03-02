@@ -42,18 +42,15 @@ export function debounce(callback, delay) {
 	return exec;
 }
 
-export function noop() {}
-
-// Semi-functional until Chrome has proxies
-export function catchAll(...props) {
-	const obj = {};
-	props.forEach(prop => obj[prop] = noop);
-	return obj;
-}
-
-// No proxies :(
-// export const catchAll = new Proxy(() => catchAll, { get: () => catchAll });
-// export const noop = new Proxy(() => {}, { get: () => noop });
+/**
+ * Can be used to replace an object with arbitrary properties of arbitrary depth:
+ * `assert.equals(noop.a.b.c, noop);`
+ * Of course, also works as a bare function (though more expensive than a trivial function):
+ * `noop();`
+ * @type {Proxy}
+ * @returns {void}
+ */
+export const noop = new Proxy(() => {}, { get: () => noop });
 
 /**
  * Creates a wrapper that will invoke `func` only once,
