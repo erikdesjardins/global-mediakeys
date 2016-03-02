@@ -4,7 +4,7 @@
 	"short_name": "GMK",
 	"description": "Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.",
 	"version": "1.2.7",
-	"minimum_chrome_version": "45",
+	"minimum_chrome_version": "49",
 	"permissions": [
 		"storage"
 	],

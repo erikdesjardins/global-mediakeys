@@ -50,7 +50,7 @@ gulp.task('browserify', () =>
 gulp.task('sass', () =>
 	gulp.src(['*.scss'], { cwd: 'src/**' })
 		.pipe(sass().on('error', sass.logError))
-		.pipe(autoprefixer({ browsers: 'Chrome >= 45' }))
+		.pipe(autoprefixer({ browsers: 'Chrome >= 49' }))
 		.pipe(gulp.dest('dist'))
 );
 
