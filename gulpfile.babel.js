@@ -9,8 +9,6 @@ import sass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
 import merge from 'merge-stream';
 import zip from 'gulp-zip';
-import eslint from 'gulp-eslint';
-import scsslint from 'gulp-scss-lint';
 
 gulp.task('default', ['clean'], () => {
 	gulp.start('watch');
@@ -63,19 +61,4 @@ gulp.task('zip', ['build'], () =>
 	gulp.src('dist/**')
 		.pipe(zip('GMK.zip'))
 		.pipe(gulp.dest('dist'))
-);
-
-gulp.task('travis', ['eslint', 'scsslint']);
-
-gulp.task('eslint', () =>
-	gulp.src(['*.js'], { cwd: 'src/**' })
-		.pipe(eslint())
-		.pipe(eslint.formatEach())
-		.pipe(eslint.failAfterError())
-);
-
-gulp.task('scsslint', () =>
-	gulp.src(['*.scss'], { cwd: 'src/**' })
-		.pipe(scsslint({ maxBuffer: 1024**2 }))
-		.pipe(scsslint.failReporter())
 );

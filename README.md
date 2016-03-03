@@ -24,4 +24,4 @@ Includes a browser action popup to view song info and album art, or to "like" th
 
 then
 
-	gulp travis
+	npm test
