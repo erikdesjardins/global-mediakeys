@@ -31,7 +31,6 @@
     "babel-preset-stage-0": "^6.5.0",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
-    "entry-loader": "^0.1.0",
     "eslint": "2.2.0",
     "eslint-plugin-babel": "^3.1.0",
     "extract-loader": "0.0.2",
@@ -46,6 +45,7 @@
     "prop-loader": "0.0.3",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.1.2",
+    "spawn-loader": "0.0.1",
     "webpack": "^1.12.14"
   }
 }

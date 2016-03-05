@@ -13,7 +13,7 @@ module.exports = {
 	},
 	module: {
 		loaders: [
-			{ test: /\.entry\.js$/, loaders: ['entry?name=[name].[hash:6].js', 'babel'] },
+			{ test: /\.entry\.js$/, loaders: ['spawn?name=[name].js', 'babel'] },
 			{ test: /\.js$/, loader: 'babel' },
 			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extract', 'css', 'postcss', 'sass'] },
 			{ test: /\.woff2$/, loader: 'file?name=[name].[ext]' },
