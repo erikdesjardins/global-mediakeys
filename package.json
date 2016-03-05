@@ -19,6 +19,7 @@
     "test": "eslint . && scss-lint"
   },
   "dependencies": {
+    "lodash": "^4.6.1",
     "tinycolor2": "^1.3.0"
   },
   "devDependencies": {
