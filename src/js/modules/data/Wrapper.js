@@ -139,7 +139,7 @@ class Wrapper {
 				descriptor.get = () => this._getterWrapper(() => this._underlying[propName], propName);
 			}
 			if (hasSetter) {
-				descriptor.set = value => this._setterWrapper(v => this._underlying[propName] = v, value, propName);
+				descriptor.set = value => this._setterWrapper(v => (this._underlying[propName] = v), value, propName);
 			}
 			Reflect.defineProperty(this, propName, descriptor);
 		});

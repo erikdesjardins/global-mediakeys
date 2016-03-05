@@ -2,44 +2,44 @@
 	"manifest_version": 2,
 	"name": "Global Media Keys",
 	"short_name": "GMK",
-	"description": "Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.",
-	"version": "1.2.7",
-	"minimum_chrome_version": "45",
+	"description": "{{prop?description!../package.json}}",
+	"version": "{{prop?version!../package.json}}",
+	"minimum_chrome_version": "49",
 	"permissions": [
 		"storage"
 	],
 	"icons": {
-		"16": "images/icon16.png",
-		"32": "images/icon32.png",
-		"48": "images/icon48.png",
-		"128": "images/icon128.png"
+		"16": "{{./images/icon16.png}}",
+		"32": "{{./images/icon32.png}}",
+		"48": "{{./images/icon48.png}}",
+		"128": "{{./images/icon128.png}}"
 	},
 	"background": {
 		"scripts": [
-			"js/background.js"
+			"{{./js/background.entry}}"
 		],
 		"persistent": false
 	},
 	"content_scripts": [
 		{
 			"matches": ["*://play.google.com/music/listen*"],
-			"js": ["js/googleplaymusic.js"]
+			"js": ["{{./js/googleplaymusic.entry}}"]
 		},
 		{
 			"matches": ["*://soundcloud.com/*"],
-			"js": ["js/soundcloud.js"]
+			"js": ["{{./js/soundcloud.entry}}"]
 		},
 		{
 			"matches": ["*://*.youtube.com/*"],
-			"js": ["js/youtube.js"]
+			"js": ["{{./js/youtube.entry}}"]
 		}
 	],
 	"browser_action": {
 		"default_icon": {
-			"19": "images/icon19.png",
-			"38": "images/icon38.png"
+			"19": "{{./images/icon19.png}}",
+			"38": "{{./images/icon38.png}}"
 		},
-		"default_popup": "html/popup.html"
+		"default_popup": "{{./html/popup.html}}"
 	},
 	"commands": {
 		"media-play-pause": {
