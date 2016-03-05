@@ -1,7 +1,7 @@
 import { MSG, CMD, STORAGE } from './shared/constants';
 import * as Messages from './modules/api/messages';
 import * as Commands from './modules/api/commands';
-import { apiToPromise } from './modules/util/function';
+import { apiToPromise } from './modules/util/api';
 import Logger from './modules/util/Logger';
 import { chain } from './modules/data/Wrapper';
 import OrderedMap from './modules/data/OrderedMap';

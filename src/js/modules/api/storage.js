@@ -3,7 +3,7 @@
  * @module api/storage
  */
 
-import { apiToPromise } from '../util/function';
+import { apiToPromise } from '../util/api';
 import { isRefType } from '../util/types';
 
 /**

@@ -5,7 +5,7 @@
 import { MSG } from './constants';
 import * as Messages from '../modules/api/messages';
 import { click } from '../modules/util/dom';
-import { debounce } from '../modules/util/function';
+import _ from 'lodash';
 import Logger from '../modules/util/Logger';
 
 export default class Domain {
@@ -108,11 +108,11 @@ export default class Domain {
 
 		window.addEventListener('unload', () => Messages.send(MSG.UNREGISTER));
 
-		this.setupPlayState(debounce(state => Messages.send({ type: MSG.PLAY_STATE, data: state }), 50), buttons.play);
-		this.setupInfo(debounce(info => Messages.send({ type: MSG.INFO, data: info }), 50));
+		this.setupPlayState(_.debounce(state => Messages.send({ type: MSG.PLAY_STATE, data: state }), 50), buttons.play);
+		this.setupInfo(_.debounce(info => Messages.send({ type: MSG.INFO, data: info }), 50));
 
 		const actionData = [];
-		const sendActionUpdate = debounce(() => Messages.send({ type: MSG.ACTIONS, data: actionData }), 50);
+		const sendActionUpdate = _.debounce(() => Messages.send({ type: MSG.ACTIONS, data: actionData }), 50);
 
 		this._log.d('Setting up actions...');
 

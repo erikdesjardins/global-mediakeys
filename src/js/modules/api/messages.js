@@ -4,7 +4,7 @@
  * @module api/messages
  */
 
-import { apiToPromise } from '../util/function';
+import { apiToPromise } from '../util/api';
 import { typeCheck } from '../util/types';
 
 const listeners = new Map();
