@@ -3,9 +3,9 @@
  * @module data/LoggingWrapper
  */
 
-import { intersperse } from '../util/array';
 import Logger from '../util/Logger';
 import Wrapper from './Wrapper';
+import { intersperse } from '../util/array';
 
 export default class LoggingWrapper extends Wrapper {
 	/**

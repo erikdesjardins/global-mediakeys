@@ -3,8 +3,8 @@
  * @module api/storage
  */
 
-import { apiToPromise } from '../util/function';
-import { isRefType } from '../util/types';
+import _ from 'lodash';
+import { apiToPromise } from '../util/api';
 
 /**
  * Wraps `chrome.storage.local.set`.
@@ -62,7 +62,7 @@ export async function autopersist(key, defaultValue) {
 
 	const val = await get(key, defaultValue);
 
-	if (!isRefType(val)) {
+	if (!_.isObjectLike(val)) {
 		throw new TypeError(`Key: ${key}, value: ${val}, is not a reference type - changes cannot be persisted.`);
 	}
 

@@ -3,16 +3,12 @@
  * @module util/dom
  */
 
-import { typeCheck } from './types';
-
 /**
  * `$.fn.click`
  * @param {!EventTarget} ele
  * @returns {void}
  */
 export function click(ele) {
-	typeCheck(ele, EventTarget);
-
 	ele.dispatchEvent(new MouseEvent('click', {
 		view: window,
 		bubbles: true,
@@ -26,8 +22,6 @@ export function click(ele) {
  * @returns {void}
  */
 export function empty(ele) {
-	typeCheck(ele, Node);
-
 	while (ele.lastChild) {
 		ele.removeChild(ele.lastChild);
 	}
@@ -42,8 +36,6 @@ export function empty(ele) {
  * @returns {MutationObserver} The attached observer.
  */
 export function observe(ele, options, callback) {
-	typeCheck(ele, Node);
-
 	const observer = new MutationObserver(mutations => mutations.some(callback));
 	observer.observe(ele, options);
 	return observer;
@@ -58,8 +50,6 @@ export function observe(ele, options, callback) {
  * @returns {MutationObserver} The attached observer.
  */
 export function onMutation(ele, options, callback, { initialCallback = false } = {}) {
-	typeCheck(ele, Node);
-
 	if (initialCallback) {
 		callback(ele);
 	}
@@ -152,8 +142,6 @@ export function waitForMutation(ele, options, callback) {
  */
 export function waitForChild(ele, selector, { initialCheck = true } = {}) {
 	return new Promise(resolve => {
-		typeCheck(ele, Element, Document);
-
 		if (initialCheck && Array.from(ele.children).some(child => child.matches(selector))) {
 			resolve();
 			return;
@@ -178,8 +166,6 @@ export function waitForChild(ele, selector, { initialCheck = true } = {}) {
  */
 export function waitForEvent(ele, event) {
 	return new Promise(resolve => {
-		typeCheck(ele, EventTarget);
-
 		ele.addEventListener(event, function fire() {
 			ele.removeEventListener(event, fire);
 			resolve();
@@ -197,8 +183,6 @@ export function waitForEvent(ele, event) {
  */
 export function descendant(ele, selector) {
 	return new Promise(resolve => {
-		typeCheck(ele, Element, Document);
-
 		const child = ele.querySelector(selector);
 		if (child) {
 			resolve(child);

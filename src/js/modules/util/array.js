@@ -3,6 +3,8 @@
  * @module util/array
  */
 
+import { range } from './generator';
+
 /**
  * Essentially, `Array.prototype.join` without converting to `string`.
  * @template T
@@ -16,7 +18,7 @@ export function intersperse(array, element) {
 	}
 
 	const result = [array[0]];
-	for (let i = 1; i < array.length; i++) {
+	for (const i of range(1, array.length)) {
 		result.push(element, array[i]);
 	}
 	return result;

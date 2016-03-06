@@ -4,8 +4,8 @@
  * @module data/AdvisorWrapper
  */
 
-import { toMap } from '../util/object';
 import Wrapper from './Wrapper';
+import { toMap } from '../util/object';
 
 export default class AdvisorWrapper extends Wrapper {
 	/**

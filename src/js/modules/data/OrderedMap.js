@@ -5,7 +5,7 @@
  * @module data/OrderedMap
  */
 
-import { equals } from '../util/types';
+import _ from 'lodash';
 import { inject, wrappable } from './Wrapper';
 
 export default
@@ -59,7 +59,7 @@ class OrderedMap {
 		if (this._exists(id)) {
 			this._remove(id);
 		}
-		this._add(id, Object.assign({}, data));
+		this._add(id, { ...data });
 	}
 
 	/**
@@ -90,8 +90,8 @@ class OrderedMap {
 			throw new Error(`Cannot update non-extant id: ${id}`);
 		}
 		const entry = this._get(id);
-		const newData = Object.assign({}, entry.data, data);
-		if (!equals(entry.data, newData)) {
+		const newData = { ...entry.data, ...data };
+		if (!_.isEqual(entry.data, newData)) {
 			entry.data = newData;
 			this._promote(id);
 			return true;

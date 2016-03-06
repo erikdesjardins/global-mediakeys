@@ -4,8 +4,8 @@
  * @module data/AutopersistWrapper
  */
 
-import * as Storage from '../api/storage';
 import Wrapper from './Wrapper';
+import * as Storage from '../api/storage';
 
 export default class AutopersistWrapper extends Wrapper {
 	/**

@@ -1,12 +1,12 @@
-import { MSG, CMD, STORAGE } from './shared/constants';
-import * as Messages from './modules/api/messages';
-import * as Commands from './modules/api/commands';
-import { apiToPromise } from './modules/util/function';
-import Logger from './modules/util/Logger';
-import { chain } from './modules/data/Wrapper';
-import OrderedMap from './modules/data/OrderedMap';
-import AutopersistWrapper from './modules/data/AutopersistWrapper';
 import AdvisorWrapper from './modules/data/AdvisorWrapper';
+import AutopersistWrapper from './modules/data/AutopersistWrapper';
+import Logger from './modules/util/Logger';
+import OrderedMap from './modules/data/OrderedMap';
+import * as Commands from './modules/api/commands';
+import * as Messages from './modules/api/messages';
+import { CMD, MSG, STORAGE } from './shared/constants';
+import { apiToPromise } from './modules/util/api';
+import { chain } from './modules/data/Wrapper';
 
 const log = new Logger('TabMgr');
 const tabs = chain(

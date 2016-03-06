@@ -5,8 +5,6 @@
 
 /* eslint-disable no-console */
 
-import { isDevMode } from './api';
-
 const ERROR = 1;
 const WARN = 2;
 const INFO = 4;
@@ -22,7 +20,7 @@ export const level = {
 	VERBOSE: ERROR | WARN | INFO | DEBUG | VERBOSE
 };
 
-let logLevel = isDevMode() ? level.VERBOSE : level.INFO;
+let logLevel = process.env.NODE_ENV === 'development' ? level.VERBOSE : level.INFO;
 
 export function setLogLevel(level) {
 	logLevel = level;

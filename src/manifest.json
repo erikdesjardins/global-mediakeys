@@ -16,22 +16,22 @@
 	},
 	"background": {
 		"scripts": [
-			"{{./js/background.entry}}"
+			"{{./js/background.entry.js}}"
 		],
 		"persistent": false
 	},
 	"content_scripts": [
 		{
 			"matches": ["*://play.google.com/music/listen*"],
-			"js": ["{{./js/googleplaymusic.entry}}"]
+			"js": ["{{./js/googleplaymusic.entry.js}}"]
 		},
 		{
 			"matches": ["*://soundcloud.com/*"],
-			"js": ["{{./js/soundcloud.entry}}"]
+			"js": ["{{./js/soundcloud.entry.js}}"]
 		},
 		{
 			"matches": ["*://*.youtube.com/*"],
-			"js": ["{{./js/youtube.entry}}"]
+			"js": ["{{./js/youtube.entry.js}}"]
 		}
 	],
 	"browser_action": {

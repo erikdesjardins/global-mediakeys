@@ -1,27 +1,29 @@
-import { join } from 'path';
-import autoprefixer from 'autoprefixer';
+import InertEntryPlugin from 'inert-entry-webpack-plugin';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
+import autoprefixer from 'autoprefixer';
+import { join } from 'path';
 
-module.exports = {
-	entry: 'file?name=[name].[ext]!extract!interpolate!./src/manifest.json',
+export default {
+	entry: 'extricate!interpolate!./src/manifest.json',
 	output: {
 		path: join(__dirname, 'dist'),
-		filename: 'unused.js'
+		filename: 'manifest.json'
 	},
 	resolve: {
 		extensions: ['', '.js']
 	},
 	module: {
 		loaders: [
-			{ test: /\.entry\.js$/, loaders: ['entry?name=[name].[hash:6].js', 'babel'] },
+			{ test: /\.entry\.js$/, loaders: ['spawn?name=[name].js', 'babel'] },
 			{ test: /\.js$/, loader: 'babel' },
-			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extract', 'css', 'postcss', 'sass'] },
+			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extricate?resolve=\\.js$', 'css', 'postcss', 'sass'] },
 			{ test: /\.woff2$/, loader: 'file?name=[name].[ext]' },
-			{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extract', 'html?attrs=link:href script:src'] },
+			{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extricate', 'html?attrs=link:href script:src'] },
 			{ test: /\.png$/, loader: 'file?name=[name].[ext]' }
 		]
 	},
 	plugins: [
+		new InertEntryPlugin(),
 		new NyanProgressPlugin()
 	],
 	postcss() {

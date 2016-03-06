@@ -4,8 +4,7 @@
  * @module api/messages
  */
 
-import { apiToPromise } from '../util/function';
-import { typeCheck } from '../util/types';
+import { apiToPromise } from '../util/api';
 
 const listeners = new Map();
 
@@ -50,9 +49,7 @@ export function addListener(type, callback, { silent = false } = {}) {
  * @returns {Promise<*, Error>} Rejects if an invalid response is received,
  * resolves with the response data otherwise.
  */
-export async function send({ type = arguments[0], tabId, data } = {}) {
-	typeCheck(type, String);
-
+export async function send({ type = arguments[0], tabId, data } = {}) { // eslint-disable-line prefer-rest-params
 	const message = { type, data };
 	const target = parseInt(tabId, 10);
 
