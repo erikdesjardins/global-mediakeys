@@ -1,12 +1,13 @@
+import InertEntryPlugin from 'inert-entry-webpack-plugin';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import { join } from 'path';
 
 export default {
-	entry: 'file?name=[name].[ext]!extricate!interpolate!./src/manifest.json',
+	entry: 'extricate!interpolate!./src/manifest.json',
 	output: {
 		path: join(__dirname, 'dist'),
-		filename: 'unused.js'
+		filename: 'manifest.json'
 	},
 	resolve: {
 		extensions: ['', '.js']
@@ -22,6 +23,7 @@ export default {
 		]
 	},
 	plugins: [
+		new InertEntryPlugin(),
 		new NyanProgressPlugin()
 	],
 	postcss() {
