@@ -5,7 +5,7 @@
  * @module data/OrderedMap
  */
 
-import { equals } from '../util/types';
+import _ from 'lodash';
 import { inject, wrappable } from './Wrapper';
 
 export default
@@ -91,7 +91,7 @@ class OrderedMap {
 		}
 		const entry = this._get(id);
 		const newData = Object.assign({}, entry.data, data);
-		if (!equals(entry.data, newData)) {
+		if (!_.isEqual(entry.data, newData)) {
 			entry.data = newData;
 			this._promote(id);
 			return true;

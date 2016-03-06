@@ -5,7 +5,6 @@
  */
 
 import { apiToPromise } from '../util/api';
-import { typeCheck } from '../util/types';
 
 const listeners = new Map();
 
@@ -51,8 +50,6 @@ export function addListener(type, callback, { silent = false } = {}) {
  * resolves with the response data otherwise.
  */
 export async function send({ type = arguments[0], tabId, data } = {}) {
-	typeCheck(type, String);
-
 	const message = { type, data };
 	const target = parseInt(tabId, 10);
 
