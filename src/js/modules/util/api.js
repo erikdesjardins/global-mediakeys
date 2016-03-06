@@ -3,10 +3,6 @@
  * @module util/api
  */
 
-import _ from 'lodash';
-
-export const isDevMode = _.once(() => !('update_url' in chrome.runtime.getManifest()));
-
 /**
  * Wraps an asynchronous API call in a promise.
  * @param {function(...*, function(...*): void): void} func
