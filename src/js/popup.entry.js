@@ -1,9 +1,9 @@
-import { MSG } from './shared/constants';
-import * as Messages from './modules/api/messages';
-import { empty } from './modules/util/dom';
-import { randomGradient } from './modules/util/gradient';
-import { populate } from './modules/util/templates';
 import Logger from './modules/util/Logger';
+import * as Messages from './modules/api/messages';
+import { MSG } from './shared/constants';
+import { empty } from './modules/util/dom';
+import { populate } from './modules/util/templates';
+import { randomGradient } from './modules/util/gradient';
 
 const log = new Logger('Popup');
 

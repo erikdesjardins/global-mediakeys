@@ -5,6 +5,8 @@
  * @module data/Wrapper
  */
 
+/* eslint no-unused-vars: [2, { "args": "none" }] */
+
 const DEFAULT_VALUE = Symbol('defaultValue');
 const INJECT_PROP = Symbol('injectProperty');
 const WRAPPABLE_FUNCTIONS = Symbol('wrappableFunctions');

@@ -2,11 +2,13 @@
  * @file The base class for content scripts that handles setup and communication with the background page.
  */
 
-import { MSG } from './constants';
-import * as Messages from '../modules/api/messages';
-import { click } from '../modules/util/dom';
-import _ from 'lodash';
+/* eslint no-unused-vars: [2, { "args": "none" }] */
+
 import Logger from '../modules/util/Logger';
+import _ from 'lodash';
+import * as Messages from '../modules/api/messages';
+import { MSG } from './constants';
+import { click } from '../modules/util/dom';
 
 export default class Domain {
 	constructor() {

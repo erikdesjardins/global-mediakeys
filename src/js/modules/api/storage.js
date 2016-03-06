@@ -3,8 +3,8 @@
  * @module api/storage
  */
 
-import { apiToPromise } from '../util/api';
 import _ from 'lodash';
+import { apiToPromise } from '../util/api';
 
 /**
  * Wraps `chrome.storage.local.set`.

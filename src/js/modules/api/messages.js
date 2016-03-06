@@ -49,7 +49,7 @@ export function addListener(type, callback, { silent = false } = {}) {
  * @returns {Promise<*, Error>} Rejects if an invalid response is received,
  * resolves with the response data otherwise.
  */
-export async function send({ type = arguments[0], tabId, data } = {}) {
+export async function send({ type = arguments[0], tabId, data } = {}) { // eslint-disable-line prefer-rest-params
 	const message = { type, data };
 	const target = parseInt(tabId, 10);
 

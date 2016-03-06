@@ -1,8 +1,8 @@
-import { join } from 'path';
-import autoprefixer from 'autoprefixer';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
+import autoprefixer from 'autoprefixer';
+import { join } from 'path';
 
-module.exports = {
+export default {
 	entry: 'file?name=[name].[ext]!extract!interpolate!./src/manifest.json',
 	output: {
 		path: join(__dirname, 'dist'),
