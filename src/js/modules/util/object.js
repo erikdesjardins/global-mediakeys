@@ -4,20 +4,6 @@
  */
 
 /**
- * `_.each` but only for objects.
- * @param {!Object} object
- * @param {function(*, string, !Object): void} callback
- * @returns {void}
- */
-export function each(object, callback) {
-	for (const key in object) {
-		if (object.hasOwnProperty(key)) {
-			callback(object[key], key, object);
-		}
-	}
-}
-
-/**
  * Creates a map from `object`.
  * @param {!Object} object
  * @returns {Map} A map containing `object`'s own properties.
