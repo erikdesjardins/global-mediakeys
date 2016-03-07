@@ -5,7 +5,7 @@ import { join } from 'path';
 
 export default {
 	entry: 'extricate!interpolate!./src/manifest.json',
-	bail: true,
+	bail: process.env.NODE_ENV === 'production',
 	output: {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json'
