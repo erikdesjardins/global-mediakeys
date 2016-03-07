@@ -57,6 +57,7 @@
     "rimraf": "^2.5.2",
     "sass-loader": "^3.1.2",
     "spawn-loader": "0.0.1",
+    "superagent": "^1.8.0-beta.2",
     "webpack": "^1.12.14"
   }
 }
