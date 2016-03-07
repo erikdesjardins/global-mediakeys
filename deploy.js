@@ -50,8 +50,8 @@ Promise.resolve(request
 		return Promise.resolve(req);
 	})
 	.then(response => {
-		if (response.body.status !== 'OK') {
-			console.error(`Publish status "${response.body.status} !== "OK".`);
+		if (response.body.status[0] !== 'OK') {
+			console.error(`Publish status "${response.body.status[0]}" !== "OK".`);
 			process.exit(1);
 		}
 		console.log('Package published.');
