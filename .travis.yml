@@ -2,3 +2,20 @@ language: node_js
 node_js: 5
 before_script: gem install scss_lint
 script: npm test
+deploy:
+  - provider: script
+    script: node deploy.js
+    skip_cleanup: true
+    on:
+      repo: erikdesjardins/global-mediakeys
+      tags: true
+      node: 5
+  - provider: releases
+    api_key:
+      secure: QLJm3hqvr4b3Pkrb1vmwkHC6fmML9L6qLMxO7HNhqfD7yombObcESqd/JJrM7xdXCCeihBbOFcro/xHe1mOuNC57BCUISvIRRIKhn8otlOq+iZLyyR8y6sn2G/LZ9/LdeZIKxi6E6S/gDscV0tKqLBCJp+2hsoeL+5miwKO5ADa3ovuIc//TOrQles+j1Np15Srd4UuRtaEjF19yPSPBZdKWlBG6qrtyqehdE1R2WEMqhBQL0aWmjyDxFaXVkUOLLHwbVitU9mHoe7tmZMOSxZrqzNnEU+svfmW9O4X/8z1XsohIk3RAdpjQp626T9vwtcWX0UySV+llf9OnD83g1cBcQbXBX/6s4pTSt9lA7hU5mOYj1xiEE/7IlnfZ47iGxPSqXARLUDejmurWhu1tJv+9SLR/qSXtjLubQpi7fWbGhbbkvkvC0ABi4uqy81GSoRxiANjWUA1nJ3tqG0dontkcDglJtVrAMMz/g8r4m+Y44WNc4q+8Rrxi/IZ3dAuHGpLtwLg/RUV1mSo90DInQkeokg2NJQb81ChQKeibfeZkEGZgZ6nJ7sS7BFjXwyZAxTLGNetWGvZGIooAiyphlBca7NuTozIA03/M2BLZ6A3MLmTVFPdItMwrZLwhcSsrOge5DAVTlHR929pOIYTnjvj3M/Jsj9YpUudutHb4miI=
+    file: dist/GMK.zip
+    skip_cleanup: true
+    on:
+      repo: erikdesjardins/global-mediakeys
+      tags: true
+      node: 5
