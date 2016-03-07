@@ -38,7 +38,7 @@ Promise.resolve(request
 	})
 	.then(response => {
 		if (response.body.uploadState !== 'SUCCESS') {
-			console.error('Upload state not SUCCESS.');
+			console.error(`Upload state "${response.body.uploadState}" !== "SUCCESS".`);
 			process.exit(1);
 		}
 		console.log('Package uploaded.');
@@ -51,7 +51,7 @@ Promise.resolve(request
 	})
 	.then(response => {
 		if (response.body.status !== 'OK') {
-			console.error('Failed to publish package.');
+			console.error(`Publish status "${response.body.status} !== "OK".`);
 			process.exit(1);
 		}
 		console.log('Package published.');
