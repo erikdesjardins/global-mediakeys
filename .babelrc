@@ -3,6 +3,7 @@
 	"plugins": [
 		"transform-decorators-legacy",
 		"transform-es2015-modules-commonjs",
+		"transform-dead-code-elimination",
 		"transform-node-env-inline",
 		"lodash"
 	]
