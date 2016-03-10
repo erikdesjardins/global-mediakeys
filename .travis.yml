@@ -4,6 +4,10 @@ before_script: gem install scss_lint
 script:
   - npm test
   - npm run build
+branches:
+  only:
+    - master
+    - /^v[0-9]/
 deploy:
   - provider: script
     script: node deploy.js
