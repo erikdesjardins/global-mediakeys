@@ -1,6 +1,6 @@
 {
   "name": "global-media-keys",
-  "version": "1.2.15",
+  "version": "1.2.16",
   "description": "Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.",
   "private": true,
   "repository": {
@@ -33,6 +33,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.6.4",
     "babel-plugin-transform-node-env-inline": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
+    "chrome-extension-deploy": "0.0.1",
     "cross-env": "^1.0.7",
     "css-loader": "^0.23.1",
     "eslint": "2.2.0",
@@ -58,7 +59,6 @@
     "rimraf": "^2.5.2",
     "sass-loader": "^3.1.2",
     "spawn-loader": "0.0.3",
-    "superagent": "^1.8.0-beta.2",
     "webpack": "^1.12.14"
   }
 }
