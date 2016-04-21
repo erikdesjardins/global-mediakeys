@@ -41,7 +41,7 @@ export function observe(ele, options, callback) {
 	return observer;
 }
 
-/**
+/*
  * Similar to {@link observe}, except `callback` is invoked with `ele`.
  * @param {!Node} ele
  * @param {!Object} options Should be a `MutationObserverInit`.
@@ -66,7 +66,7 @@ export function onMutation(ele, options, callback, { initialCallback = false } =
  * The returned node may not be present in the DOM.
  */
 
-/**
+/*
  * Similar to {@link onMutation}, except the observed element is a descendant of `ele`.
  * This descendant may be added or removed from the DOM at any time, and the observer will be reattached.
  * Specifically, the first descendant of `ele` matching `selector` will be observed.
@@ -130,7 +130,7 @@ export function waitForMutation(ele, options, callback) {
 	});
 }
 
-/**
+/*
  * Waits for a direct child of `ele` matching `selector`.
  * Does not retrieve the matching element, use {@link descendant} instead.
  * This is due to `MutationRecord` nodes not being live in some situations.

@@ -17,7 +17,7 @@ const listeners = new Map();
  * Ignored if the listener is silent.
  */
 
-/**
+/*
  * Register a listener to be invoked whenever a message of `type` is received.
  * Responses may be sent synchronously or asynchronously:
  * If `silent` is true, no response will be sent.
@@ -40,7 +40,7 @@ export function addListener(type, callback, { silent = false } = {}) {
 	});
 }
 
-/**
+/*
  * Send a message to non-content scripts or to the content script at `tabId` (if specified).
  * Accepts one argument: either an options object or a string for `type`.
  * @param {string} type
