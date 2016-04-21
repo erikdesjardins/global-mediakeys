@@ -5,7 +5,7 @@
 
 import tinycolor from 'tinycolor2';
 
-/**
+/*
  * Create a random gradient.
  * The following named parameters may be passed in an object to tune its creation.
  * @param {number} [hue] A number in [0, 1].
