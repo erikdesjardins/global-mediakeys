@@ -4,11 +4,11 @@
 
 /* eslint no-unused-vars: [2, { "args": "none" }] */
 
-import Logger from '../modules/util/Logger';
+import Logger from '../util/Logger';
 import _ from 'lodash';
-import * as Messages from '../modules/api/messages';
+import * as Messages from '../api/messages';
 import { MSG } from './constants';
-import { click } from '../modules/util/dom';
+import { click } from '../util/dom';
 
 export default class Domain {
 	constructor() {

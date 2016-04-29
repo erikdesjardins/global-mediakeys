@@ -1,5 +1,5 @@
 import Domain from './shared/Domain';
-import { click, onDescendantMutation, onMutation, waitForChild } from './modules/util/dom';
+import { click, onDescendantMutation, onMutation, waitForChild } from './util/dom';
 
 class Soundcloud extends Domain {
 	async getButtons() {
