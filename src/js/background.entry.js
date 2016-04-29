@@ -1,12 +1,12 @@
-import AdvisorWrapper from './modules/data/AdvisorWrapper';
-import AutopersistWrapper from './modules/data/AutopersistWrapper';
-import Logger from './modules/util/Logger';
-import OrderedMap from './modules/data/OrderedMap';
-import * as Commands from './modules/api/commands';
-import * as Messages from './modules/api/messages';
+import AdvisorWrapper from './data/AdvisorWrapper';
+import AutopersistWrapper from './data/AutopersistWrapper';
+import Logger from './util/Logger';
+import OrderedMap from './data/OrderedMap';
+import * as Commands from './api/commands';
+import * as Messages from './api/messages';
 import { CMD, MSG, STORAGE } from './shared/constants';
-import { apiToPromise } from './modules/util/api';
-import { chain } from './modules/data/Wrapper';
+import { apiToPromise } from './util/api';
+import { chain } from './data/Wrapper';
 
 const log = new Logger('TabMgr');
 const tabs = chain(
@@ -69,17 +69,17 @@ commandToTab(CMD.NEXT, MSG.NEXT);
 commandToTab(CMD.PREV, MSG.PREV);
 
 Commands.addListener(CMD.STOP, () =>
-		tabs.each(async ({ id: tabId, data: tab }) => {
-			if (tab.isPlaying) {
-				// Avoid promoting the tab when its state changes
-				tab.isPlaying = false;
-				try {
-					await Messages.send({ type: MSG.PLAY_PAUSE, tabId });
-				} catch (e) {
-					await tabs.remove(tabId);
-				}
+	tabs.each(async ({ id: tabId, data: tab }) => {
+		if (tab.isPlaying) {
+			// Avoid promoting the tab when its state changes
+			tab.isPlaying = false;
+			try {
+				await Messages.send({ type: MSG.PLAY_PAUSE, tabId });
+			} catch (e) {
+				await tabs.remove(tabId);
 			}
-		})
+		}
+	})
 );
 
 Messages.addListener(MSG.FOCUS_TAB, async () => {
@@ -93,6 +93,6 @@ Messages.addListener(MSG.FOCUS_TAB, async () => {
 
 // Prune unresponsive tabs (in case of crashing, etc.)
 tabs.each(({ id: tabId }) =>
-		Messages.send({ type: MSG.ECHO, tabId })
-			.catch(() => tabs.remove(tabId))
+	Messages.send({ type: MSG.ECHO, tabId })
+		.catch(() => tabs.remove(tabId))
 );

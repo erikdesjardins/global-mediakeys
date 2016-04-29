@@ -1,5 +1,5 @@
 import Domain from './shared/Domain';
-import { click, descendant, onDescendantMutation, onMutation, waitForChild } from './modules/util/dom';
+import { click, descendant, onDescendantMutation, onMutation, waitForChild } from './util/dom';
 
 class YouTube extends Domain {
 	async getButtons() {
