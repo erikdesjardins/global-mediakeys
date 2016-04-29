@@ -14,9 +14,8 @@ const WRAPPABLE_ACCESSORS = Symbol('wrappableAccessors');
 
 const wrapperInjectTarget = Symbol('injectTarget');
 
-export default
 @inject(wrapperInjectTarget)
-class Wrapper {
+export default class Wrapper {
 	/**
 	 * Assigns an underlying object for this wrapper.
 	 * @param {!Object} underlyingInstance The instance to be wrapped.
