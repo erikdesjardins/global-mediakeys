@@ -11,8 +11,7 @@ deploy({
 	clientSecret: process.env.CLIENT_SECRET,
 	refreshToken: process.env.REFRESH_TOKEN,
 	id: 'hhingnpbfhkjnmfkghlihmghgnddojeb',
-	zip: fs.readFileSync(path.join(__dirname, 'dist/GMK.zip')),
-	to: deploy.TRUSTED_TESTERS
+	zip: fs.readFileSync(path.join(__dirname, 'dist/GMK.zip'))
 }).then(function() {
 	console.log('Deploy complete!');
 }, function(err) {
