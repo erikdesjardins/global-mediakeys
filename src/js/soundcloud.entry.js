@@ -8,7 +8,7 @@ class Soundcloud extends Domain {
 		return {
 			play: document.querySelector('.playControls .playControl'),
 			next: document.querySelector('.playControls .skipControl__next'),
-			prev: document.querySelector('.playControls .skipControl__previous')
+			prev: document.querySelector('.playControls .skipControl__previous'),
 		};
 	}
 
@@ -32,7 +32,7 @@ class Soundcloud extends Domain {
 			callback({
 				image: getComputedStyle(imageElem).backgroundImage.replace('50x50', '250x250'),
 				title: titleElem.textContent,
-				subtitle: subtitleElem.textContent
+				subtitle: subtitleElem.textContent,
 			});
 		}
 
@@ -52,7 +52,7 @@ class Soundcloud extends Domain {
 			function sendUpdate(likeButton) {
 				callback({
 					icon: '\uf004',
-					state: likeButton.classList.contains('sc-button-selected')
+					state: likeButton.classList.contains('sc-button-selected'),
 				});
 			}
 

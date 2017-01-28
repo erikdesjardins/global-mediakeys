@@ -36,7 +36,7 @@ export function addListener(type, callback, { silent = false } = {}) {
 	}
 	listeners.set(type, {
 		options: { silent },
-		callback
+		callback,
 	});
 }
 

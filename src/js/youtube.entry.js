@@ -8,7 +8,7 @@ class YouTube extends Domain {
 		return {
 			play: document.querySelector('.ytp-play-button'),
 			next: document.querySelector('.ytp-next-button'),
-			prev: document.querySelector('.ytp-prev-button')
+			prev: document.querySelector('.ytp-prev-button'),
 		};
 	}
 
@@ -32,7 +32,7 @@ class YouTube extends Domain {
 			callback({
 				image: `url(${imageUrl.replace('/s88', '/s250')})`,
 				title: titleElem.textContent,
-				subtitle: subtitleElem.textContent
+				subtitle: subtitleElem.textContent,
 			});
 		}
 
@@ -52,7 +52,7 @@ class YouTube extends Domain {
 			function sendUpdate() {
 				callback({
 					icon: '\uf017',
-					state: button.innerHTML.includes('#ytp-svg-53')
+					state: button.innerHTML.includes('#ytp-svg-53'),
 				});
 			}
 

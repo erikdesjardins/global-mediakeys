@@ -16,16 +16,16 @@ export const MSG = {
 	NEXT: 'tab-next',
 	PREV: 'tab-prev',
 
-	ECHO: 'echo'
+	ECHO: 'echo',
 };
 
 export const CMD = {
 	PLAY_PAUSE: 'media-play-pause',
 	NEXT: 'media-next',
 	PREV: 'media-prev',
-	STOP: 'media-stop'
+	STOP: 'media-stop',
 };
 
 export const STORAGE = {
-	TABS: 'registered-tabs'
+	TABS: 'registered-tabs',
 };

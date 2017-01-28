@@ -15,7 +15,8 @@
     "once": "cross-env NODE_ENV=development webpack",
     "prebuild": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack",
-    "test": "eslint . && sass-lint -v -q"
+    "lint": "eslint . && sass-lint -v -q",
+    "lint-fix": "eslint . --fix"
   },
   "dependencies": {
     "lodash": "4.17.4",
@@ -40,7 +41,7 @@
     "cross-env": "3.1.4",
     "css-loader": "0.26.1",
     "eslint": "3.14.1",
-    "eslint-plugin-babel": "4.0.1",
+    "eslint-import-resolver-webpack": "0.8.1",
     "eslint-plugin-consistent-return-legacy": "1.0.1",
     "eslint-plugin-filenames": "1.1.0",
     "eslint-plugin-import": "2.2.0",
