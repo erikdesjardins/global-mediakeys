@@ -17,7 +17,7 @@ export const level = {
 	WARN: ERROR | WARN,
 	INFO: ERROR | WARN | INFO,
 	DEBUG: ERROR | WARN | INFO | DEBUG,
-	VERBOSE: ERROR | WARN | INFO | DEBUG | VERBOSE
+	VERBOSE: ERROR | WARN | INFO | DEBUG | VERBOSE,
 };
 
 let logLevel = process.env.NODE_ENV === 'development' ? level.VERBOSE : level.INFO;

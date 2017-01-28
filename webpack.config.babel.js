@@ -1,7 +1,6 @@
 import InertEntryPlugin from 'inert-entry-webpack-plugin';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 import ZipPlugin from 'zip-webpack-plugin';
-import autoprefixer from 'autoprefixer';
 import { join } from 'path';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -11,10 +10,7 @@ export default {
 	bail: isProduction,
 	output: {
 		path: join(__dirname, 'dist'),
-		filename: 'manifest.json'
-	},
-	resolve: {
-		extensions: ['', '.js']
+		filename: 'manifest.json',
 	},
 	module: {
 		loaders: [
@@ -23,15 +19,12 @@ export default {
 			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extricate?resolve=\\.js$', 'css', 'postcss', 'sass'] },
 			{ test: /\.woff2$/, loader: 'file?name=[name].[ext]' },
 			{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extricate', 'html?attrs=link:href script:src'] },
-			{ test: /\.png$/, loader: 'file?name=[name].[ext]' }
-		]
+			{ test: /\.png$/, loader: 'file?name=[name].[ext]' },
+		],
 	},
 	plugins: [
 		new InertEntryPlugin(),
 		(isProduction && new ZipPlugin({ filename: 'GMK.zip' })),
-		new NyanProgressPlugin()
+		new NyanProgressPlugin(),
 	].filter(x => x),
-	postcss() {
-		return [autoprefixer];
-	}
 };

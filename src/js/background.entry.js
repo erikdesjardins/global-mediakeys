@@ -14,7 +14,7 @@ const tabs = chain(
 	new AdvisorWrapper({
 		add: ([tabId]) => log.i('Added id:', tabId),
 		remove: ([tabId]) => log.i('Removed id:', tabId),
-		update: ([tabId, data], updated) => updated && log.d('Updated id:', tabId, 'with:', data)
+		update: ([tabId, data], updated) => updated && log.d('Updated id:', tabId, 'with:', data),
 	}),
 	new AutopersistWrapper(STORAGE.TABS)
 );
@@ -85,9 +85,9 @@ Commands.addListener(CMD.STOP, () =>
 Messages.addListener(MSG.FOCUS_TAB, async () => {
 	const { id: tabId } = await tabs.peek();
 	const { windowId } = await apiToPromise(chrome.tabs.get)(tabId);
-	return await Promise.all([
+	return Promise.all([
 		apiToPromise(chrome.tabs.update)(tabId, { active: true }),
-		apiToPromise(chrome.windows.update)(windowId, { focused: true })
+		apiToPromise(chrome.windows.update)(windowId, { focused: true }),
 	]);
 });
 

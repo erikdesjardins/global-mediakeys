@@ -15,7 +15,7 @@ import { apiToPromise } from '../util/api';
  */
 export async function set(key, value) {
 	const items = { [key]: value };
-	await apiToPromise(::chrome.storage.local.set)(items);
+	await apiToPromise((items, callback) => chrome.storage.local.set(items, callback))(items);
 }
 
 /**
@@ -28,7 +28,7 @@ export async function set(key, value) {
  * resolves with the value fetched from storage otherwise.
  */
 export async function get(key, defaultValue) {
-	const items = await apiToPromise(::chrome.storage.local.get)({ [key]: defaultValue });
+	const items = await apiToPromise((keys, callback) => chrome.storage.local.get(keys, callback))({ [key]: defaultValue });
 	return items[key];
 }
 
@@ -39,7 +39,7 @@ export async function get(key, defaultValue) {
  * resolves when the `keys` have been removed otherwise.
  */
 export async function remove(...keys) {
-	await apiToPromise(::chrome.storage.local.remove)(keys);
+	await apiToPromise((keys, callback) => chrome.storage.local.remove(keys, callback))(keys);
 }
 
 const fetchedKeys = new Set();

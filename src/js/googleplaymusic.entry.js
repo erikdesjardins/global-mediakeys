@@ -8,7 +8,7 @@ class GooglePlayMusic extends Domain {
 		return {
 			play: await descendant(player, '[data-id="play-pause"]'),
 			next: await descendant(player, '[data-id="forward"]'),
-			prev: await descendant(player, '[data-id="rewind"]')
+			prev: await descendant(player, '[data-id="rewind"]'),
 		};
 	}
 
@@ -30,7 +30,7 @@ class GooglePlayMusic extends Domain {
 			callback({
 				image: `url(${imageElem.src.replace('=s90', '=s250')})`,
 				title: titleElem.textContent,
-				subtitle: subtitleElem.textContent
+				subtitle: subtitleElem.textContent,
 			});
 		}
 
@@ -48,7 +48,7 @@ class GooglePlayMusic extends Domain {
 			function sendUpdate() {
 				callback({
 					icon: '\uf164',
-					state: thumbUpButton.title.toLowerCase().includes('undo')
+					state: thumbUpButton.title.toLowerCase().includes('undo'),
 				});
 			}
 
@@ -66,7 +66,7 @@ class GooglePlayMusic extends Domain {
 			function sendUpdate() {
 				callback({
 					icon: '\uf165',
-					state: thumbDownButton.title.toLowerCase().includes('undo')
+					state: thumbDownButton.title.toLowerCase().includes('undo'),
 				});
 			}
 

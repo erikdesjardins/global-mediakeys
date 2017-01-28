@@ -12,7 +12,7 @@ export function click(ele) {
 	ele.dispatchEvent(new MouseEvent('click', {
 		view: window,
 		bubbles: true,
-		cancelable: true
+		cancelable: true,
 	}));
 }
 
@@ -105,7 +105,7 @@ export async function onDescendantMutation(ele, selector, options, callback, { i
 		},
 		descendant() {
 			return child;
-		}
+		},
 	};
 }
 
