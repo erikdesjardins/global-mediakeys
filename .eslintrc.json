@@ -35,7 +35,9 @@
 
 		"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
 
-		"filenames/filenames": [2, ".*", "match-regex-and-exported"],
+		"filenames/match-regex": 0,
+		"filenames/match-exported": 2,
+		"filenames/no-index": 0,
 
 		"import/no-unresolved": 2,
 		"import/named": 2,

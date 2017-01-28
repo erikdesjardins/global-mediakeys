@@ -1,7 +1,6 @@
 import InertEntryPlugin from 'inert-entry-webpack-plugin';
 import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
 import ZipPlugin from 'zip-webpack-plugin';
-import autoprefixer from 'autoprefixer';
 import { join } from 'path';
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -12,9 +11,6 @@ export default {
 	output: {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json'
-	},
-	resolve: {
-		extensions: ['', '.js']
 	},
 	module: {
 		loaders: [
@@ -30,8 +26,5 @@ export default {
 		new InertEntryPlugin(),
 		(isProduction && new ZipPlugin({ filename: 'GMK.zip' })),
 		new NyanProgressPlugin()
-	].filter(x => x),
-	postcss() {
-		return [autoprefixer];
-	}
+	].filter(x => x)
 };
