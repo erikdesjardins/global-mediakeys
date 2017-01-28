@@ -1,6 +1,6 @@
 {
   "name": "global-media-keys",
-  "version": "1.2.23",
+  "version": "1.2.24",
   "description": "Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.",
   "private": true,
   "repository": {
