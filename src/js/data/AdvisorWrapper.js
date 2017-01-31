@@ -5,7 +5,6 @@
  */
 
 import Wrapper from './Wrapper';
-import { toMap } from '../util/object';
 
 export default class AdvisorWrapper extends Wrapper {
 	/**
@@ -37,9 +36,9 @@ export default class AdvisorWrapper extends Wrapper {
 	 */
 	constructor(functionAdvisors = {}, getterAdvisors = {}, setterAdvisors = {}) {
 		super();
-		this._functionAdvisors = toMap(functionAdvisors);
-		this._getterAdvisors = toMap(getterAdvisors);
-		this._setterAdvisors = toMap(setterAdvisors);
+		this._functionAdvisors = new Map(Object.entries(functionAdvisors));
+		this._getterAdvisors = new Map(Object.entries(getterAdvisors));
+		this._setterAdvisors = new Map(Object.entries(setterAdvisors));
 	}
 
 	_functionWrapper(func, args, name) {
