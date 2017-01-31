@@ -1,5 +1,5 @@
 import Domain from './shared/Domain';
-import { click, descendant, onMutation } from './util/dom';
+import { descendant, onMutation } from './util/dom';
 
 class GooglePlayMusic extends Domain {
 	async getButtons() {
@@ -59,7 +59,7 @@ class GooglePlayMusic extends Domain {
 				{ initialCallback: true }
 			);
 
-			return () => click(thumbUpButton);
+			return () => thumbUpButton.click();
 		}, async callback => {
 			const thumbDownButton = await descendant(document.getElementById('playerSongInfo'), '[data-rating="1"]');
 
@@ -77,7 +77,7 @@ class GooglePlayMusic extends Domain {
 				{ initialCallback: true }
 			);
 
-			return () => click(thumbDownButton);
+			return () => thumbDownButton.click();
 		}];
 	}
 }

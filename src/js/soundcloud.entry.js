@@ -1,5 +1,5 @@
 import Domain from './shared/Domain';
-import { click, onDescendantMutation, onMutation, waitForChild } from './util/dom';
+import { onDescendantMutation, onMutation, waitForChild } from './util/dom';
 
 class Soundcloud extends Domain {
 	async getButtons() {
@@ -64,7 +64,7 @@ class Soundcloud extends Domain {
 				{ initialCallback: true }
 			);
 
-			return () => click(descendant());
+			return () => descendant().click();
 		}];
 	}
 }

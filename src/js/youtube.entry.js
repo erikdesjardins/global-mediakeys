@@ -1,5 +1,5 @@
 import Domain from './shared/Domain';
-import { click, descendant, onDescendantMutation, onMutation, waitForChild } from './util/dom';
+import { descendant, onDescendantMutation, onMutation, waitForChild } from './util/dom';
 
 class YouTube extends Domain {
 	async getButtons() {
@@ -63,7 +63,7 @@ class YouTube extends Domain {
 				{ initialCallback: true }
 			);
 
-			return () => click(button);
+			return () => button.click();
 		}];
 	}
 }

@@ -4,19 +4,6 @@
  */
 
 /**
- * `$.fn.click`
- * @param {!EventTarget} ele
- * @returns {void}
- */
-export function click(ele) {
-	ele.dispatchEvent(new MouseEvent('click', {
-		view: window,
-		bubbles: true,
-		cancelable: true,
-	}));
-}
-
-/**
  * `$.fn.empty`
  * @param {!Node} ele
  * @returns {void}
