@@ -11,9 +11,7 @@ import { MSG } from './constants';
 import { click } from '../util/dom';
 
 export default class Domain {
-	constructor() {
-		this._log = new Logger(this.constructor.name);
-	}
+	_log = new Logger(this.constructor.name);
 
 	/**
 	 * Buttons for controlling play/pause, next, and prev track.
