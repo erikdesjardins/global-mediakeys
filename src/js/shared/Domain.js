@@ -8,7 +8,6 @@ import Logger from '../util/Logger';
 import _ from 'lodash';
 import * as Messages from '../api/messages';
 import { MSG } from './constants';
-import { click } from '../util/dom';
 
 export default class Domain {
 	_log = new Logger(this.constructor.name);
@@ -98,9 +97,9 @@ export default class Domain {
 
 		Messages.addListener(MSG.ECHO, data => data);
 
-		Messages.addListener(MSG.PLAY_PAUSE, () => click(buttons.play));
-		Messages.addListener(MSG.NEXT, () => click(buttons.next));
-		Messages.addListener(MSG.PREV, () => click(buttons.prev));
+		Messages.addListener(MSG.PLAY_PAUSE, () => buttons.play.click());
+		Messages.addListener(MSG.NEXT, () => buttons.next.click());
+		Messages.addListener(MSG.PREV, () => buttons.prev.click());
 
 		this._log.d('Waiting for registration...');
 
