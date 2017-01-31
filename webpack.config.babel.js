@@ -12,6 +12,7 @@ export default {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json',
 	},
+	devtool: isProduction ? '#source-map' : '#cheap-source-map',
 	module: {
 		loaders: [
 			{ test: /\.entry\.js$/, loaders: ['spawn?name=[name].js', 'babel'] },
