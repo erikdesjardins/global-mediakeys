@@ -2,9 +2,9 @@
 	"manifest_version": 2,
 	"name": "Global Media Keys",
 	"short_name": "GMK",
-	"description": "{{prop?description!../package.json}}",
-	"version": "{{prop?version!../package.json}}",
-	"minimum_chrome_version": "54",
+	"description": "{{prop-loader?description!../package.json}}",
+	"version": "{{prop-loader?version!../package.json}}",
+	"minimum_chrome_version": "55",
 	"permissions": [
 		"storage"
 	],

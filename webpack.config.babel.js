@@ -1,12 +1,15 @@
-import InertEntryPlugin from 'inert-entry-webpack-plugin';
-import NyanProgressPlugin from 'nyan-progress-webpack-plugin';
-import ZipPlugin from 'zip-webpack-plugin';
-import { join } from 'path';
+/* eslint-disable import/no-commonjs */
+
+const InertEntryPlugin = require('inert-entry-webpack-plugin');
+const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const { join } = require('path');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-export default {
-	entry: 'extricate!interpolate!./src/manifest.json',
+module.exports = {
+	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
 	bail: isProduction,
 	output: {
 		path: join(__dirname, 'dist'),
@@ -14,17 +17,56 @@ export default {
 	},
 	devtool: isProduction ? '#source-map' : '#cheap-source-map',
 	module: {
-		loaders: [
-			{ test: /\.entry\.js$/, loaders: ['spawn?name=[name].js', 'babel'] },
-			{ test: /\.js$/, loader: 'babel' },
-			{ test: /\.scss$/, loaders: ['file?name=[name].css', 'extricate?resolve=\\.js$', 'css', 'postcss', 'sass'] },
-			{ test: /\.woff2$/, loader: 'file?name=[name].[ext]' },
-			{ test: /\.html$/, loaders: ['file?name=[name].[ext]', 'extricate', 'html?attrs=link:href script:src'] },
-			{ test: /\.png$/, loader: 'file?name=[name].[ext]' },
-		],
+		rules: [{
+			test: /\.entry\.js$/,
+			use: [{
+				loader: 'spawn-loader',
+				options: { name: '[name].js' },
+			}, {
+				loader: 'babel-loader',
+			}],
+		}, {
+			test: /\.js$/,
+			use: [{
+				loader: 'babel-loader',
+			}],
+		}, {
+			test: /\.scss$/,
+			use: [{
+				loader: 'file-loader',
+				options: { name: '[name].css' },
+			}, {
+				loader: 'extricate-loader',
+				options: { resolve: '\\.js$' },
+			}, {
+				loader: 'css-loader',
+			}, {
+				loader: 'postcss-loader',
+			}, {
+				loader: 'sass-loader',
+			}],
+		}, {
+			test: /\.html$/,
+			use: [{
+				loader: 'file-loader',
+				options: { name: '[name].[ext]' },
+			}, {
+				loader: 'extricate-loader',
+			}, {
+				loader: 'html-loader',
+				options: { attrs: ['link:href', 'script:src'] },
+			}],
+		}, {
+			test: /\.(png|woff2)$/,
+			use: [{
+				loader: 'file-loader',
+				options: { name: '[name].[ext]' },
+			}],
+		}],
 	},
 	plugins: [
 		new InertEntryPlugin(),
+		new LodashModuleReplacementPlugin(),
 		(isProduction && new ZipPlugin({ filename: 'GMK.zip' })),
 		new NyanProgressPlugin(),
 	].filter(x => x),

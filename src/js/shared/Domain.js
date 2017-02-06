@@ -107,11 +107,11 @@ export default class Domain {
 
 		window.addEventListener('unload', () => Messages.send(MSG.UNREGISTER));
 
-		this.setupPlayState(_.debounce(state => Messages.send({ type: MSG.PLAY_STATE, data: state }), 50), buttons.play);
-		this.setupInfo(_.debounce(info => Messages.send({ type: MSG.INFO, data: info }), 50));
+		this.setupPlayState(_.debounce(state => Messages.send(MSG.PLAY_STATE, { data: state }), 50), buttons.play);
+		this.setupInfo(_.debounce(info => Messages.send(MSG.INFO, { data: info }), 50));
 
 		const actionData = [];
-		const sendActionUpdate = _.debounce(() => Messages.send({ type: MSG.ACTIONS, data: actionData }), 50);
+		const sendActionUpdate = _.debounce(() => Messages.send(MSG.ACTIONS, { data: actionData }), 50);
 
 		this._log.d('Setting up actions...');
 

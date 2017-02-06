@@ -20,7 +20,7 @@ function updateActions(actions = []) {
 	actions.forEach((action, i) => {
 		const ele = populate('action-button', action);
 		const button = ele.firstElementChild;
-		button.addEventListener('click', () => Messages.send({ type: MSG.DO_ACTION, data: i }));
+		button.addEventListener('click', () => Messages.send(MSG.DO_ACTION, { data: i }));
 		button.classList.toggle('isInactive', !action.state);
 		container.appendChild(ele);
 	});
