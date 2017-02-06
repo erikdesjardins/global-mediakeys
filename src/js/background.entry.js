@@ -23,7 +23,7 @@ function getTabSender(type) {
 	return async data => {
 		const { id: tabId } = await tabs.peek();
 		try {
-			return await Messages.send({ type, tabId, data });
+			return await Messages.send(type, { tabId, data });
 		} catch (e) {
 			await tabs.remove(tabId);
 		}
@@ -74,7 +74,7 @@ Commands.addListener(CMD.STOP, () =>
 			// Avoid promoting the tab when its state changes
 			tab.isPlaying = false;
 			try {
-				await Messages.send({ type: MSG.PLAY_PAUSE, tabId });
+				await Messages.send(MSG.PLAY_PAUSE, { tabId });
 			} catch (e) {
 				await tabs.remove(tabId);
 			}
@@ -93,6 +93,6 @@ Messages.addListener(MSG.FOCUS_TAB, async () => {
 
 // Prune unresponsive tabs (in case of crashing, etc.)
 tabs.each(({ id: tabId }) =>
-	Messages.send({ type: MSG.ECHO, tabId })
+	Messages.send(MSG.ECHO, { tabId })
 		.catch(() => tabs.remove(tabId))
 );

@@ -5,8 +5,6 @@
 		"transform-class-properties",
 		["transform-object-rest-spread", { "useBuiltIns": true }],
 		"transform-async-generator-functions",
-		"transform-async-to-generator",
-		"transform-es2015-modules-commonjs",
 		"transform-dead-code-elimination",
 		"transform-node-env-inline",
 		"lodash"

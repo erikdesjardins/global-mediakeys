@@ -49,14 +49,16 @@ export function addListener(type, callback, { silent = false } = {}) {
  * @returns {Promise<*, Error>} Rejects if an invalid response is received,
  * resolves with the response data otherwise.
  */
-export async function send({ type = arguments[0], tabId, data } = {}) { // eslint-disable-line prefer-rest-params
+export async function send(type, { tabId, data } = {}) { // eslint-disable-line prefer-rest-params
 	const message = { type, data };
 	const target = parseInt(tabId, 10);
 
-	const response = await (tabId ?
+	const request = (tabId ?
 		apiToPromise(chrome.tabs.sendMessage)(target, message) :
 		apiToPromise(chrome.runtime.sendMessage)(message)
 	);
+	// work around a Chrome (or maybe Babel) bug with precedence of ternary in await
+	const response = await request;
 
 	if (!response) {
 		throw new Error(`Received invalid response from message type: ${type}`);
