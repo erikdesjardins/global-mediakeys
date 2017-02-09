@@ -58,10 +58,11 @@
     "postcss-loader": "1.2.2",
     "prop-loader": "0.0.5",
     "rimraf": "2.5.4",
+    "rollup-plugin-commonjs": "7.0.0",
     "sass-lint": "1.10.2",
-    "sass-loader": "4.1.1",
-    "spawn-loader": "1.0.0",
+    "sass-loader": "5.0.1",
     "webpack": "2.2.1",
+    "webpack-rollup-loader": "0.1.0",
     "zip-webpack-plugin": "0.3.0"
   }
 }

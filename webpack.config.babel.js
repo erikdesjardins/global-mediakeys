@@ -4,6 +4,7 @@ const InertEntryPlugin = require('inert-entry-webpack-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const rollupCommonjsPlugin = require('rollup-plugin-commonjs');
 const { join } = require('path');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -15,13 +16,15 @@ module.exports = {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json',
 	},
-	devtool: isProduction ? '#source-map' : '#cheap-source-map',
 	module: {
 		rules: [{
 			test: /\.entry\.js$/,
 			use: [{
-				loader: 'spawn-loader',
+				loader: 'file-loader',
 				options: { name: '[name].js' },
+			}, {
+				loader: 'webpack-rollup-loader',
+				options: { plugins: [rollupCommonjsPlugin()] },
 			}, {
 				loader: 'babel-loader',
 			}],
