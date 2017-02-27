@@ -19,52 +19,37 @@ module.exports = {
 	module: {
 		rules: [{
 			test: /\.entry\.js$/,
-			use: [{
-				loader: 'file-loader',
-				options: { name: '[name].js' },
-			}, {
-				loader: 'webpack-rollup-loader',
-				options: { plugins: [rollupCommonjsPlugin()] },
-			}, {
-				loader: 'babel-loader',
-			}],
+			use: [
+				{ loader: 'file-loader', options: { name: '[name].js' } },
+				{ loader: 'webpack-rollup-loader', options: { plugins: [rollupCommonjsPlugin()] } },
+				{ loader: 'babel-loader' },
+			],
 		}, {
 			test: /\.js$/,
-			use: [{
-				loader: 'babel-loader',
-			}],
+			use: [
+				{ loader: 'babel-loader' },
+			],
 		}, {
 			test: /\.scss$/,
-			use: [{
-				loader: 'file-loader',
-				options: { name: '[name].css' },
-			}, {
-				loader: 'extricate-loader',
-				options: { resolve: '\\.js$' },
-			}, {
-				loader: 'css-loader',
-			}, {
-				loader: 'postcss-loader',
-			}, {
-				loader: 'sass-loader',
-			}],
+			use: [
+				{ loader: 'file-loader', options: { name: '[name].css' } },
+				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
+				{ loader: 'css-loader' },
+				{ loader: 'postcss-loader' },
+				{ loader: 'sass-loader' },
+			],
 		}, {
 			test: /\.html$/,
-			use: [{
-				loader: 'file-loader',
-				options: { name: '[name].[ext]' },
-			}, {
-				loader: 'extricate-loader',
-			}, {
-				loader: 'html-loader',
-				options: { attrs: ['link:href', 'script:src'] },
-			}],
+			use: [
+				{ loader: 'file-loader', options: { name: '[name].[ext]' } },
+				{ loader: 'extricate-loader' },
+				{ loader: 'html-loader', options: { attrs: ['link:href', 'script:src'] } },
+			],
 		}, {
 			test: /\.(png|woff2)$/,
-			use: [{
-				loader: 'file-loader',
-				options: { name: '[name].[ext]' },
-			}],
+			use: [
+				{ loader: 'file-loader', options: { name: '[name].[ext]' } },
+			],
 		}],
 	},
 	plugins: [
