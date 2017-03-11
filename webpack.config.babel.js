@@ -22,7 +22,6 @@ module.exports = {
 			use: [
 				{ loader: 'file-loader', options: { name: '[name].js' } },
 				{ loader: 'webpack-rollup-loader', options: { plugins: [rollupCommonjsPlugin()] } },
-				{ loader: 'babel-loader' },
 			],
 		}, {
 			test: /\.js$/,
