@@ -7,8 +7,7 @@
 	"minimum_chrome_version": "55",
 	"permissions": [
 		"storage",
-		"identity",
-		"<all_urls>"
+		"identity"
 	],
 	"icons": {
 		"16": "{{./images/icon16.png}}",
