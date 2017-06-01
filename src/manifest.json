@@ -6,7 +6,8 @@
 	"version": "{{prop-loader?version!../package.json}}",
 	"minimum_chrome_version": "55",
 	"permissions": [
-		"storage"
+		"storage",
+		"identity"
 	],
 	"icons": {
 		"16": "{{./images/icon16.png}}",
