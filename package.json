@@ -19,8 +19,7 @@
     "lint-fix": "eslint . --fix"
   },
   "dependencies": {
-    "lodash": "4.17.4",
-    "tinycolor2": "1.4.1"
+    "lodash": "4.17.4"
   },
   "devDependencies": {
     "autoprefixer": "7.1.2",
