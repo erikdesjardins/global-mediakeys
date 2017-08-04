@@ -4,7 +4,6 @@
 		"transform-class-properties",
 		["transform-object-rest-spread", { "useBuiltIns": true }],
 		"transform-dead-code-elimination",
-		"transform-node-env-inline",
 		"lodash"
 	]
 }
