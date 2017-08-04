@@ -72,6 +72,7 @@
 		"no-inline-comments": 0,
 		"no-inner-declarations": 0, // ES6 has block-scoped functions
 		"no-invalid-this": 0,
+		"no-mixed-operators": 0,
 		"linebreak-style": 0,
 		"no-plusplus": 0,
 		"no-process-env": 0,
