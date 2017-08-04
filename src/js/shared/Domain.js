@@ -10,7 +10,9 @@ import * as Messages from '../api/messages';
 import { MSG } from './constants';
 
 export default class Domain {
-	_log = new Logger(this.constructor.name);
+	constructor() {
+		this._log = new Logger(this.constructor.name);
+	}
 
 	/**
 	 * Buttons for controlling play/pause, next, and prev track.

@@ -131,10 +131,4 @@ export default class OrderedMap {
 	async each(callback) {
 		await Promise.all(this._v.map(({ id, data }) => callback({ id, data })));
 	}
-
-	*[Symbol.iterator]() {
-		for (const { id, data } of this._v) {
-			yield { id, data };
-		}
-	}
 }
