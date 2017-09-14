@@ -5,7 +5,7 @@
 /* eslint no-unused-vars: [2, { "args": "none" }] */
 
 import Logger from '../util/Logger';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import * as Messages from '../api/messages';
 import { MSG } from './constants';
 

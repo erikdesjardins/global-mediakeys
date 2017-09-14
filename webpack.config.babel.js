@@ -4,7 +4,6 @@ const InertEntryPlugin = require('inert-entry-webpack-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const rollupCommonjsPlugin = require('rollup-plugin-commonjs');
 const { join } = require('path');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -21,7 +20,7 @@ module.exports = {
 			test: /\.entry\.js$/,
 			use: [
 				{ loader: 'file-loader', options: { name: '[name].js' } },
-				{ loader: 'webpack-rollup-loader', options: { plugins: [rollupCommonjsPlugin()] } },
+				{ loader: 'webpack-rollup-loader' },
 			],
 		}, {
 			test: /\.js$/,

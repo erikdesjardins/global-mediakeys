@@ -19,7 +19,7 @@
     "lint-fix": "eslint . --fix"
   },
   "dependencies": {
-    "lodash": "4.17.4"
+    "lodash-es": "4.17.4"
   },
   "devDependencies": {
     "autoprefixer": "7.1.2",
@@ -51,7 +51,6 @@
     "postcss-loader": "2.0.6",
     "prop-loader": "1.0.0",
     "rimraf": "2.6.1",
-    "rollup-plugin-commonjs": "8.1.0",
     "sass-lint": "1.10.2",
     "sass-loader": "6.0.6",
     "webpack": "3.4.1",

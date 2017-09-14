@@ -5,7 +5,7 @@
  * @module data/OrderedMap
  */
 
-import _ from 'lodash';
+import _ from 'lodash-es';
 import { inject, wrappable } from './Wrapper';
 
 @inject('_v', [])
