@@ -25,7 +25,18 @@ module.exports = {
 		}, {
 			test: /\.js$/,
 			use: [
-				{ loader: 'babel-loader', options: { comments: !isProduction } },
+				{
+					loader: 'babel-loader',
+					options: {
+						plugins: [
+							'transform-decorators-legacy',
+							['transform-object-rest-spread', { useBuiltIns: true }],
+							'lodash',
+						],
+						comments: !isProduction,
+						babelrc: false,
+					},
+				},
 			],
 		}, {
 			test: /\.scss$/,
