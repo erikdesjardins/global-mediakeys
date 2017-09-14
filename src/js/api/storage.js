@@ -3,7 +3,7 @@
  * @module api/storage
  */
 
-import _ from 'lodash';
+import _ from 'lodash-es';
 import { apiToPromise } from '../util/api';
 
 /**

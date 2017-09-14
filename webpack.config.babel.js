@@ -4,7 +4,6 @@ const InertEntryPlugin = require('inert-entry-webpack-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-const rollupCommonjsPlugin = require('rollup-plugin-commonjs');
 const { join } = require('path');
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -21,12 +20,23 @@ module.exports = {
 			test: /\.entry\.js$/,
 			use: [
 				{ loader: 'file-loader', options: { name: '[name].js' } },
-				{ loader: 'webpack-rollup-loader', options: { plugins: [rollupCommonjsPlugin()] } },
+				{ loader: 'webpack-rollup-loader' },
 			],
 		}, {
 			test: /\.js$/,
 			use: [
-				{ loader: 'babel-loader', options: { comments: !isProduction } },
+				{
+					loader: 'babel-loader',
+					options: {
+						plugins: [
+							'transform-decorators-legacy',
+							['transform-object-rest-spread', { useBuiltIns: true }],
+							'lodash',
+						],
+						comments: !isProduction,
+						babelrc: false,
+					},
+				},
 			],
 		}, {
 			test: /\.scss$/,
