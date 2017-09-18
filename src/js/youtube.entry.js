@@ -1,14 +1,14 @@
 import Domain from './shared/Domain';
-import { descendant, onDescendantMutation, onMutation, waitForChild } from './util/dom';
+import { descendant, onMutation } from './util/dom';
 
 class YouTube extends Domain {
 	async getButtons() {
-		await waitForChild(document.getElementById('player-api'), '.html5-video-player');
+		const player = await descendant(document, '#player-api .html5-video-player');
 
 		return {
-			play: document.querySelector('.ytp-play-button'),
-			next: document.querySelector('.ytp-next-button'),
-			prev: document.querySelector('.ytp-prev-button'),
+			play: player.querySelector('.ytp-play-button'),
+			next: player.querySelector('.ytp-next-button'),
+			prev: player.querySelector('.ytp-prev-button'),
 		};
 	}
 
@@ -21,33 +21,30 @@ class YouTube extends Domain {
 		);
 	}
 
-	setupInfo(callback) {
-		async function sendUpdate(parent) {
-			const imageElem = await descendant(parent, '.video-thumb img');
-			const titleElem = await descendant(parent, '#watch-headline-title');
-			const subtitleElem = await descendant(parent, '.yt-user-info');
+	async setupInfo(callback) {
+		const main = await descendant(document, '#main');
+		const imageElem = await descendant(main, '#meta #img');
+		const titleElem = await descendant(main, 'h1.title');
+		const subtitleElem = await descendant(main, '#owner-name a');
 
-			const imageUrl = imageElem.getAttribute('data-thumb') || imageElem.src;
-
+		function sendUpdate() {
 			callback({
-				image: `url(${imageUrl.replace('/s88', '/s250')})`,
+				image: `url(${imageElem.src.replace('/s88', '/s250')})`,
 				title: titleElem.textContent,
 				subtitle: subtitleElem.textContent,
 			});
 		}
 
-		onDescendantMutation(
-			document.getElementById('content'),
-			'#watch-header',
-			{ childList: true },
-			sendUpdate,
-			{ initialCallback: true }
-		);
+		onMutation(imageElem, { attributes: true, attributeFilter: ['src'] }, sendUpdate);
+		onMutation(titleElem, { characterData: true }, sendUpdate);
+		onMutation(subtitleElem, { characterData: true }, sendUpdate);
+
+		sendUpdate();
 	}
 
 	getActions() {
-		return [callback => {
-			const button = document.querySelector('.ytp-watch-later-button');
+		return [async callback => {
+			const button = await descendant(document, '.ytp-watch-later-button');
 
 			function sendUpdate() {
 				callback({
