@@ -88,7 +88,9 @@
 		"no-use-before-define": [2, "nofunc"],
 		"no-magic-numbers": 0,
 
+		"array-bracket-newline": 0,
 		"array-callback-return": 0,
+		"array-element-newline": [0, { "multiline": true }],
 		"arrow-parens": [2, "as-needed"],
 		"brace-style": [2, "1tbs", { "allowSingleLine": true }],
 		"callback-return": 0,
@@ -100,8 +102,10 @@
 		"curly": [2, "multi-line"],
 		"dot-location": [2, "property"],
 		"func-style": [2, "declaration"],
+		"function-paren-newline": 0,
 		"generator-star-spacing": [0, { "before": false, "after": true }],
 		"id-length": 0,
+		"implicit-arrow-linebreak": 0,
 		"indent": [2, "tab", { "SwitchCase": 1 }],
 		"init-declarations": 0,
 		"line-comment-position": 0,
@@ -113,6 +117,7 @@
 		"max-params": 0,
 		"max-statements": 0,
 		"max-statements-per-line": [2, { "max": 2 }],
+		"multiline-comment-style": 0,
 		"multiline-ternary": 0,
 		"new-cap": 2,
 		"newline-after-var": [0, "never"],
@@ -135,7 +140,11 @@
 		"sort-keys": 0,
 		"sort-vars": 0,
 		"sort-imports": 0, // see sort-imports-es6/sort-imports-es6
-		"space-before-function-paren": [2, "never"],
+		"space-before-function-paren": [2, {
+			"anonymous": "never",
+			"named": "never",
+			"asyncArrow": "always"
+		}],
 		"strict": [2, "never"], // Babel inserts it for us
 		"valid-jsdoc": [2, { "requireParamDescription": false, "prefer": { "return": "returns" } }],
 		"vars-on-top": 0,

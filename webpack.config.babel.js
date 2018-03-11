@@ -6,15 +6,13 @@ const ZipPlugin = require('zip-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const { join } = require('path');
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-module.exports = {
+module.exports = ({ zip } = {}, { mode } = {}) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
-	bail: isProduction,
 	output: {
 		path: join(__dirname, 'dist'),
 		filename: 'manifest.json',
 	},
+	devtool: false,
 	module: {
 		rules: [{
 			test: /\.entry\.js$/,
@@ -33,7 +31,7 @@ module.exports = {
 							['transform-object-rest-spread', { useBuiltIns: true }],
 							'lodash',
 						],
-						comments: !isProduction,
+						comments: mode === 'development',
 						babelrc: false,
 					},
 				},
@@ -62,9 +60,9 @@ module.exports = {
 		}],
 	},
 	plugins: [
+		new NyanProgressPlugin(),
 		new InertEntryPlugin(),
 		new LodashModuleReplacementPlugin(),
-		(isProduction && new ZipPlugin({ filename: 'GMK.zip' })),
-		new NyanProgressPlugin(),
+		zip && new ZipPlugin({ filename: 'GMK.zip' }),
 	].filter(x => x),
-};
+});
