@@ -3,7 +3,7 @@ import { descendant, onMutation } from './util/dom';
 
 class YouTube extends Domain {
 	async getButtons() {
-		const player = await descendant(document, '#player-api .html5-video-player');
+		const player = await descendant(document, '.html5-video-player');
 
 		return {
 			play: player.querySelector('.ytp-play-button'),
