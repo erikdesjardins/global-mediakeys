@@ -29,7 +29,6 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 					options: {
 						plugins: [
 							['@babel/plugin-proposal-decorators', { legacy: true }],
-							['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
 							'babel-plugin-lodash',
 						],
 						comments: mode === 'development',
