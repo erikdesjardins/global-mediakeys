@@ -8,8 +8,9 @@
 import _ from 'lodash-es';
 import { inject, wrappable } from './Wrapper';
 
+export default
 @inject('_v', [])
-export default class OrderedMap {
+class OrderedMap {
 	constructor() {
 		this._v = [];
 	}
