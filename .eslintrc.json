@@ -1,9 +1,6 @@
 {
 	"parser": "babel-eslint",
 	"plugins": [
-		"no-useless-assign",
-		"consistent-return-legacy",
-		"prefer-spread",
 		"sort-imports-es6",
 		"filenames",
 		"import"
@@ -23,12 +20,6 @@
 	},
 	"extends": ["eslint:all"],
 	"rules": {
-		"no-useless-assign/no-useless-assign": 2,
-
-		"consistent-return-legacy/consistent-return": 2,
-
-		"prefer-spread/prefer-object-spread": 2,
-
 		"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
 
 		"filenames/match-regex": 0,
