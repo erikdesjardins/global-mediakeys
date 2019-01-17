@@ -22,14 +22,14 @@ class YouTube extends Domain {
 	}
 
 	async setupInfo(callback) {
-		const main = await descendant(document, '#main');
+		const main = await descendant(document, '#primary');
 		const imageElem = await descendant(main, '#meta #img');
 		const titleElem = await descendant(main, 'h1.title');
 		const subtitleElem = await descendant(main, '#owner-name a');
 
 		function sendUpdate() {
 			callback({
-				image: `url(${imageElem.src.replace('/s88', '/s250')})`,
+				image: `url(${imageElem.src.replace('s48-', 's250-')})`,
 				title: titleElem.textContent,
 				subtitle: subtitleElem.textContent,
 			});

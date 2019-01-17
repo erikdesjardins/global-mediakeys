@@ -4,6 +4,7 @@ const InertEntryPlugin = require('inert-entry-webpack-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const sass = require('sass');
 const { join } = require('path');
 
 module.exports = ({ zip } = {}, { mode } = {}) => ({
@@ -27,9 +28,8 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 					loader: 'babel-loader',
 					options: {
 						plugins: [
-							'transform-decorators-legacy',
-							['transform-object-rest-spread', { useBuiltIns: true }],
-							'lodash',
+							['@babel/plugin-proposal-decorators', { legacy: true }],
+							'babel-plugin-lodash',
 						],
 						comments: mode === 'development',
 						babelrc: false,
@@ -43,7 +43,7 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
 				{ loader: 'css-loader' },
 				{ loader: 'postcss-loader' },
-				{ loader: 'sass-loader' },
+				{ loader: 'sass-loader', options: { implementation: sass } },
 			],
 		}, {
 			test: /\.html$/,

@@ -1,9 +1,6 @@
 {
 	"parser": "babel-eslint",
 	"plugins": [
-		"no-useless-assign",
-		"consistent-return-legacy",
-		"prefer-spread",
 		"sort-imports-es6",
 		"filenames",
 		"import"
@@ -23,12 +20,6 @@
 	},
 	"extends": ["eslint:all"],
 	"rules": {
-		"no-useless-assign/no-useless-assign": 2,
-
-		"consistent-return-legacy/consistent-return": 2,
-
-		"prefer-spread/prefer-object-spread": 2,
-
 		"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
 
 		"filenames/match-regex": 0,
@@ -113,6 +104,7 @@
 		"max-depth": 0,
 		"max-len": 0,
 		"max-lines": 0,
+		"max-lines-per-function": 0,
 		"max-nested-callbacks": [2, 5],
 		"max-params": 0,
 		"max-statements": 0,
@@ -137,6 +129,7 @@
 		"id-match": 0,
 		"id-blacklist": 0,
 		"require-jsdoc": 0,
+		"require-unicode-regexp": 0,
 		"sort-keys": 0,
 		"sort-vars": 0,
 		"sort-imports": 0, // see sort-imports-es6/sort-imports-es6
