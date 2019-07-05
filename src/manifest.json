@@ -22,6 +22,10 @@
 	},
 	"content_scripts": [
 		{
+			"matches": ["*://*.bandcamp.com/*"],
+			"js": ["{{./js/bandcamp.entry.js}}"]
+		},
+		{
 			"matches": ["*://play.google.com/music/listen*"],
 			"js": ["{{./js/googleplaymusic.entry.js}}"]
 		},
