@@ -7,8 +7,8 @@ class Bandcamp extends Domain {
 
 		return {
 			play: await descendant(trackInfo, '.playbutton'),
-			next: await descendant(trackInfo, '.prevbutton'),
-			prev: await descendant(trackInfo, '.nextbutton'),
+			next: await descendant(trackInfo, '.nextbutton'),
+			prev: await descendant(trackInfo, '.prevbutton'),
 		};
 	}
 
