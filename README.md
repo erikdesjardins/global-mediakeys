@@ -1,4 +1,4 @@
-# global-mediakeys [![Build Status](https://travis-ci.org/erikdesjardins/global-mediakeys.svg)](https://travis-ci.org/erikdesjardins/global-mediakeys)
+# global-mediakeys
 
 Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.
 

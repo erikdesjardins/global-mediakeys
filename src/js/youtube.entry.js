@@ -25,7 +25,7 @@ class YouTube extends Domain {
 		const main = await descendant(document, '#primary');
 		const imageElem = await descendant(main, '#meta #img');
 		const titleElem = await descendant(main, 'h1.title');
-		const subtitleElem = await descendant(main, '#owner-name a');
+		const subtitleElem = await descendant(main, '#upload-info #channel-name');
 
 		function sendUpdate() {
 			callback({
