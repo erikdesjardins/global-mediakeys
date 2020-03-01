@@ -8,6 +8,7 @@
 	"permissions": [
 		"storage"
 	],
+	"content_security_policy": "default-src 'self'; img-src 'self' https:",
 	"icons": {
 		"16": "{{./images/icon16.png}}",
 		"32": "{{./images/icon32.png}}",
@@ -22,19 +23,19 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["*://*.bandcamp.com/*"],
+			"matches": ["https://*.bandcamp.com/*"],
 			"js": ["{{./js/bandcamp.entry.js}}"]
 		},
 		{
-			"matches": ["*://play.google.com/music/listen*"],
+			"matches": ["https://play.google.com/music/listen*"],
 			"js": ["{{./js/googleplaymusic.entry.js}}"]
 		},
 		{
-			"matches": ["*://soundcloud.com/*"],
+			"matches": ["https://soundcloud.com/*"],
 			"js": ["{{./js/soundcloud.entry.js}}"]
 		},
 		{
-			"matches": ["*://*.youtube.com/*"],
+			"matches": ["https://www.youtube.com/*"],
 			"js": ["{{./js/youtube.entry.js}}"]
 		}
 	],
