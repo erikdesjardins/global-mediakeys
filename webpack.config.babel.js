@@ -18,7 +18,7 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 		rules: [{
 			test: /\.entry\.js$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].js' } },
+				{ loader: 'file-loader', options: { name: '[name].js', esModule: false } },
 				{ loader: 'webpack-rollup-loader' },
 			],
 		}, {
@@ -39,7 +39,7 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 		}, {
 			test: /\.scss$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].css' } },
+				{ loader: 'file-loader', options: { name: '[name].css', esModule: false } },
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
 				{ loader: 'css-loader' },
 				{ loader: 'postcss-loader' },
@@ -48,14 +48,14 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 		}, {
 			test: /\.html$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].[ext]' } },
+				{ loader: 'file-loader', options: { name: '[name].[ext]', esModule: false } },
 				{ loader: 'extricate-loader' },
 				{ loader: 'html-loader', options: { attrs: ['link:href', 'script:src'] } },
 			],
 		}, {
 			test: /\.(png|woff2)$/,
 			use: [
-				{ loader: 'file-loader', options: { name: '[name].[ext]' } },
+				{ loader: 'file-loader', options: { name: '[name].[ext]', esModule: false } },
 			],
 		}],
 	},
