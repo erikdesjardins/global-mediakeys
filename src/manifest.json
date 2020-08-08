@@ -35,6 +35,10 @@
 			"js": ["{{./js/soundcloud.entry.js}}"]
 		},
 		{
+			"matches": ["https://music.youtube.com/*"],
+			"js": ["{{./js/youtubemusic.entry.js}}"]
+		},
+		{
 			"matches": ["https://www.youtube.com/*"],
 			"js": ["{{./js/youtube.entry.js}}"]
 		}
