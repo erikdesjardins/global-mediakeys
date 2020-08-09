@@ -38,7 +38,7 @@ class YouTubeMusic extends Domain {
 
 		onMutation(imageElem, { attributes: true, attributeFilter: ['src'] }, sendUpdate);
 		onMutation(titleElem, { characterData: true }, sendUpdate);
-		onMutation(subtitleElem, { characterData: true }, sendUpdate);
+		onMutation(subtitleElem, { childList: true }, sendUpdate);
 
 		sendUpdate();
 	}
