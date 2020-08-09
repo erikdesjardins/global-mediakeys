@@ -29,7 +29,7 @@ class YouTube extends Domain {
 
 		function sendUpdate() {
 			callback({
-				image: `url(${imageElem.src.replace('s48-', 's250-')})`,
+				image: `url(${imageElem.src.replace(/s\d+-/, 's500-')})`,
 				title: titleElem.textContent,
 				subtitle: subtitleElem.textContent,
 			});
