@@ -30,7 +30,7 @@ class Soundcloud extends Domain {
 			const subtitleElem = watchElem.querySelector('.playbackSoundBadge__lightLink');
 
 			callback({
-				image: getComputedStyle(imageElem).backgroundImage.replace('50x50', '250x250'),
+				image: getComputedStyle(imageElem).backgroundImage.replace(/t\d+x\d+\./, 't500x500.'),
 				title: titleElem.textContent,
 				subtitle: subtitleElem.textContent,
 			});

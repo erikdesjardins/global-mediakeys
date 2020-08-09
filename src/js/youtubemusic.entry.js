@@ -30,7 +30,7 @@ class YouTubeMusic extends Domain {
 
 		function sendUpdate() {
 			callback({
-				image: `url(${imageElem.src.replace('w60-h60-l90', 'w512-h512-l100')})`,
+				image: `url(${imageElem.src.replace(/w\d+-h\d+-l\d+/, 'w500-h500-l100')})`,
 				title: titleElem.textContent,
 				subtitle: subtitleElem.textContent,
 			});
