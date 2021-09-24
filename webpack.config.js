@@ -41,15 +41,15 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 			use: [
 				{ loader: 'file-loader', options: { name: '[name].css', esModule: false } },
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
-				{ loader: 'css-loader' },
+				{ loader: 'css-loader', options: { esModule: false } },
 				{ loader: 'sass-loader', options: { implementation: sass } },
 			],
 		}, {
 			test: /\.html$/,
 			use: [
 				{ loader: 'file-loader', options: { name: '[name].[ext]', esModule: false } },
-				{ loader: 'extricate-loader' },
-				{ loader: 'html-loader', options: { attrs: ['link:href', 'script:src'] } },
+				{ loader: 'extricate-loader', options: { resolve: '/html-loader/.+\\.js$' } },
+				{ loader: 'html-loader' },
 			],
 		}, {
 			test: /\.(png|woff2)$/,
