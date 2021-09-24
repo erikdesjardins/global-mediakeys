@@ -1,6 +1,6 @@
 {
   "name": "global-media-keys",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Use global keyboard shortcuts to control Soundcloud, YouTube Music, and Bandcamp.",
   "private": true,
   "repository": {
