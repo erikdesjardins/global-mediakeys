@@ -1,5 +1,5 @@
 {
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"name": "Global Media Keys",
 	"short_name": "GMK",
 	"description": "{{prop-loader?description!../package.json}}",
@@ -8,7 +8,9 @@
 	"permissions": [
 		"storage"
 	],
-	"content_security_policy": "default-src 'self'; img-src 'self' https:",
+	"content_security_policy": {
+		"extension_pages": "default-src 'self'; img-src 'self' https:"
+	},
 	"icons": {
 		"16": "{{./images/icon16.png}}",
 		"32": "{{./images/icon32.png}}",
@@ -16,10 +18,7 @@
 		"128": "{{./images/icon128.png}}"
 	},
 	"background": {
-		"scripts": [
-			"{{./js/background.entry.js}}"
-		],
-		"persistent": false
+		"service_worker": "{{./js/background.entry.js}}"
 	},
 	"content_scripts": [
 		{
@@ -39,7 +38,7 @@
 			"js": ["{{./js/youtube.entry.js}}"]
 		}
 	],
-	"browser_action": {
+	"action": {
 		"default_icon": {
 			"19": "{{./images/icon19.png}}",
 			"38": "{{./images/icon38.png}}"
