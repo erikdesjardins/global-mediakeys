@@ -27,10 +27,6 @@
 			"js": ["{{./js/bandcamp.entry.js}}"]
 		},
 		{
-			"matches": ["https://play.google.com/music/listen*"],
-			"js": ["{{./js/googleplaymusic.entry.js}}"]
-		},
-		{
 			"matches": ["https://soundcloud.com/*"],
 			"js": ["{{./js/soundcloud.entry.js}}"]
 		},
