@@ -42,7 +42,6 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 				{ loader: 'file-loader', options: { name: '[name].css', esModule: false } },
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
 				{ loader: 'css-loader' },
-				{ loader: 'postcss-loader' },
 				{ loader: 'sass-loader', options: { implementation: sass } },
 			],
 		}, {
