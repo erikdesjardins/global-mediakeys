@@ -4,7 +4,7 @@
 	"short_name": "GMK",
 	"description": "{{prop-loader?description!../package.json}}",
 	"version": "{{prop-loader?version!../package.json}}",
-	"minimum_chrome_version": "63",
+	"minimum_chrome_version": "92",
 	"permissions": [
 		"storage"
 	],
