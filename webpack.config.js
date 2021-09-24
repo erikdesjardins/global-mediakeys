@@ -7,7 +7,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const sass = require('sass');
 const { join } = require('path');
 
-module.exports = ({ zip } = {}, { mode } = {}) => ({
+module.exports = (env, { mode }) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
 	output: {
 		path: join(__dirname, 'dist'),
@@ -61,6 +61,6 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 		new NyanProgressPlugin(),
 		new InertEntryPlugin(),
 		new LodashModuleReplacementPlugin(),
-		zip && new ZipPlugin({ filename: 'GMK.zip' }),
+		new ZipPlugin({ filename: 'GMK.zip' }),
 	].filter(x => x),
 });

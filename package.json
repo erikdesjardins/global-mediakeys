@@ -14,7 +14,7 @@
     "preonce": "rimraf dist",
     "once": "webpack --mode development",
     "prebuild": "rimraf dist",
-    "build": "webpack --mode production --env.zip",
+    "build": "webpack --mode production",
     "lint": "eslint . && sass-lint -v -q",
     "lint-fix": "eslint . --fix"
   },
