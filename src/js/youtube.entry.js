@@ -17,7 +17,7 @@ class YouTube extends Domain {
 			playButton,
 			{ attributes: true, attributeFilter: ['aria-label'] },
 			() => callback(playButton.getAttribute('aria-label').toLowerCase().includes('pause')),
-			{ initialCallback: true }
+			{ initialCallback: true },
 		);
 	}
 
@@ -57,7 +57,7 @@ class YouTube extends Domain {
 				button,
 				{ childList: true },
 				sendUpdate,
-				{ initialCallback: true }
+				{ initialCallback: true },
 			);
 
 			return () => button.click();

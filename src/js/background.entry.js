@@ -64,7 +64,7 @@ Commands.addListener(CMD.STOP, () =>
 				await Tabs.remove(tabId);
 			}
 		}
-	})
+	}),
 );
 
 Messages.addListener(MSG.FOCUS_TAB, async () => {
@@ -79,5 +79,5 @@ Messages.addListener(MSG.FOCUS_TAB, async () => {
 // Prune unresponsive tabs (in case of crashing, etc.)
 Tabs.each(({ id: tabId }) =>
 	Messages.send(MSG.ECHO, { tabId })
-		.catch(() => Tabs.remove(tabId))
+		.catch(() => Tabs.remove(tabId)),
 );

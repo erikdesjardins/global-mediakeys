@@ -121,7 +121,7 @@ export default class Domain {
 			setup(data => {
 				actionData[i] = data;
 				sendActionUpdate();
-			})
+			}),
 		));
 
 		Messages.addListener(MSG.DO_ACTION, i => actions[i]());

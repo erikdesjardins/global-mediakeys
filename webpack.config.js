@@ -28,7 +28,6 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 					loader: 'babel-loader',
 					options: {
 						plugins: [
-							['@babel/plugin-proposal-decorators', { legacy: true }],
 							'babel-plugin-lodash',
 						],
 						comments: mode === 'development',
