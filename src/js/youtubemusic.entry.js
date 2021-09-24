@@ -17,7 +17,7 @@ class YouTubeMusic extends Domain {
 			playButton,
 			{ attributes: true, attributeFilter: ['title'] },
 			() => callback(playButton.getAttribute('title') === 'Pause'),
-			{ initialCallback: true }
+			{ initialCallback: true },
 		);
 	}
 
@@ -58,7 +58,7 @@ class YouTubeMusic extends Domain {
 				thumbUpButton,
 				{ attributes: true, attributeFilter: ['aria-pressed'] },
 				sendUpdate,
-				{ initialCallback: true }
+				{ initialCallback: true },
 			);
 
 			return () => thumbUpButton.click();
@@ -76,7 +76,7 @@ class YouTubeMusic extends Domain {
 				thumbDownButton,
 				{ attributes: true, attributeFilter: ['aria-pressed'] },
 				sendUpdate,
-				{ initialCallback: true }
+				{ initialCallback: true },
 			);
 
 			return () => thumbDownButton.click();

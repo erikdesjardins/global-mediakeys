@@ -17,7 +17,7 @@ class Bandcamp extends Domain {
 			playButton,
 			{ attributes: true, attributeFilter: ['class'] },
 			() => callback(playButton.classList.contains('playing')),
-			{ initialCallback: true }
+			{ initialCallback: true },
 		);
 	}
 
@@ -38,7 +38,7 @@ class Bandcamp extends Domain {
 			titleElem,
 			{ childList: true },
 			sendUpdate,
-			{ initialCallback: true }
+			{ initialCallback: true },
 		);
 	}
 

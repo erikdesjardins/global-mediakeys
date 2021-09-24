@@ -1,5 +1,8 @@
 {
-	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaVersion": 2019,
+		"sourceType": "module"
+	},
 	"plugins": [
 		"sort-imports-es6",
 		"filenames",
@@ -23,7 +26,7 @@
 	},
 	"extends": ["eslint:all"],
 	"rules": {
-		"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
+		//"sort-imports-es6/sort-imports-es6": [2, { "memberSyntaxSortOrder": ["none", "single", "all", "multiple"] }],
 
 		"filenames/match-regex": 0,
 		"filenames/match-exported": 2,

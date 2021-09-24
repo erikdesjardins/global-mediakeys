@@ -19,6 +19,6 @@ export function apiToPromise(func) {
 				} else {
 					resolve(results.length > 1 ? results : results[0]);
 				}
-			})
+			}),
 		);
 }

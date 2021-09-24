@@ -17,7 +17,7 @@ class Soundcloud extends Domain {
 			playButton,
 			{ attributes: true, attributeFilter: ['class'] },
 			() => callback(playButton.classList.contains('playing')),
-			{ initialCallback: true }
+			{ initialCallback: true },
 		);
 	}
 
@@ -39,7 +39,7 @@ class Soundcloud extends Domain {
 		onMutation(
 			watchElem,
 			{ childList: true },
-			sendUpdate
+			sendUpdate,
 		);
 
 		await waitForChild(watchElem, '*');
@@ -61,7 +61,7 @@ class Soundcloud extends Domain {
 				'.playbackSoundBadge__like',
 				{ attributes: true, attributeFilter: ['class'] },
 				sendUpdate,
-				{ initialCallback: true }
+				{ initialCallback: true },
 			);
 
 			return () => descendant().click();

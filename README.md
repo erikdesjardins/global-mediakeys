@@ -1,6 +1,6 @@
 # global-mediakeys
 
-Use global keyboard shortcuts to control Soundcloud, Google Play Music, and YouTube.
+Use global keyboard shortcuts to control Soundcloud, YouTube Music, and Bandcamp.
 
 Includes a browser action popup to view song info and album art, or to "like" the current song.
 

@@ -7,7 +7,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const sass = require('sass');
 const { join } = require('path');
 
-module.exports = ({ zip } = {}, { mode } = {}) => ({
+module.exports = (env, { mode }) => ({
 	entry: 'extricate-loader!interpolate-loader!./src/manifest.json',
 	output: {
 		path: join(__dirname, 'dist'),
@@ -28,7 +28,6 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 					loader: 'babel-loader',
 					options: {
 						plugins: [
-							['@babel/plugin-proposal-decorators', { legacy: true }],
 							'babel-plugin-lodash',
 						],
 						comments: mode === 'development',
@@ -41,16 +40,15 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 			use: [
 				{ loader: 'file-loader', options: { name: '[name].css', esModule: false } },
 				{ loader: 'extricate-loader', options: { resolve: '\\.js$' } },
-				{ loader: 'css-loader' },
-				{ loader: 'postcss-loader' },
+				{ loader: 'css-loader', options: { esModule: false } },
 				{ loader: 'sass-loader', options: { implementation: sass } },
 			],
 		}, {
 			test: /\.html$/,
 			use: [
 				{ loader: 'file-loader', options: { name: '[name].[ext]', esModule: false } },
-				{ loader: 'extricate-loader' },
-				{ loader: 'html-loader', options: { attrs: ['link:href', 'script:src'] } },
+				{ loader: 'extricate-loader', options: { resolve: '/html-loader/.+\\.js$' } },
+				{ loader: 'html-loader' },
 			],
 		}, {
 			test: /\.(png|woff2)$/,
@@ -63,6 +61,6 @@ module.exports = ({ zip } = {}, { mode } = {}) => ({
 		new NyanProgressPlugin(),
 		new InertEntryPlugin(),
 		new LodashModuleReplacementPlugin(),
-		zip && new ZipPlugin({ filename: 'GMK.zip' }),
+		new ZipPlugin({ filename: 'GMK.zip' }),
 	].filter(x => x),
 });
