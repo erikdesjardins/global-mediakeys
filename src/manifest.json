@@ -30,6 +30,10 @@
 			"js": ["{{./js/soundcloud.entry.js}}"]
 		},
 		{
+			"matches": ["https://open.spotify.com/*"],
+			"js": ["{{./js/spotify.entry.js}}"]
+		},
+		{
 			"matches": ["https://music.youtube.com/*"],
 			"js": ["{{./js/youtubemusic.entry.js}}"]
 		},
