@@ -18,11 +18,11 @@
     "lint": "eslint . && sass-lint -v -q",
     "lint-fix": "eslint . --fix"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "7.16.0",
     "babel-loader": "8.2.3",
+    "bell-on-bundler-error-plugin": "2.0.0",
     "chrome-extension-deploy": "3.0.0",
     "css-loader": "5.2.7",
     "eslint": "8.3.0",
