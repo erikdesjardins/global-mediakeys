@@ -4,11 +4,10 @@
  * @module data/tabs
  */
 
-import _ from 'lodash-es';
-
 import * as Storage from '../api/storage';
 import Logger from '../util/Logger';
 import { STORAGE } from '../shared/constants';
+import { structuralEq } from '../util/object';
 
 const log = new Logger('TabMgr');
 
@@ -130,7 +129,7 @@ export async function update(id, data) {
 	}
 	const entry = _get(id);
 	const newData = { ...entry.data, ...data };
-	if (!_.isEqual(entry.data, newData)) {
+	if (!structuralEq(entry.data, newData)) {
 		entry.data = newData;
 		_promote(id);
 		await _save();

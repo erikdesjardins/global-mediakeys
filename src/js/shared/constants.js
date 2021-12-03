@@ -1,7 +1,3 @@
-/**
- * @file Constants used for message types, command types, and storage keys.
- */
-
 export const MSG = {
 	REGISTER: 'tab-register',
 	UNREGISTER: 'tab-unregister',
@@ -28,4 +24,8 @@ export const CMD = {
 
 export const STORAGE = {
 	TABS: 'registered-tabs',
+};
+
+export const DEBOUNCE = {
+	MSG: 50, // ms
 };

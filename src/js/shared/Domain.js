@@ -5,9 +5,9 @@
 /* eslint no-unused-vars: [2, { "args": "none" }] */
 
 import Logger from '../util/Logger';
-import _ from 'lodash-es';
 import * as Messages from '../api/messages';
-import { MSG } from './constants';
+import { DEBOUNCE, MSG } from './constants';
+import { debounce } from '../util/function';
 
 export default class Domain {
 	constructor() {
@@ -109,11 +109,11 @@ export default class Domain {
 
 		window.addEventListener('unload', () => Messages.send(MSG.UNREGISTER));
 
-		this.setupPlayState(_.debounce(state => Messages.send(MSG.PLAY_STATE, { data: state }), 50), buttons.play);
-		this.setupInfo(_.debounce(info => Messages.send(MSG.INFO, { data: info }), 50));
+		this.setupPlayState(debounce(state => Messages.send(MSG.PLAY_STATE, { data: state }), DEBOUNCE.MSG), buttons.play);
+		this.setupInfo(debounce(info => Messages.send(MSG.INFO, { data: info }), DEBOUNCE.MSG));
 
 		const actionData = [];
-		const sendActionUpdate = _.debounce(() => Messages.send(MSG.ACTIONS, { data: actionData }), 50);
+		const sendActionUpdate = debounce(() => Messages.send(MSG.ACTIONS, { data: actionData }), DEBOUNCE.MSG);
 
 		this._log.d('Setting up actions...');
 
