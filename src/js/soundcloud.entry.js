@@ -1,7 +1,7 @@
-import Domain from './shared/Domain';
+import { registerDomain } from './shared/domain';
 import { onDescendantMutation, onMutation, waitForChild } from './util/dom';
 
-class Soundcloud extends Domain {
+registerDomain({
 	async getButtons() {
 		await waitForChild(document.getElementById('app'), '.playControls');
 
@@ -10,7 +10,7 @@ class Soundcloud extends Domain {
 			next: document.querySelector('.playControls .skipControl__next'),
 			prev: document.querySelector('.playControls .skipControl__previous'),
 		};
-	}
+	},
 
 	setupPlayState(callback, playButton) {
 		onMutation(
@@ -19,7 +19,7 @@ class Soundcloud extends Domain {
 			() => callback(playButton.classList.contains('playing')),
 			{ initialCallback: true },
 		);
-	}
+	},
 
 	async setupInfo(callback) {
 		const watchElem = document.querySelector('.playbackSoundBadge');
@@ -45,7 +45,7 @@ class Soundcloud extends Domain {
 		await waitForChild(watchElem, '*');
 
 		sendUpdate();
-	}
+	},
 
 	getActions() {
 		return [async callback => {
@@ -66,7 +66,5 @@ class Soundcloud extends Domain {
 
 			return () => descendant().click();
 		}];
-	}
-}
-
-new Soundcloud().go();
+	},
+});

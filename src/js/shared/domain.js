@@ -5,14 +5,13 @@
 /* eslint no-unused-vars: [2, { "args": "none" }] */
 
 import Logger from '../util/Logger';
-import _ from 'lodash-es';
 import * as Messages from '../api/messages';
-import { MSG } from './constants';
+import { DEBOUNCE, MSG } from './constants';
+import { debounce } from '../util/function';
 
-export default class Domain {
-	constructor() {
-		this._log = new Logger(this.constructor.name);
-	}
+const log = new Logger('Domain');
+
+export async function registerDomain({
 
 	/**
 	 * Buttons for controlling play/pause, next, and prev track.
@@ -28,9 +27,7 @@ export default class Domain {
 	 * @abstract
 	 * @returns {!ButtonDefinition|Promise<ButtonDefinition, *>} The three main buttons.
 	 */
-	getButtons() {
-		throw new Error('getButtons() is not defined.');
-	}
+	getButtons,
 
 	/**
 	 * @abstract
@@ -39,9 +36,7 @@ export default class Domain {
 	 * @param {!Element} playButton The `play` property of the {@link ButtonDefinition} returned by {@link getButtons}.
 	 * @returns {void}
 	 */
-	setupPlayState(callback, playButton) {
-		throw new Error('setupPlayState(callback, playButton) is not defined.');
-	}
+	setupPlayState,
 
 	/**
 	 * Information about the currently playing track.
@@ -57,9 +52,7 @@ export default class Domain {
 	 * and when initial info is known.
 	 * @returns {void}
 	 */
-	setupInfo(callback) {
-		throw new Error('setupInfo(callback) is not defined.');
-	}
+	setupInfo,
 
 	/**
 	 * A custom action supported by the `Domain`.
@@ -77,55 +70,46 @@ export default class Domain {
 	 */
 
 	/**
+	 * @abstract
 	 * @returns {ActionInit[]} Functions to set up custom actions.
 	 */
-	getActions() {
-		return [];
+	getActions,
+}) {
+	log.d('Waiting for buttons...');
+
+	const buttons = await getButtons();
+
+	if (!buttons.play) {
+		throw new Error('No play button found.');
 	}
 
-	/**
-	 * @returns {Promise<void, Error>} Rejects if {@link getButtons} rejects,
-	 * rejects if {@link getButtons} does not return a valid play button,
-	 * resolves when initialization is complete otherwise.
-	 */
-	async go() {
-		this._log.d('Waiting for buttons...');
+	Messages.addListener(MSG.ECHO, data => data);
 
-		const buttons = await this.getButtons();
+	Messages.addListener(MSG.PLAY_PAUSE, () => buttons.play.click());
+	Messages.addListener(MSG.NEXT, () => buttons.next.click());
+	Messages.addListener(MSG.PREV, () => buttons.prev.click());
 
-		if (!buttons.play) {
-			throw new Error('No play button found.');
-		}
+	log.d('Waiting for registration...');
 
-		Messages.addListener(MSG.ECHO, data => data);
+	await Messages.send(MSG.REGISTER);
+	window.addEventListener('unload', () => Messages.send(MSG.UNREGISTER));
 
-		Messages.addListener(MSG.PLAY_PAUSE, () => buttons.play.click());
-		Messages.addListener(MSG.NEXT, () => buttons.next.click());
-		Messages.addListener(MSG.PREV, () => buttons.prev.click());
+	setupPlayState(debounce(state => Messages.send(MSG.PLAY_STATE, { data: state }), DEBOUNCE.MSG), buttons.play);
+	setupInfo(debounce(info => Messages.send(MSG.INFO, { data: info }), DEBOUNCE.MSG));
 
-		this._log.d('Waiting for registration...');
+	log.d('Setting up actions...');
 
-		await Messages.send(MSG.REGISTER);
+	const actionData = [];
+	const sendActionUpdate = debounce(() => Messages.send(MSG.ACTIONS, { data: actionData }), DEBOUNCE.MSG);
 
-		window.addEventListener('unload', () => Messages.send(MSG.UNREGISTER));
+	const actions = await Promise.all(getActions().map((setup, i) =>
+		setup(data => {
+			actionData[i] = data;
+			sendActionUpdate();
+		}),
+	));
 
-		this.setupPlayState(_.debounce(state => Messages.send(MSG.PLAY_STATE, { data: state }), 50), buttons.play);
-		this.setupInfo(_.debounce(info => Messages.send(MSG.INFO, { data: info }), 50));
+	Messages.addListener(MSG.DO_ACTION, i => actions[i]());
 
-		const actionData = [];
-		const sendActionUpdate = _.debounce(() => Messages.send(MSG.ACTIONS, { data: actionData }), 50);
-
-		this._log.d('Setting up actions...');
-
-		const actions = await Promise.all(this.getActions().map((setup, i) =>
-			setup(data => {
-				actionData[i] = data;
-				sendActionUpdate();
-			}),
-		));
-
-		Messages.addListener(MSG.DO_ACTION, i => actions[i]());
-
-		this._log.d('Init complete.');
-	}
+	log.d('Init complete.');
 }

@@ -1,7 +1,7 @@
-import Domain from './shared/Domain';
+import { registerDomain } from './shared/domain';
 import { descendant, onMutation } from './util/dom';
 
-class YouTubeMusic extends Domain {
+registerDomain({
 	async getButtons() {
 		const controls = document.querySelector('#left-controls');
 
@@ -10,7 +10,7 @@ class YouTubeMusic extends Domain {
 			next: await descendant(controls, '.next-button'),
 			prev: await descendant(controls, '.previous-button'),
 		};
-	}
+	},
 
 	setupPlayState(callback, playButton) {
 		onMutation(
@@ -19,7 +19,7 @@ class YouTubeMusic extends Domain {
 			() => callback(playButton.getAttribute('title') === 'Pause'),
 			{ initialCallback: true },
 		);
-	}
+	},
 
 	async setupInfo(callback) {
 		const middle = document.querySelector('.middle-controls');
@@ -41,7 +41,7 @@ class YouTubeMusic extends Domain {
 		onMutation(subtitleElem, { childList: true }, sendUpdate);
 
 		sendUpdate();
-	}
+	},
 
 	getActions() {
 		return [callback => {
@@ -81,7 +81,5 @@ class YouTubeMusic extends Domain {
 
 			return () => thumbDownButton.click();
 		}];
-	}
-}
-
-new YouTubeMusic().go();
+	},
+});

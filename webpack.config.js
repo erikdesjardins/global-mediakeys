@@ -1,9 +1,9 @@
 /* eslint-disable import/no-commonjs */
 
+const BellOnBundlerErrorPlugin = require('bell-on-bundler-error-plugin');
 const InertEntryPlugin = require('inert-entry-webpack-plugin');
 const NyanProgressPlugin = require('nyan-progress-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const sass = require('sass');
 const { join } = require('path');
 
@@ -27,9 +27,6 @@ module.exports = (env, { mode }) => ({
 				{
 					loader: 'babel-loader',
 					options: {
-						plugins: [
-							'babel-plugin-lodash',
-						],
 						comments: mode === 'development',
 						babelrc: false,
 					},
@@ -58,9 +55,9 @@ module.exports = (env, { mode }) => ({
 		}],
 	},
 	plugins: [
-		new NyanProgressPlugin(),
 		new InertEntryPlugin(),
-		new LodashModuleReplacementPlugin(),
+		new BellOnBundlerErrorPlugin(),
+		new NyanProgressPlugin(),
 		new ZipPlugin({ filename: 'GMK.zip' }),
 	].filter(x => x),
 });

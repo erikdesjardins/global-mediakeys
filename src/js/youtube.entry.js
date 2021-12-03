@@ -1,7 +1,7 @@
-import Domain from './shared/Domain';
+import { registerDomain } from './shared/domain';
 import { descendant, onMutation } from './util/dom';
 
-class YouTube extends Domain {
+registerDomain({
 	async getButtons() {
 		const player = await descendant(document, '.html5-video-player');
 
@@ -10,7 +10,7 @@ class YouTube extends Domain {
 			next: player.querySelector('.ytp-next-button'),
 			prev: player.querySelector('.ytp-prev-button'),
 		};
-	}
+	},
 
 	setupPlayState(callback, playButton) {
 		onMutation(
@@ -19,7 +19,7 @@ class YouTube extends Domain {
 			() => callback(playButton.getAttribute('aria-label').toLowerCase().includes('pause')),
 			{ initialCallback: true },
 		);
-	}
+	},
 
 	async setupInfo(callback) {
 		const main = await descendant(document, '#primary');
@@ -40,7 +40,7 @@ class YouTube extends Domain {
 		onMutation(subtitleElem, { characterData: true }, sendUpdate);
 
 		sendUpdate();
-	}
+	},
 
 	getActions() {
 		return [async callback => {
@@ -62,7 +62,5 @@ class YouTube extends Domain {
 
 			return () => button.click();
 		}];
-	}
-}
-
-new YouTube().go();
+	},
+});

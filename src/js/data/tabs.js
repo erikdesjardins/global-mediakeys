@@ -4,11 +4,10 @@
  * @module data/tabs
  */
 
-import _ from 'lodash-es';
-
 import * as Storage from '../api/storage';
 import Logger from '../util/Logger';
 import { STORAGE } from '../shared/constants';
+import { structuralEq } from '../util/object';
 
 const log = new Logger('TabMgr');
 
@@ -57,7 +56,7 @@ function _get(id) {
 }
 
 function _add(id, data) {
-	_v.unshift({ id, data });
+	_v.push({ id, data });
 }
 
 function _remove(id) {
@@ -65,7 +64,7 @@ function _remove(id) {
 }
 
 function _promote(id) {
-	_v.unshift(_remove(id));
+	_v.push(_remove(id));
 }
 
 /**
@@ -130,7 +129,7 @@ export async function update(id, data) {
 	}
 	const entry = _get(id);
 	const newData = { ...entry.data, ...data };
-	if (!_.isEqual(entry.data, newData)) {
+	if (!structuralEq(entry.data, newData)) {
 		entry.data = newData;
 		_promote(id);
 		await _save();
@@ -148,10 +147,10 @@ export async function update(id, data) {
 export async function peek() {
 	await isReady;
 
-	if (!_v.length) {
+	if (_v.length === 0) {
 		throw new Error('The map is empty.');
 	}
-	const [{ id, data }] = _v;
+	const { id, data } = _v[_v.length - 1];
 	return { id, data };
 }
 
