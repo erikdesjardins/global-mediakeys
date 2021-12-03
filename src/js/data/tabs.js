@@ -57,7 +57,7 @@ function _get(id) {
 }
 
 function _add(id, data) {
-	_v.unshift({ id, data });
+	_v.push({ id, data });
 }
 
 function _remove(id) {
@@ -65,7 +65,7 @@ function _remove(id) {
 }
 
 function _promote(id) {
-	_v.unshift(_remove(id));
+	_v.push(_remove(id));
 }
 
 /**
@@ -148,10 +148,10 @@ export async function update(id, data) {
 export async function peek() {
 	await isReady;
 
-	if (!_v.length) {
+	if (_v.length === 0) {
 		throw new Error('The map is empty.');
 	}
-	const [{ id, data }] = _v;
+	const { id, data } = _v[_v.length - 1];
 	return { id, data };
 }
 
