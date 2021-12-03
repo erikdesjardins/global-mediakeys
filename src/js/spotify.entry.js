@@ -1,7 +1,7 @@
-import Domain from './shared/Domain';
+import { registerDomain } from './shared/domain';
 import { descendant, onMutation } from './util/dom';
 
-class Spotify extends Domain {
+registerDomain({
 	async getButtons() {
 		const controls = await descendant(document.body, '.player-controls');
 
@@ -10,7 +10,7 @@ class Spotify extends Domain {
 			next: controls.querySelector('button[data-testid="control-button-skip-forward"]'),
 			prev: controls.querySelector('button[aria-label="Previous"]'),
 		};
-	}
+	},
 
 	setupPlayState(callback, playButton) {
 		onMutation(
@@ -19,7 +19,7 @@ class Spotify extends Domain {
 			() => callback(playButton.getAttribute('aria-label') === 'Pause'),
 			{ initialCallback: true },
 		);
-	}
+	},
 
 	async setupInfo(callback) {
 		const nowPlaying = await descendant(document.body, '[data-testid="now-playing-widget"]');
@@ -41,7 +41,7 @@ class Spotify extends Domain {
 		onMutation(nowPlaying, { attributes: true, attributeFilter: ['aria-label'] }, sendUpdate);
 
 		sendUpdate();
-	}
+	},
 
 	getActions() {
 		return [async callback => {
@@ -63,7 +63,5 @@ class Spotify extends Domain {
 
 			return () => likeButton.click();
 		}];
-	}
-}
-
-new Spotify().go();
+	},
+});

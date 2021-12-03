@@ -1,7 +1,7 @@
-import Domain from './shared/Domain';
+import { registerDomain } from './shared/domain';
 import { descendant, onMutation } from './util/dom';
 
-class Bandcamp extends Domain {
+registerDomain({
 	async getButtons() {
 		const trackInfo = await descendant(document.body, '#trackInfo');
 
@@ -10,7 +10,7 @@ class Bandcamp extends Domain {
 			next: await descendant(trackInfo, '.nextbutton'),
 			prev: await descendant(trackInfo, '.prevbutton'),
 		};
-	}
+	},
 
 	setupPlayState(callback, playButton) {
 		onMutation(
@@ -19,7 +19,7 @@ class Bandcamp extends Domain {
 			() => callback(playButton.classList.contains('playing')),
 			{ initialCallback: true },
 		);
-	}
+	},
 
 	setupInfo(callback) {
 		const image = `url(${document.querySelector('#tralbumArt img').src})`;
@@ -40,11 +40,9 @@ class Bandcamp extends Domain {
 			sendUpdate,
 			{ initialCallback: true },
 		);
-	}
+	},
 
 	getActions() {
 		return [];
-	}
-}
-
-new Bandcamp().go();
+	},
+});
